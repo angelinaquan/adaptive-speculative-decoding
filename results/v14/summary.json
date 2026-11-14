@@ -1,0 +1,36 @@
+{
+  "scope": "Validation only, descriptive timings; fixed7 batch8 first timing outlier retained",
+  "independent_output_comparison_passed": true,
+  "results": [
+    {
+      "batch": 1,
+      "rates": {
+        "ar": 187.42918433986677,
+        "fixed7": 184.3010009807966,
+        "adaptive": 212.12972518214087
+      },
+      "adaptive_vs_fixed7_pct": 15.099605565486819,
+      "adaptive_vs_ar_pct": 13.178599122260714
+    },
+    {
+      "batch": 8,
+      "rates": {
+        "ar": 567.8708611426601,
+        "fixed7": 1010.3112515300716,
+        "adaptive": 1107.4966174817816
+      },
+      "adaptive_vs_fixed7_pct": 9.619349067381666,
+      "adaptive_vs_ar_pct": 95.02613943833916
+    },
+    {
+      "batch": 32,
+      "rates": {
+        "ar": 1885.4816978104268,
+        "fixed7": 1641.2087851567846,
+        "adaptive": 1824.3906393375364
+      },
+      "adaptive_vs_fixed7_pct": 11.161398588495386,
+      "adaptive_vs_ar_pct": -3.240076981061879
+    }
+  ]
+}

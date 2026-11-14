@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+*.pyc
+.local/
+wandb/
+experiments/model_paths.json
+.DS_Store
