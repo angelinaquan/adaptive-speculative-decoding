@@ -118,6 +118,17 @@ Two checks passed before timing conclusions:
 
 These checks have limits: greedy agreement is not a proof of full-model stochastic equivalence; the finite-state kernel test does not validate every cache or scheduler path. Earlier work with a different BF16 backend failed a numerical check, so these FP32 results must not be relabeled as BF16 results.
 
+## Reproduce the cost experiments
+
+After installing the pinned environment, downloading the models with `scripts/download_models.py`, and configuring W&B, use a fresh output directory:
+
+```bash
+python scripts/run_cost_study.py --phase validation --run-dir .local/cost-validation-1
+python scripts/run_cost_study.py --phase confirmation --run-dir .local/cost-confirmation-1
+```
+
+The confirmation command reproduces the published fixed-width selection on the frozen prompts; these prompts are not a new unseen test for later research. Each phase runs independently in its own directory. The validation runner requires its outputs to match the published batch-invariant reference; another GPU/backend may fail that numerical gate. Set `WANDB_MODE=offline` to retain logs locally. `--stage-only` copies inputs without starting inference or downloading anything; existing run directories are rejected. Staging and overwrite protection have been checked locally; the complete GPU run of this packaging wrapper has not been tested separately from the underlying cluster scripts.
+
 ## Reproduce
 
 Use a CUDA-capable Linux GPU environment with enough memory for this FP32 configuration. The measured configuration was an H200; other hardware can change the ranking.
