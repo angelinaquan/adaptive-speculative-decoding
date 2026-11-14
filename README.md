@@ -71,6 +71,12 @@ The [vLLM team's August 2026 description](https://vllm.ai/blog/2026-08-14-dspark
 
 ![Measured verification costs and validation throughput](docs/figures/cost_diagnostic_validation.png)
 
+The budget model chooses the number of drafts that maximizes expected accepted tokens divided by estimated draft-plus-verification time. When the estimated verification cost is flat across budgets, adding a draft with positive survival probability always looks beneficial. More accurate probabilities can then leave the selected budget unchanged.
+
+![Idealized budget sensitivity, not a throughput result](docs/figures/decision_sensitivity.png)
+
+This illustration uses the original and measured cost tables from the **same v34 engine**, with 64 identical requests and a shared conditional acceptance probability. The original table chooses all seven drafts across the plotted range; the measured table permits one-, three-, or seven-draft decisions. It explains why calibration can matter only near a decision boundary, but does not claim that real requests share these probabilities or that the plot measures a speedup. [Reproduction script](experiments/plot_decision_sensitivity.py) · [numerical inputs and decisions](docs/figures/decision_sensitivity.json).
+
 Keeping the measured target-cost curve instead of applying the upstream nondecreasing envelope improved throughput **1.46%** over the original cost model on 144 reused validation prompts at batch 32 (last batch: 16), with identity confidence calibration in both cases. All four balanced timing rounds were positive (+1.36% to +1.55%), and every output matched the batch-invariant ordinary-decoding reference. The change trimmed drafts on 156 of 780 steps, versus no trimming in the original-policy comparison. This is a descriptive single-engine validation result; the subsequent all-width sweep is reported below.
 
 The isolated online-calibration comparison remained negative: online updates were **0.11% slower** than frozen calibration with the same measured cost table. The positive result concerns the cost model, not online calibration.
