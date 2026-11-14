@@ -25,6 +25,14 @@ The diagnostic reproduced the same single mismatch in two complete repeats. At t
 
 **Precision qualification:** the serving studies request FP32 tensors and set `NVIDIA_TF32_OVERRIDE=0`. A later inspection found cached batch-invariant Triton persistent-matmul kernels containing TF32 instructions despite that setting. This is not proof that every cached kernel executes in every timed step; complete kernel attribution remains unaudited. Accordingly, these results must not be described as globally strict IEEE FP32 arithmetic. The frozen comparison uses the same backend settings for all methods and checks token equality against its ordinary-decoding reference. Historical configuration files retain their original requested settings; this note corrects any stronger interpretation of “TF32 disabled.”
 
+## Larger-vocabulary recovery screen (v60)
+
+On 48 reused prompts at batch 8 and width 7, recency-16,384 gained **3.66%** over native full-vocabulary decoding (orders **3.62% / 3.69%**). Recency-4,096 gained **1.96%**; prompt-only-16,384 lost **1.81%**. All projection, target-invariance, buffer, output, and provenance gates passed; independent local analysis exactly matched the remote summary. These are exploratory results, not significance or fresh-confirmation claims. No candidate met the >10% expansion gate.
+
+The source prior contains only 5,738 observed token types; the 16,384-token source initialization includes 10,646 zero-frequency fill entries. Recency is a prior-inspired baseline, not a novel prefix-weighted algorithm. The previously reported 17.59% future-output oracle can also change acceptance by excluding wrong draft choices; it is not a projection-only ceiling. A gated instrumented diagnostic (v61) is investigating that distinction, with no new speed claim.
+
+[Raw sessions and audited results](results/v60/) · [W&B audit](https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/7v6j6ei1) · [Current six-page research report](output/pdf/research_status.pdf) (snapshot through v59).
+
 ## Larger-gain exploration at batch 64 (v29)
 
 Following the 1.25% held-out gain, the batch-64 exploratory sweep reused the 384 v26 prompts explicitly as exploratory data and retuned all fixed widths 1–7 with a graph-capture limit of 512. All ten methods passed output checks against a fresh batch-64 ordinary-decoding reference; independent local analysis matched the remote audit and verified execution-source hashes.

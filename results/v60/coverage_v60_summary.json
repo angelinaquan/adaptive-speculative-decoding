@@ -1,0 +1,103 @@
+{
+  "all_checks_passed": true,
+  "scope": "Coverage-recovery screen: samegeneration-time recency baseline,4096vs16384active tokens plusmatchingprompt16384control.48reusedprompts,b8,width7; notnovelmethod.",
+  "throughputs": {
+    "native7": 1137.6652671912484,
+    "prompt16384": 1117.1083130756147,
+    "recency16384": 1179.2925608684334,
+    "recency4096": 1160.014396322958
+  },
+  "comparisons": {
+    "native7": {
+      "native7": {
+        "gain_percent": 0.0,
+        "round_gains": [
+          0.0,
+          0.0
+        ]
+      },
+      "prompt16384": {
+        "gain_percent": 1.8401934597582992,
+        "round_gains": [
+          1.4921317744042817,
+          2.1890717285931505
+        ]
+      }
+    },
+    "prompt16384": {
+      "native7": {
+        "gain_percent": -1.806942227074071,
+        "round_gains": [
+          -1.4701945346078493,
+          -2.142177917426591
+        ]
+      },
+      "prompt16384": {
+        "gain_percent": 0.0,
+        "round_gains": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "recency16384": {
+      "native7": {
+        "gain_percent": 3.6590106842197656,
+        "round_gains": [
+          3.6231787073932598,
+          3.694951602688601
+        ]
+      },
+      "prompt16384": {
+        "gain_percent": 5.566537019280937,
+        "round_gains": [
+          5.169373082534001,
+          5.964908472201391
+        ]
+      }
+    },
+    "recency4096": {
+      "native7": {
+        "gain_percent": 1.9644731869934429,
+        "round_gains": [
+          2.1224960842207263,
+          1.8065695611961363
+        ]
+      },
+      "prompt16384": {
+        "gain_percent": 3.8408167538575233,
+        "round_gains": [
+          3.6462982971081637,
+          4.035188393310785
+        ]
+      }
+    }
+  },
+  "runs": {
+    "native7-0": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/arckmkq1",
+    "native7-1": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/chfhug0l",
+    "prompt16384-0": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/m6e301qb",
+    "prompt16384-1": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/3e23ly8j",
+    "recency16384-0": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/sqr9kser",
+    "recency16384-1": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/9ifzuism",
+    "recency4096-0": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/swx0j3dw",
+    "recency4096-1": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/9q3gv040"
+  },
+  "hashes": {
+    "manifest_sha256": "232a0575125149596c23ff01f996ae44a00c8f77391b95e4f606e685ced72464",
+    "plan_sha256": "85314a8256752b0d6cdb28bd8296d30f747b27ce0d142dcc273edc7fca0323b2",
+    "source_sha256": "1b097b047ea61afcb502bf4456b0066cf3eab45fadac5856210a8d5b15a2ba1c",
+    "active_module_sha256": "55ce1243c78522dd982c2b43a10020c17f901c7de222bcd1c09ec18ac72f8e13",
+    "base_module_sha256": "e61b8209ef380ad946f6ebbbde8070afb2d0c2c9a0680daecf7bb3a261b31ef9",
+    "checks_sha256": "307a6ffb9556b1a284f6eaf88d35b71b5eb860d7010000efbfec4e082f6cb8b2",
+    "selector_sha256": "70bb34c05968eb2b7fb35eae7ea0e1cb9830484da397b2ff89a76e1513ab2189",
+    "priors_sha256": "a2e18b56d42226c005272487063d30ae48101863763a49cb3af9e5885e15f3e7"
+  },
+  "limitations": [
+    "Recency ispriorwork, notproposedprefixmethod.",
+    "Synchronousgather andsharedbatchvocabulary differ fromNanoSpec; notfullpaperreproduction.",
+    "Onlyb8width7greedyFP32singleGPU; notstochastic.",
+    "48reusedprompts,2orders; no significance.",
+    "Source256prompts underpopulate16384vocabulary; zero-frequency ties use tokenID and are explicitly disclosed."
+  ]
+}
