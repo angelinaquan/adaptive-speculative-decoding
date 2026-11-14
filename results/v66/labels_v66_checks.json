@@ -1,0 +1,30 @@
+{
+  "status": "failed",
+  "scope": "Real-context independent-width greedy label checks. No training or speed claim.",
+  "source_sha256": "abada4d17494a26dba3a84e21b013dc11dedb21d6aca7654d1c89f4b77c55175",
+  "model": "RedHatAI/Qwen3-4B-speculator.dflash2",
+  "revision": "27aa911ddb040c61adeeade08e92949e24c9e17b",
+  "checks": [],
+  "plan_sha256": "0094e84a393d0fcb4aa430021c307c475b2c8d32dc8a8a8b8fb03357628df3bd",
+  "manifest_sha256": "232a0575125149596c23ff01f996ae44a00c8f77391b95e4f606e685ced72464",
+  "forespark_commit": "5d457ddab73a76f28db34acc577abfbd9e7c6eee",
+  "target_path": "/data/scene-rep/u/aquan/.cache/huggingface/hub/models--Qwen--Qwen3-4B/snapshots/1cfa9a7208912126459214e8b04321603b3df60c",
+  "checkpoint_tensor_count": 83,
+  "target_owned_parameters": [
+    "verifier_lm_head.weight",
+    "verifier_norm.weight"
+  ],
+  "new_head_parameters": [
+    "confidence_head.proj.bias",
+    "confidence_head.proj.weight",
+    "fore_d_predictor.anchor_projection.weight",
+    "fore_d_predictor.context_projection.weight",
+    "fore_d_predictor.fusion_bias",
+    "fore_d_predictor.output_projection.bias",
+    "fore_d_predictor.output_projection.weight"
+  ],
+  "records": [],
+  "passed": false,
+  "error": "RuntimeError('Could not infer dtype of tokenizers.Encoding')",
+  "traceback": "Traceback (most recent call last):\n  File \"/data/scene-rep/u/aquan/speculative-tonight-20261109/check_labels_v66.py\", line 68, in <module>\n    input_ids=torch.tensor([prompt],device='cuda');p=input_ids.shape[1]\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: Could not infer dtype of tokenizers.Encoding\n"
+}
