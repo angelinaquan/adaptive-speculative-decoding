@@ -1,0 +1,23 @@
+{
+  "scope": "Source-only greedy full-width accepted-prefix collection for prefix-aware active-vocabulary research. No speed evidence.",
+  "manifest_sha256": "633e51c395ae9d3f0415c684a6da11f84b927a29d2537395eb8cca3f7990a317",
+  "orders": [
+    [
+      "fixed7_greedy"
+    ]
+  ],
+  "roles": [
+    "fixed7_greedy"
+  ],
+  "source_prompts": 256,
+  "correctness": "FreshARreference plus equality everywarmup/collection pass.",
+  "label_scope": "Full-width sampler acceptance before EOS/cap truncation; not committed-output gain.",
+  "candidate": "Fit source vocabulary using prefix-loss weights vs ordinary accepted-token frequency; compare at equal vocab budgets. Any online update must use only past verification. No guarantees under uncontrolled shifts.",
+  "prior_work": [
+    "https://arxiv.org/abs/2506.22694",
+    "https://arxiv.org/abs/2605.26444",
+    "https://arxiv.org/abs/2605.27390"
+  ],
+  "novelty": "Active vocabulary adaptation already exists; prefix-loss objective is a candidate distinction, not established novelty.",
+  "success": "Target >10% end-to-end gain against fully retuned cheap static baselines, same target output checks, held-out prompts and paired engine repetitions. Do not count synthetic identity checks as speed evidence."
+}
