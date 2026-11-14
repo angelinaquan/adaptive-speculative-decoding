@@ -4,18 +4,18 @@
 \hypersetup{colorlinks=true,urlcolor=blue}
 \setlength{\emergencystretch}{2em}
 \setlength{\parskip}{5pt}\setlength{\parindent}{0pt}
-\title{Adaptive Speculative Decoding:\\Evidence and a Prefix-Aware Vocabulary Method}
+\title{Adaptive Speculative Decoding:\\Methods, Related Work, and Experimental Results}
 \author{Angelina Quan}\date{November 14, 2026}
 \begin{document}\maketitle
 \begin{abstract}
-This progress report reviews our experiments on confidence calibration and speculative decoding, then describes a method for reducing draft computation. Completed expanded experiments support a modest cost-model improvement: 2.56\% higher throughput than tuned fixed-width decoding at batch 64. They do not establish a benefit from online calibration or a 10--15\% gain over strong baselines. Our current hypothesis is that a compact draft vocabulary should be selected by the accepted prefixes it preserves, rather than token frequency alone. Its end-to-end advantage remains unconfirmed.
+We study whether feedback from speculative verification can improve inference efficiency under workload shifts. The original online-confidence-calibration pilot did not produce a meaningful speedup. A separate verification-cost ablation produced a modest, expanded result: 2.56\% higher throughput than a tuned global fixed width at batch 64. We then proposed prefix-weighted draft-vocabulary selection, which gives more weight to tokens whose exclusion would destroy a longer accepted prefix. This report describes that objective, the closest literature, matched baselines, and completed experiments. The proposed static rule has not improved end-to-end speed. A deployable recency baseline gains 1.99\% in a small reused-prompt screen; a 17.59\% oracle result uses future tokens and is not a deployable method.
 \end{abstract}
-\section{Research question}
-The original proposal was to calibrate a released drafter's confidence estimates online under shifts from conversation to mathematics and code. The intended chain was: better acceptance forecasts, better verification-length decisions, and higher throughput. These are separate claims. Better probability scores may not change a discrete scheduling decision, and any benefit must exceed update overhead.
+\section{Research question and current contribution}
+The original proposal was to calibrate a released drafter's confidence estimates online as the workload shifts from conversation to mathematics and code. The intended chain was: better acceptance forecasts, better verification-length decisions, and higher throughput. These are separate claims. Better probability scores may not change a discrete scheduling decision, and any benefit must exceed update overhead. Our matched serving pilot found online updates 0.24\% slower than frozen calibration.
 
-Our matched serving pilot found online updates 0.24\% slower than frozen calibration. The useful completed result instead changes the verification cost table. That modification does not reduce full parallel-draft generation. We therefore propose a more direct intervention: reduce the vocabulary dimensions of the draft projections while preserving tokens that support long accepted prefixes.
+The current method hypothesis targets draft computation directly: \textbf{select a compact draft vocabulary by the accepted-prefix loss it prevents, rather than token frequency alone.} This is an extension of the original proposal, not a demonstrated success of online confidence calibration. Its static version is implemented; an online prefix-weighted version remains a research proposal.
 
-\textbf{Current question:} At the same vocabulary budget, does selecting tokens by the accepted-prefix loss they prevent improve throughput over frequency and context-based selection? This extends the original project. The implemented prototype uses a static source-fitted vocabulary; online vocabulary adaptation is future work.
+The reportable contribution so far is an empirical study of where these interventions help or fail, a modest cost-table ablation, and an explicit prefix-loss selection objective with correctness checks. We do not claim a new state-of-the-art decoding algorithm or a confirmed gain above 10\% over strong tuned baselines.
 \section{Literature and positioning}
 \textbf{Speculative decoding.} Leviathan et al.~\cite{leviathan} establish the draft-and-verify foundation with target-distribution preservation under the algorithm's assumptions. Our current speed studies use greedy decoding and require exact output agreement with ordinary target decoding. These empirical checks do not prove stochastic correctness.
 
@@ -24,6 +24,8 @@ Our matched serving pilot found online updates 0.24\% slower than frozen calibra
 \textbf{Calibration.} Gupta and Ramdas~\cite{ops} study online Platt scaling and calibeating. OPS/TOPS are relevant controls for the original proposal. Guarantees for those algorithms do not automatically extend to dependent, partially observed prefix forecasts.
 \newpage
 \textbf{Closest vocabulary methods.} VocabTrim~\cite{vocabtrim} prunes the draft LM head using frequent target tokens. NanoSpec~\cite{nanospec} builds small context-dependent vocabularies with GPU-resident state and asynchronous weight gathering. EvoSpec~\cite{evospec} adapts vocabulary and lightweight draft parameters from verification feedback. Static pruning, dynamic selection, and feedback-based adaptation already exist.
+
+SpecVocab~\cite{specvocab} also selects a vocabulary subset at each decoding step. Thus, per-step vocabulary prediction is not itself a new contribution.
 
 Our candidate distinction is the \emph{selection objective}: value tokens by the accepted-prefix length lost when they are excluded, rather than count all occurrences equally. This is a research hypothesis, not an established novelty claim. A stronger novelty assessment requires comparing the detailed objectives of these and other acceptance-aware methods. Published speedups on different systems are not matched comparisons with our experiments.
 \section{Proposed method}
@@ -48,32 +50,34 @@ We collected 7,055 full-width states and 19,018 accepted tokens from 256 convers
 
 An online extension could update scores using past verification and add recent prompt/output tokens for domain shifts. Selection and gathering overhead must count toward timing. Predictions must precede feedback, and state resets must be defined. Restricted-vocabulary observations are censored; they cannot be treated as unbiased full-policy feedback without additional assumptions or exploration.
 \newpage
-\section{Baselines and evaluation}
+\section{Baselines and implementation}
 \begin{tabularx}{\linewidth}{@{}p{.28\linewidth}X@{}}
 \toprule
-Baseline & Purpose and status \\
+Baseline & Purpose and evidence status \\
 \midrule
-Ordinary target decoding & Output reference and contextual throughput baseline. \\
-Tuned fixed widths 1--7 & Completed cost-study controls. New vocabulary methods require joint width/budget tuning. \\
-Native adaptive verification & Direct cost-study control and required final serving comparator. \\
-Frozen calibration; OPS/TOPS & Original statistical controls. OPS/TOPS code exists; no expanded throughput victory is established. \\
-Full-vocabulary identity & Compact code retaining all tokens; isolates implementation effects. Included in current prototype plan. \\
-Accepted-token frequency & Same source observations and 4,096-token budget as prefix weighting. Included in current plan. \\
-All-target-token frequency & Stronger frequency control including corrections/bonus tokens; prepared, not evaluated. \\
-Context-based vocabulary & Needed to test value beyond contextual coverage; NanoSpec is relevant prior work, not yet a matched reproduction. \\
+Ordinary target decoding & Exact greedy output reference; also reports throughput without speculation. \\
+Tuned fixed widths 1--7 & Completed controls in the expanded cost study. Vocabulary candidates still need joint width/budget tuning. \\
+Native adaptive verification & Direct comparator in the cost study; required in final vocabulary evaluation. \\
+Frozen calibration; OPS/TOPS & Controls for the original hypothesis. Code exists, but no expanded serving advantage over these methods is established. \\
+Full-vocabulary identity & Uses the compact projection code with every token retained; checks implementation effects. Completed. \\
+Accepted-token frequency & Same source accepted tokens and vocabulary budget as the prefix rule. Completed. \\
+Prompt/source frequency & Uses prompt tokens and source token counts, including target correction/bonus outputs. Completed. \\
+Online recency & Adds recent target candidates after verification. Completed deployable baseline inspired by NanoSpec; not a faithful paper reproduction. \\
+Future-output oracle & Uses future target outputs to construct the vocabulary. Diagnostic only; excluded from deployable comparisons. \\
 \bottomrule
 \end{tabularx}
 
-\textbf{Current prototype.} Qwen3-4B, released DSpark block-7 drafter, vLLM 0.33.0, one H200, batch 64, greedy generation, and a 128-token output cap. Native, full-vocabulary identity, prefix-weighted, and frequency-selected variants all use width 7. Two reverse engine orders and two timed passes after two warmup passes are planned on 192 reused validation prompts. This is a selection experiment, not fresh confirmation.
+\textbf{Common system.} Qwen3-4B with the released DSpark block-7 drafter, vLLM 0.33.0, one H200, greedy generation, batch-invariant execution, and a 128-token output cap. The target and verifier are unchanged. Current compact variants retain the original full weights, so there is no memory-saving claim. FP32 tensors do not establish strict IEEE arithmetic throughout the kernel stack.
 
-\textbf{Correctness.} Check compact projections against selected native rows, target parameter pointers/versions, source/configuration hashes, and every output against ordinary decoding. The first prototype failed projection equivalence because ordinary matrix multiplication differed from the native backend. The repaired run uses the native backend without relaxing tolerance. At this report's status check, GPU job 3054440 was running and audit 3054441 pending. No completed pruning speed result is claimed.
+\textbf{Recency baseline.} At each batch reset, initialize a shared vocabulary from prompt frequencies and source counts. After verification, add the top 16 target-logit candidates at observed prefix positions, including the correction/bonus position and excluding the rejected suffix. Select the most recent $K$ tokens with deterministic ties, then gather compact LM and Markov weights into persistent GPU buffers. Updates affect the next step and are included in timing. Unlike NanoSpec, this implementation uses a shared batch vocabulary, synchronous gathering, and no all-position prefill candidates. It is a baseline adaptation, not our proposed prefix-weighted method.
 
-\textbf{Expansion.} Freeze the selection rule, vocabulary budget, widths, and comparators before evaluating new prompts. Use balanced engine orders, paired prompt batches, and separate conversation/math/code results. For adaptation, include ordered domain shifts and charge all update costs. Report aggregate tokens/s, prefix acceptance, draft/target time, and selection overhead. Resample prompt batches and rounds, keeping repeated timings together; tokens are not independent experimental units.
-\section{Completed results}
-Our completed method retains measured target-verification costs instead of their monotone envelope within the graph-capture range. It changes neither the confidence head nor the allocation algorithm. It is a cost-table ablation, not a new scheduler or a calibration gain.
-
-Expanded studies used 384 prompts at batch 32 and 768 different prompts at batch 64, equally divided among conversation, mathematics, and code. Widths were selected separately. Each study used four balanced engine orders, two warmup/correctness passes, and two timed passes. All output checks passed. Generation timing excludes startup/profiling. FP32 tensor dtype does not establish strict IEEE arithmetic across the kernel stack.
+\textbf{Correctness gates.} Check selected compact projections against native rows, target parameter invariance, stable compact-buffer pointers, source/configuration hashes, and every generated output against ordinary target decoding. Finite CPU/GPU tests check recency updates, ties, and rejected-suffix exclusion. An early prototype failed projection equivalence; it was retained as a failure and repaired by using the native projection kernel without relaxing tolerance. Completed results below passed their gates. These checks support the tested greedy implementation, not a general stochastic-correctness theorem.
 \newpage
+\section{Completed experimental results}
+\subsection{Expanded verification-cost study}
+This intervention retains measured target-verification costs instead of their monotone envelope within the graph-capture range. It changes neither the confidence head nor the allocation algorithm. It is an ablation of a known implementation tradeoff, not a new scheduler or a calibration result.
+
+The studies used 384 prompts at batch 32 and 768 different prompts at batch 64, fresh at launch and equally divided among conversation, mathematics, and code. Widths were selected separately. Each used four balanced engine orders, two warmup/correctness passes, and two timed passes; all output checks passed. Timing excludes startup/profiling.
 \begin{center}
 \begin{tabular}{@{}llrr@{}}
 \toprule
@@ -87,27 +91,43 @@ Batch & Comparator & Throughput gain & 95\% interval \\
 \bottomrule
 \end{tabular}
 \end{center}
-Intervals use 10,000 paired, domain-stratified batch-and-round bootstrap draws. Gain is $100(T_b/T_m-1)$ for identical output counts, not percentage latency reduction. The stronger domain baseline uses width 3 for conversation and 7 for mathematics/code, fixed before testing; its interval crosses zero. At batch 128 the exploratory intervention lost 4.10\% to tuned fixed width 3. Earlier 10--15\% exploratory effects did not reproduce at that magnitude against stronger baselines.
+Intervals use 10,000 paired, domain-stratified batch-and-round bootstrap draws. Gain is $100(T_b/T_m-1)$ for identical output counts; it is not percentage latency reduction. Domain widths were fixed before testing: 3 for conversation and 7 for mathematics/code. Against that stronger comparator the interval crosses zero. The prespecified 5\% improvement target was not reached. Earlier 10--15\% exploratory gains did not reproduce at that magnitude against stronger baselines.
 
-\textbf{Prefix-vocabulary evidence.} The frozen-block identity passed 15,000 finite cases including ties. Source-fit mean positive prefix losses are:
+\subsection{Vocabulary selection screens}
+These are exploratory comparisons on reused prompts, not independent confirmation. Batch-64 screens use 192 prompts; batch-8 screens use 48. Each uses two reverse engine orders, two warmup passes, and two timed passes. All variants below use draft width 7. Percentages compare each method with native full-vocabulary width 7 in its own experiment.
 \begin{center}
-\begin{tabular}{@{}rrr@{}}
+\begin{tabular}{@{}lrrr@{}}
 \toprule
-Vocabulary size & Prefix-weighted & Accepted-token frequency \\
+Method & Batch & Vocabulary size & Throughput gain \\
 \midrule
-1,024 & 1.407 & 1.460 \\
-2,048 & 0.837 & 0.972 \\
-4,096 & 0.126 & 0.328 \\
+Static prefix-weighted (v54) & 64 & 4,096 & $-$24.84\% \\
+Static accepted-frequency (v54) & 64 & 4,096 & $-$24.84\% \\
+Prompt + source frequency (v55) & 64 & 8,192 & $-$7.17\% \\
+Prompt + prefix weights (v55) & 64 & 8,192 & $-$6.70\% \\
+Online recency (v58) & 8 & 1,024 & $-$20.39\% \\
+Online recency (v58) & 8 & 4,096 & +1.99\% \\
+\midrule
+Future-output oracle (v56) & 64 & 4,096 & +8.03\% \\
+Future-output oracle (v57) & 8 & 1,024 & +17.59\% \\
 \bottomrule
 \end{tabular}
 \end{center}
-These are optimistic source-fit statistics, not held-out acceptance or speed results. Labels measure sampler acceptance before final EOS/output-cap clipping. The results motivate testing the objective but do not establish generalization or superiority to context-aware selection.
+Static prefix weighting beats matched frequency by only 0.0023\%; the prompt-augmented version gains 0.51\% over prompt-frequency while both lose to native decoding. Recency-4,096 gains 1.93\% and 2.06\% in the two orders. These repeats do not establish statistical significance or generalization. The oracle uses future target tokens and is neither deployable nor a universal upper bound.
+\newpage
+\section{Interpretation and remaining work}
+\textbf{Why the prefix idea was plausible.} On the 256-prompt source fit, prefix weighting reduced mean positive prefix loss from 0.328 to 0.126 at a 4,096-token budget. The frozen-block calculation passed 15,000 finite cases, including ties. But source-fit loss is not held-out speed: compact selection changes future draft states, and a source vocabulary may miss tokens needed in a new domain. Completed timing experiments do not support the static method as an improvement.
 
-\textbf{Supported conclusion.} We have a reproducible modest cost-model improvement and a proposed prefix-aware vocabulary method. The latter has a local mathematical rationale and source-fit evidence; a successful end-to-end comparison is still required. No confirmed gain above 10\% over strong tuned baselines or state-of-the-art result is established.
+\textbf{What limits the deployable recency baseline.} An instrumented diagnostic (v59) compared full-vocabulary identity with recency-4,096 on the same 48 prompts. Mean accepted-prefix length fell from 2.602 to 2.153 for conversation, 5.157 to 4.956 for mathematics, and 4.632 to 4.177 for code. The measured update-event span was roughly 0.46--0.48 ms per step. This points to an acceptance-versus-projection-cost tradeoff. Instrumented spans include launch gaps and are not an independent end-to-end speed measurement.
 
-\textbf{Reproducibility.} \href{https://github.com/angelinaquan/adaptive-verification-for-speculative-decoding}{Code, plans, raw results, and analyzers}. W\&B audits: \href{https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/vxw4i4v4}{batch 32}, \href{https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/az4k5l1i}{batch 64}, \href{https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/etci0731}{draft-configuration screen}. The last screen's best tested cheap adaptive configuration gained only 0.052\% over its best tested fixed configuration.
+\textbf{Pending evidence.} At this report's live status check on November 14, job 3055496 was running and its audit 3055500 was pending. It compares native width 7, prompt-only 16,384, recency 16,384, and recency 4,096 on the existing 48-prompt workload. No result is included here. The source prior has only 5,738 observed token types, so its 16,384-token source initialization includes 10,646 zero-frequency fill entries. This is a coverage diagnostic, not a large-corpus frequency baseline or a novel algorithm.
 
-\begin{thebibliography}{9}\small
+\textbf{A defensible final comparison.} Freeze the candidate, vocabulary budget, width, and update rule using validation data. Compare with independently tuned native fixed/adaptive decoding and matched prompt/recency controls on fresh prompts. Include ordered domain shifts if claiming online adaptation. Charge selection, gathering, and update costs; report tokens/s, acceptance, and per-domain results. For online methods, score predictions before feedback and resample whole independent streams rather than treating dependent tokens or batches as independent. Repeated prompt timing alone cannot establish a new-workload benefit.
+
+\textbf{Proposed method versus established result.} Our method proposal is prefix-loss-weighted vocabulary selection. Its mathematical motivation and implementation are concrete, but its completed static experiments are negative. Online recency is a prior-inspired baseline, not a new contribution. The strongest expanded positive result currently remains the modest verification-cost ablation. The honest project conclusion is that improved calibration or source-fit prefix coverage does not automatically produce faster decoding; acceptance and runtime overhead must be evaluated jointly.
+
+\textbf{Reproducibility.} \href{https://github.com/angelinaquan/adaptive-verification-for-speculative-decoding}{Repository: code, plans, raw results, and analyzers}. W\&B audit runs: \href{https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/vxw4i4v4}{expanded batch 32}; \href{https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/az4k5l1i}{expanded batch 64}; \href{https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/dij1tz6j}{static vocabulary}; \href{https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/qpv8opau}{prompt vocabulary}; \href{https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/amrk97ic}{batch-8 oracle}; \href{https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/xp0unh2g}{online recency}; \href{https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/gkx5aht9}{acceptance diagnostic}. Completed v54--v59 analyses were independently recomputed locally and matched the remote summaries.
+\newpage
+\begin{thebibliography}{10}\small
 \bibitem{leviathan} Leviathan et al. \href{https://arxiv.org/abs/2211.17192}{Fast Inference from Transformers via Speculative Decoding}. ICML, 2023.
 \bibitem{specdec} Huang et al. \href{https://arxiv.org/abs/2405.19715}{SpecDec++: Boosting Speculative Decoding via Adaptive Candidate Lengths}. COLM, 2025.
 \bibitem{bandit} Hou et al. \href{https://proceedings.mlr.press/v267/hou25h.html}{BanditSpec: Adaptive Speculative Decoding via Bandit Algorithms}. ICML, 2025.
@@ -117,5 +137,6 @@ These are optimistic source-fit statistics, not held-out acceptance or speed res
 \bibitem{vocabtrim} Goel et al. \href{https://arxiv.org/abs/2506.22694}{VocabTrim: Vocabulary Pruning for Efficient Speculative Decoding in LLMs}. 2025.
 \bibitem{nanospec} Chen et al. \href{https://arxiv.org/abs/2605.26444}{NanoSpec: Accelerating Speculative Decoding using Minimalist In-Context Vocabularies}. 2026.
 \bibitem{evospec} Zhang et al. \href{https://arxiv.org/abs/2605.27390}{EvoSpec: Evolving Speculative Decoding via Real-Time Vocabulary and Parameter Adaptation}. 2026.
+\bibitem{specvocab} Williams et al. \href{https://arxiv.org/abs/2602.13836}{Speculative Decoding with a Speculative Vocabulary}. Findings of ACL, 2026.
 \end{thebibliography}
 \end{document}
