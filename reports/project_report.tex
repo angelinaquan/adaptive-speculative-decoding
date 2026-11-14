@@ -1,0 +1,136 @@
+\documentclass[10pt]{article}
+\usepackage[margin=0.85in]{geometry}
+\usepackage{amsmath,amssymb,graphicx,booktabs,tabularx,array,hyperref}
+\hypersetup{colorlinks=true,urlcolor=blue}
+\title{Confidence and Cost Models for Adaptive Speculative Decoding\\\large Literature, method, baselines, and experimental results}
+\author{Angelina Quan}
+\date{November 14, 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+We test a small change to the cost model of an existing adaptive speculative-decoding scheduler: retain measured target-verification costs instead of their monotone envelope. Two expanded studies show modest throughput gains over a globally tuned fixed verification width and native adaptive verification. At batch 64, the gains are 2.56\% and 3.17\%, respectively. Improvement over stronger, prespecified domain-specific fixed widths remains inconclusive. These results support a cost-model ablation in one serving configuration; they do not establish a new scheduler or a benefit from online confidence calibration.
+\end{abstract}
+\section{Research question and contribution}
+The original proposal asked whether online calibration could make a released drafter's confidence estimates more useful after workload shifts from conversation to mathematics or code. This requires two separate improvements: better probability predictions and better verification decisions after accounting for update overhead. Our calibration pilots did not establish a useful end-to-end speed gain. We therefore report that limitation alongside a narrower positive result: replacing a smoothed target-cost table with measured costs can improve the existing scheduler's throughput.
+
+The method supported by the completed experiments is \textbf{measured-cost adaptive verification}. It is a small modification to vLLM's DSpark implementation, not a new drafter, sampler, or allocation algorithm. The contribution is a controlled empirical study of this modification, including tuned baselines, repeated engine sessions, output checks, and a regime where the modification loses. The original online-calibration hypothesis remains unconfirmed.
+
+\section{Related work}
+\paragraph{Speculative decoding.}
+Leviathan, Kalman, and Matias~\cite{leviathan} establish draft-and-verify decoding that preserves the target distribution under the algorithm's assumptions. This is the foundation of our implementation, not our contribution. In this report, the completed speed experiments use greedy decoding and enforce token equality against ordinary decoding; those checks are not a general proof for stochastic generation.
+
+\paragraph{Adaptive candidate lengths.}
+SpecDec++~\cite{specdec} models candidate-length choice as an MDP and uses a trained acceptance predictor to guide stopping. BanditSpec~\cite{bandit} treats speculative configuration selection as online bandit learning. These methods establish that confidence-guided lengths and online configuration selection already have substantial prior work. Neither is reproduced as a matched serving baseline in our final tables, so we make no superiority claim against them.
+
+\paragraph{DSpark and the closest implementation baseline.}
+DSpark~\cite{dspark} combines a parallel backbone with a lightweight sequential component and schedules verification using estimated prefix survival and engine throughput profiles. Its released drafter and confidence head are reused here. The vLLM implementation~\cite{vllmav} allocates a shared verification budget using confidence scores and a profiled cost model. Its documentation explicitly discusses nonmonotonic measurements and intentionally applies a monotone envelope. Our experiment tests removing that envelope inside the captured-graph range; it does not discover hardware-dependent costs or confidence scheduling.
+
+\paragraph{Online probability calibration.}
+Gupta and Ramdas~\cite{ops} introduce Online Platt Scaling (OPS), which fits a logistic mapping online, and tracking-based calibeating (TOPS), which uses historical outcome frequencies in forecast bins. These are relevant statistical controls for the original proposal. Their paper distinguishes TOPS from randomized variants with stronger adversarial calibration guarantees; such guarantees should not be transferred automatically to our structured prefix forecasts. vLLM's later online estimator~\cite{online} also fits acceptance estimates from draft-logit features and verification feedback for drafters without confidence heads. Thus, merely updating an acceptance estimate online is not a sufficient novelty claim.
+
+\paragraph{Recent joint scheduling.}
+ForeSpark~\cite{forespark}, released November 10, 2026, predicts acceptance before drafting and jointly schedules draft and verification budgets. It is particularly relevant because our intervention changes verification decisions after drafting and leaves draft generation unchanged. We do not reproduce its system or compare its published speedup numbers to ours: models, serving objectives, and configurations differ.
+
+Taken together, this literature supports a narrow positioning: our report studies the practical sensitivity of an existing confidence scheduler to its cost table, while recording why the initial calibration intervention did not produce a clear speed benefit. It does not establish a first-of-its-kind or state-of-the-art result.
+
+\section{Proposed method}
+\subsection{Forecasts and the original calibration proposal}
+For request $i$, let $c_{i,k}$ estimate conditional acceptance at draft position $k$, and define the prefix-survival forecast and outcome
+\[
+ S_{i,k}=\prod_{j=1}^{k}c_{i,j},\qquad
+ Y_{i,k}=\mathbf{1}\{\text{the first $k$ draft tokens pass verification}\}.
+\]
+A candidate calibration model from the proposal is
+\[
+ \widetilde c_{t,k}=\sigma(z_{t,k}/T_k+b_t),\qquad
+ \widetilde S_{t,k}=\prod_{j=1}^{k}\widetilde c_{t,j},
+\]
+where $T_k>0$ is fitted on source prompts and $b_t$ is updated from past feedback. Predictions must be scored before their labels update the model. Only observed prefix labels may be used: an unverified suffix is not automatically a rejection. A verified earlier rejection does determine later joint-prefix labels to be zero. This formulation describes the original candidate, not a component responsible for the final speed gains.
+
+Brier loss $K^{-1}\sum_k(\widetilde S_{t,k}-Y_{t,k})^2$ measures probability prediction quality, not calibration alone. Reliability plots and within-domain comparisons are needed to separate miscalibration from intrinsic difficulty. Independent per-position OPS/TOPS forecasts can violate prefix monotonicity, so any projection is a separate modification requiring evaluation.
+
+\subsection{The implemented cost-table intervention}
+Keep the native confidence head, budget selector, prefix allocator, sampler, and model weights fixed. Profile the target's forward time at sizes $n_1<\cdots<n_J$, and compute the median $m_j$ at each size. Write $j(n)=\min\{j:n_j\geq n\}$, capped at $J$. Within the graph-capture range, the native and proposed tables are
+\[
+ C_{\rm native}(n)=\max_{\ell\leq j(n)}m_\ell,
+ \qquad C_{\rm measured}(n)=m_{j(n)}.
+\]
+The draft-cost table and all target-cost entries beyond the capture limit are unchanged. This is exactly the intervention in \texttt{cost\_only\_v26.py}. Profiling occurs before timed generation; the method introduces no online fitting or per-step diagnostic logging.
+
+Conceptually, the existing scheduler balances expected committed tokens against predicted step time. A schematic objective is
+\[
+ B^*\in\arg\max_B
+ \frac{N_{\rm sampling}+\sum_{(i,k)\in A(B)}S_{i,k}}
+ {\widehat C_{\rm step}(B;\text{current state})},
+\]
+where $A(B)$ contains the selected prefix slots. This equation explains the tradeoff; our code does not replace the native objective or allocation logic. It changes only the target-cost component of the denominator. CPU budget sizing and GPU allocation retain the implementation's existing timing of confidence inputs.
+
+The intuition is that smoothing can hide a cheaper execution shape and therefore change a discrete budget choice. Removing smoothing can also expose profiling noise or choose a shape whose startup measurement transfers poorly to the workload. The experiment must test both possibilities. Shorter verification does not imply less drafting work for the parallel drafter, because the draft-generation path remains unchanged.
+
+\section{Baselines and comparison scope}
+\begin{center}\small
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{.24\linewidth}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+Baseline & What it controls & Evidence in this report \\
+\midrule
+Ordinary decoding & Target model without speculative drafts & Reference tokens for all speed gates; contextual throughput in batch-32 study. \\
+Globally tuned fixed width & Best width from 1--7 on separate exploratory prompts & Expanded throughput comparator; width 7 at batches 32/64, width 3 in batch-128 screen. \\
+Domain-specific fixed widths & Stronger comparator allowed prior domain identity & Width 3 for chat and 7 for math/code, frozen before the batch-64 test. \\
+Native adaptive verification & Same released head and scheduler, native smoothed cost table & Direct ablation baseline in both expanded studies. \\
+Frozen / online calibration & Whether updating confidence adds value & Separate serving pilots; not the cause of expanded cost-model gains. \\
+OPS / TOPS & Published online probability-calibration controls & Implementation in repository; not a completed expanded throughput comparison here. \\
+SpecDec++, BanditSpec, ForeSpark & Related adaptive speculation systems & Literature comparisons only; no matched reproduction or performance ranking. \\
+\bottomrule
+\end{tabularx}\end{center}
+The domain-specific baseline is assembled from the measured timings of its prespecified widths on each domain. It is not a deployable system that infers unknown domains for free, nor a width selected after seeing test timings. It is a deliberately strong comparator with known benchmark domain labels.
+
+For OPS/TOPS, the repository implements independent binary calibrators per prefix position and records paper-versus-released-code initialization conventions. These statistical implementations should not be confused with an end-to-end serving benchmark. A claim that our method beats OPS/TOPS in throughput would require a separate matched integration and measurement, which the final tables do not provide.
+
+\section{Experimental setup}
+We use Qwen3-4B with the released DSpark Qwen3-4B block-7 drafter, vLLM 0.33.0, and one H200 GPU. Decoding is greedy with a 128-token output cap. All methods use FP32 tensors, batch-invariant Triton attention, disabled prefix caching, and a 2,048-token context limit. Strict IEEE arithmetic throughout the kernel stack is not established.
+
+The batch-32 study uses 384 prompts; the batch-64 study uses 768 different prompts. Each has equal numbers of conversation, mathematics, and code prompts from Alpaca, GSM8K, and MBPP. The latter study expands MBPP from the sanitized subset to the full official test split, excluding previously used task IDs and normalized text. Prompts were unused at the launch of each expanded study. Subsequent reuse does not create additional independent test data.
+
+Fixed widths are selected on separate exploratory sweeps over widths 1--7. Global width 7 is selected for both studies. The stronger batch-64 comparator uses width 3 for conversation and width 7 for mathematics and code, selected before the expanded run. Each study has four balanced engine orders and two timed passes per session after two full passes for correctness and warmup. Every output in every pass must match the ordinary-decoding reference. Initialization and profiling are outside the timed generation calls; gains describe warmed-up generation throughput, not startup latency.
+\section{Results}
+\subsection{Exploratory screen and independent expansion}
+The batch-64 exploratory sweep on 384 reused prompts tested all fixed widths 1--7. Measured costs improved throughput by 4.68\% over the best global fixed width and 4.98\% over native adaptive verification. Its unbalanced engine order and reused prompts made this a selection experiment, not a confirmed speedup. The method and comparator choices were then frozen for the separate 768-prompt expanded study. The smaller effect below is the result to report.
+
+\subsection{Expanded cost-model comparisons}
+\begin{center}
+\resizebox{\linewidth}{!}{\input{cost_evidence_table.tex}}
+\end{center}
+Intervals are paired, domain-stratified batch-and-round bootstrap intervals (10,000 draws). Repeats stay together; identical prompt groups and rounds are resampled across methods. Gain is $100(T_b/T_m-1)$, where $T_b$ and $T_m$ are aggregate baseline and measured-cost generation times for identical output-token counts. It is not the percentage reduction in latency.
+
+All output checks passed in all 16 sessions in each study. At batch 64, measured-cost throughput is 6,250.80 tokens/s, versus 6,095.03 for global fixed width 7 and 6,058.87 for native adaptive verification. The domain-specific comparator achieves 6,174.37 tokens/s. Its interval crosses zero. The prespecified 5\% mixed-workload target failed. Earlier exploratory chat gains around 10--15\% did not reproduce at that magnitude against stronger baselines.
+\begin{center}
+\includegraphics[width=.78\linewidth]{../docs/figures/cost_v38_confirmation.pdf}
+\end{center}
+\subsection{Calibration pilots}
+With measured costs at batch 64, the matched-extension calibration pilot (v32) found online updates 0.24\% slower than frozen source calibration, with negative differences in all three rounds. Online updates improved only 0.04\% over identity confidence. These were exploratory measurements on reused prompts, not fresh confirmations. An earlier pilot (v18) also found negligible benefit over frozen calibration. This does not prove that calibration cannot help elsewhere; it shows that the tested calibration approach did not produce our speedup.
+
+\newpage
+\section{Interpretation and limits}
+The supported finding is a modest benefit from changing the target-cost table in this configuration. Online calibration pilots did not show a meaningful additional speed gain; these results must not be attributed to calibration. Domain findings are descriptive: batch-64 gains against the prespecified domain baseline are 2.12\% for conversation, 0.25\% for mathematics, and 1.05\% for code.
+
+There are only four prompt batches per domain at batch 64 and four engine rounds. Intervals do not cover uncertainty across devices, model pairs, backends, or workload families, and are not adjusted for the broader exploratory search. A targeted batch-128 sweep tested all fixed widths 1--7 on 384 reused prompts. All output checks passed. Measured costs improved 2.09\% over native adaptive but lost 4.10\% to the best fixed width (3). Because it failed the predeclared positive-comparison gate, no larger batch-128 run was launched. These unbalanced-order exploratory estimates do not establish significance.
+\section{Reproducibility}
+The repository contains frozen plans, manifests, raw outputs and timings, source hashes, and analyzers. Independent analysis reproduced both expanded summaries and reconstructed all eight batch-64 adaptive target-cost tables. \texttt{scripts/summarize\_cost\_evidence.py} generates the table from audited results.
+
+\noindent\href{https://github.com/angelinaquan/adaptive-verification-for-speculative-decoding}{Code and raw results}\quad
+\href{https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/vxw4i4v4}{Batch-32 audit}\quad
+\href{https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/az4k5l1i}{Batch-64 audit}
+\section{Conclusion}
+The completed contribution is a reproducible cost-table ablation: retaining measured target-verification costs yields modest throughput gains over native adaptive verification and globally tuned fixed widths at batches 32 and 64. Improvement over domain-specific fixed widths is unresolved, and the batch-128 screen loses to tuned fixed width. Online calibration remains an unconfirmed part of the original proposal. These qualifications are part of the result, not omitted failures.
+
+\begin{thebibliography}{9}\small
+\bibitem{leviathan} Y. Leviathan, M. Kalman, and Y. Matias. \href{https://arxiv.org/abs/2211.17192}{Fast Inference from Transformers via Speculative Decoding}. ICML, 2023.
+\bibitem{specdec} K. Huang, X. Guo, and M. Wang. \href{https://arxiv.org/abs/2405.19715}{SpecDec++: Boosting Speculative Decoding via Adaptive Candidate Lengths}. arXiv:2405.19715, revised 2025.
+\bibitem{bandit} Y. Hou et al. \href{https://proceedings.mlr.press/v267/hou25h.html}{BanditSpec: Adaptive Speculative Decoding via Bandit Algorithms}. ICML, 2025.
+\bibitem{dspark} X. Cheng et al. \href{https://arxiv.org/abs/2607.05147}{DSpark: Confidence-Scheduled Speculative Decoding with Semi-Autoregressive Generation}. arXiv:2607.05147, 2026.
+\bibitem{vllmav} vLLM Team. \href{https://vllm.ai/blog/2026-08-14-dspark-adaptive-verification}{Adaptive Verification in vLLM: DSpark confidence-scheduled verification}. Engineering documentation, August 14, 2026.
+\bibitem{ops} C. Gupta and A. Ramdas. \href{https://proceedings.mlr.press/v202/gupta23c.html}{Online Platt Scaling with Calibeating}. ICML, 2023. TOPS: Section 3.1, Eq. (11).
+\bibitem{online} G. Delfin. \href{https://vllm.ai/blog/2026-10-14-adaptive-verification-online-estimator}{Adaptive Verification Without a Confidence Head}. vLLM engineering documentation, October 14, 2026.
+\bibitem{forespark} J. Song et al. \href{https://arxiv.org/abs/2611.13442}{ForeSpark: Joint Draft and Verification Budget Scheduling for Parallel Speculative Decoding}. arXiv:2611.13442, November 10, 2026.
+\end{thebibliography}
+\end{document}

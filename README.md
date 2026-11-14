@@ -11,7 +11,7 @@ Experiments by **Angelina Quan** on confidence-based verification lengths for an
 
 Brackets give 95% paired batch-and-round bootstrap intervals. Every output matched its ordinary-decoding reference across all 16 sessions in each study. At batch 64, improvement over the stronger domain-specific fixed baseline is **+1.24% [−1.20, 3.94]**, which is not statistically established. The larger 5% target and exploratory 10–15% effects were not confirmed.
 
-[Two-page results report](output/pdf/cost_study.pdf) · [Editable LaTeX](reports/cost_study.tex) · [Report-ready CSV](reports/cost_evidence.csv) · [LaTeX table](reports/cost_evidence_table.tex) · [Claims and limitations](reports/cost_evidence.json) · [Table-generation script](scripts/summarize_cost_evidence.py).
+[Full report: literature, method, baselines, and results](output/pdf/project_report.pdf) · [Report LaTeX](reports/project_report.tex) · [Two-page results report](output/pdf/cost_study.pdf) · [Editable LaTeX](reports/cost_study.tex) · [Report-ready CSV](reports/cost_evidence.csv) · [LaTeX table](reports/cost_evidence_table.tex) · [Claims and limitations](reports/cost_evidence.json) · [Table-generation script](scripts/summarize_cost_evidence.py).
 
 **Completed scope:** the two expanded studies above are packaged in the results report. The targeted batch-128 sweep passed all output checks but did not qualify for expansion: measured costs gained **2.09%** over native adaptive and lost **4.10%** against the best fixed width (3). The sweep reused 384 prompts and had unbalanced engine order, so these are exploratory estimates. All widths 1–7 were tested; the negative comparison is retained. [Batch-128 results](results/v48/). New stochastic and calibration branches remain deferred.
 
