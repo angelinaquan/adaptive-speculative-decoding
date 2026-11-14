@@ -1,0 +1,59 @@
+{
+  "scope": "Prespecified confirmation of nativewidth3vs8 atbatch8and64.768unusedprompts acrosschat/math/code. Empiricaltuningstudy, notnewalgorithm orcalibrationgain.",
+  "manifest_sha256": "c566cdb0fef7a993133220996b8ad1f926c3af567ec98e8e600171a928b5b5bf",
+  "batch_sizes": [
+    8,
+    64
+  ],
+  "widths": [
+    3,
+    8
+  ],
+  "orders": [
+    [
+      "b8w3",
+      "b8w8",
+      "b64w3",
+      "b64w8"
+    ],
+    [
+      "b8w8",
+      "b8w3",
+      "b64w8",
+      "b64w3"
+    ],
+    [
+      "b64w3",
+      "b64w8",
+      "b8w3",
+      "b8w8"
+    ],
+    [
+      "b64w8",
+      "b64w3",
+      "b8w8",
+      "b8w3"
+    ]
+  ],
+  "warmup_passes": 2,
+  "timed_passes": 2,
+  "cap": 64,
+  "selection": "Widths locked fromv69/v70/v72beforefreshoutputs; no selectiononconfirmationprompts.",
+  "primary": "Atbatch64 native3 gains>10% throughputover native8 andpairedbootstrap95%lowerbound>0. Report whetherlowerboundalsoexceeds10%.",
+  "secondary": "Atbatch8 native8 beatsnative3; reportload-by-widthlogtimeinteraction. No claimglobaloptimalityfromtwowidthconfirmation.",
+  "uncertainty": "10000 paired bootstrapdraws:resample4engine rounds and4 contiguous64promptblocks perdomain, preserving allmethodsandbothloads. b8microbatches summedwithin64promptblock. Repeatskepttogether. OneGPU/modelpair.",
+  "gates": [
+    "Everywarmup/timedoutputexactmatchesfreshAR",
+    "FreshARoutputs agreeacrossbatchsizes",
+    "Prompttext/hash andMBPPtaskID exclusionaudit",
+    "Source/configurationandoutputhashaudit"
+  ],
+  "cache": "Isolatedperwidth caches; b64reusepreviouslyvalidatedv72sameconfiguration; b8separatefreshv76caches. Startup/warmupexcluded.",
+  "mbpp_scope": "All officialMBPP partitions eligible, excludingpreviouslyused task IDs; thisisfreshinference-workload evaluation, notclaimofheldoutmodeltrainingdata. Report expandedpool.",
+  "limitations": [
+    "Configurationcomparison, notonlinepolicy ornovelalgorithm.",
+    "Offlinecombiningperloadtimings excludesengine-switching costs; do notclaimdeployableloadrouter speed.",
+    "Newtoourruns doesnotmean unseeninreleasedmodeltraining.",
+    "Report everydomain,load,round andnegativeoutcome."
+  ]
+}
