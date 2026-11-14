@@ -1,0 +1,63 @@
+{
+  "passed": true,
+  "scope": "Prespecified confirmation of nativewidth3vs8 atbatch8and64.768unusedprompts acrosschat/math/code. Empiricaltuningstudy, notnewalgorithm orcalibrationgain.",
+  "throughputs": {
+    "b8w3": 1240.3146048600754,
+    "b8w8": 1671.4054360648558,
+    "b64w3": 9146.792888024402,
+    "b64w8": 7049.684887407675
+  },
+  "comparisons": {
+    "batch8_width8_vs3_percent": {
+      "estimate": 34.75657139854555,
+      "paired_bootstrap_95": [
+        33.01267226113316,
+        36.49221762862666
+      ]
+    },
+    "batch64_width3_vs8_percent": {
+      "estimate": 29.747542395301018,
+      "paired_bootstrap_95": [
+        26.81052893390557,
+        32.61120852456823
+      ]
+    },
+    "log_time_interaction": {
+      "estimate": 0.5587201847499165,
+      "paired_bootstrap_95": [
+        0.5402582197174548,
+        0.5777238232713664
+      ]
+    }
+  },
+  "round_gains_percent": {
+    "8": [
+      34.330204758652,
+      35.06856563028633,
+      35.13507458432923,
+      34.492602362519165
+    ],
+    "64": [
+      30.55851668772167,
+      30.428993936491988,
+      28.480539530879213,
+      29.54135158270066
+    ]
+  },
+  "domains": {
+    "b8_alpaca": 24.597937212493616,
+    "b8_gsm8k": 53.82434001073699,
+    "b8_mbpp": 32.596042450756535,
+    "b64_alpaca": 37.02627374944789,
+    "b64_gsm8k": 19.979828905653928,
+    "b64_mbpp": 30.54723656711871
+  },
+  "primary_pass": true,
+  "limitations": [
+    "Configurationcomparison, notonlinepolicy ornovelalgorithm.",
+    "Offlinecombiningperloadtimings excludesengine-switching costs; do notclaimdeployableloadrouter speed.",
+    "Newtoourruns doesnotmean unseeninreleasedmodeltraining.",
+    "Report everydomain,load,round andnegativeoutcome."
+  ],
+  "bootstrap_scope": "10000 paired bootstrapdraws:resample4engine rounds and4 contiguous64promptblocks perdomain, preserving allmethodsandbothloads. b8microbatches summedwithin64promptblock. Repeatskepttogether. OneGPU/modelpair."
+}

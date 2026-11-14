@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "sessions": 18,
+  "batch_output_checks": 3888,
+  "local_remote_summary_equal": true,
+  "slurm_status": "COMPLETED",
+  "slurm_exit": "0:0",
+  "elapsed": "00:44:05",
+  "primary_ci_lower_exceeds_10_percent": true,
+  "limitations": "One GPU/model pair; four engine rounds, twelve 64-prompt blocks. CI does not cover hardware/model variation. Widths 3 and 8 only; no online-controller or global-optimum claim."
+}

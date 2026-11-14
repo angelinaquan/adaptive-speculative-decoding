@@ -2,6 +2,25 @@
 
 Experiments by **Angelina Quan** on confidence-based verification lengths for an open-weight LLM.
 
+## Latest: confirmed batch-dependent draft-width effects (v76)
+
+On **768 fresh-to-our-runs prompts**, native DFlash2 width 3 was **29.75% faster than width 8 at batch 64**. At batch 8 the direction reversed: width 8 was **34.76% faster than width 3**. This supports a practical configuration-tuning study; it is not a new adaptive algorithm or a calibration gain.
+
+| Batch | Width 3 tokens/s | Width 8 tokens/s | Faster configuration | Throughput gain, 95% paired bootstrap CI |
+|---|---:|---:|---|---:|
+| 8 | 1,240.31 | 1,671.41 | Width 8 | **34.76% [33.01, 36.49]** |
+| 64 | 9,146.79 | 7,049.68 | Width 3 | **29.75% [26.81, 32.61]** |
+
+All four engine orders agreed. All 18 sessions completed; **3,888 batch-output checks** matched ordinary greedy decoding, including warmups. Ordinary-decoding outputs agreed across batch sizes. Independent local analysis reproduced the remote summary exactly. The protocol used two warmup and two timed workload passes per session, Qwen3-4B with the released DFlash2 drafter, BF16, a 64-token generation cap, and one H200. Widths were fixed before inspecting these prompts.
+
+The batch-64 benefit was 37.03% on Alpaca, 19.98% on GSM8K, and 30.55% on MBPP. At batch 8, width 8 gained 24.60%, 53.82%, and 32.60%, respectively. Bootstrap intervals resample engine rounds and contiguous 64-prompt blocks within domains; they do not quantify generalization across GPUs or model pairs. MBPP includes previously unused tasks from all official partitions; freshness to our experiments does not imply absence from model training data.
+
+Only widths 3 and 8 were confirmed here. Width 3 was selected from the earlier native batch-64 width sweep; these results do not establish global optimality or a gain over the best batch-specific fixed configuration. This is offline batched inference, not a measured live load-switching policy. Batch-dependent draft selection and lookup tables are established prior work; see the literature review for attribution and the proposed profiling-reliability/transfer study.
+
+[Results, compressed raw sessions, and audit](results/v76/) · [Frozen protocol](experiments/load_v76_plan.json) · [W&B](https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/0arn12x7) · [Literature and project framing](reports/batch_width_related_work.md).
+
+## Earlier verification-cost and calibration studies
+
 **Expanded result:** keeping the measured verification-cost curve improves throughput over globally tuned fixed widths and native adaptive verification in two balanced studies. The gains are modest; online calibration did not cause them.
 
 | Batch | Prompts | vs tuned global fixed | vs native adaptive |

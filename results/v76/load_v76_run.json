@@ -1,0 +1,23 @@
+{
+  "url": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/0arn12x7",
+  "statuses": {
+    "load_v76_b64_w3_r1": "completed",
+    "load_v76_b64_w8_r2": "completed",
+    "load_v76_b8_w3_r2": "completed",
+    "load_v76_b8_w8_r1": "completed",
+    "load_v76_b8_w3_r3": "completed",
+    "load_v76_b8_w8_r0": "completed",
+    "load_v76_b64_w0_r-1": "completed",
+    "load_v76_b64_w3_r0": "completed",
+    "load_v76_b64_w8_r3": "completed",
+    "load_v76_b8_w3_r1": "completed",
+    "load_v76_b8_w8_r2": "completed",
+    "load_v76_b64_w3_r2": "completed",
+    "load_v76_b64_w8_r1": "completed",
+    "load_v76_b64_w3_r3": "completed",
+    "load_v76_b64_w8_r0": "completed",
+    "load_v76_b8_w0_r-1": "completed",
+    "load_v76_b8_w3_r0": "completed",
+    "load_v76_b8_w8_r3": "completed"
+  }
+}

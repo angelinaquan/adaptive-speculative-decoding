@@ -23,7 +23,7 @@ The course assignment permits empirical questions and proposed initial experimen
 - v70: at batch 64, forced width 3 was 16.38% faster than forced width 8 on 192 reused prompts. This was exploratory configuration tuning.
 - v72: the native width sweep recovered the benefit. Custom forced width 3 differed from native width 3 by only +0.056%. There is no demonstrated custom-runtime advantage.
 - v69: width 8 won the small batch-8 forced-width screen. This motivates checking a batch-by-width interaction; it does not establish an optimal width across workloads.
-- v76: the frozen confirmation protocol uses 768 fresh-to-our-runs prompts, native widths 3 and 8, batch sizes 8 and 64, four engine orders, two warmup passes and two timed passes. Results must pass the complete output/provenance audit before promotion. This two-width comparison cannot establish global optimality.
+- v76: the frozen confirmation completed on 768 fresh-to-our-runs prompts, native widths 3 and 8, batch sizes 8 and 64, four engine orders, two warmup passes and two timed passes. Width 3 gained **29.75% [26.81%, 32.61%]** at batch 64; width 8 gained **34.76% [33.01%, 36.49%]** at batch 8. All 18 sessions and 3,888 batch-output checks passed; local reanalysis exactly matched the remote summary. Intervals are paired bootstrap intervals over rounds and within-domain prompt blocks on one GPU/model pair. This two-width comparison cannot establish global optimality. [Results](../results/v76/) and [W&B](https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/0arn12x7).
 
 These experiments concern offline batched inference. Batch size is not a substitute for a measured arrival-rate workload, and combining timings from separately initialized engines omits switching costs.
 
