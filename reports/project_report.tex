@@ -1,136 +1,125 @@
 \documentclass[10pt]{article}
 \usepackage[margin=0.85in]{geometry}
-\usepackage{amsmath,amssymb,graphicx,booktabs,tabularx,array,hyperref}
-\hypersetup{colorlinks=true,urlcolor=blue}
-\title{Confidence and Cost Models for Adaptive Speculative Decoding\\\large Literature, method, baselines, and experimental results}
+\usepackage{amsmath,amssymb,booktabs,tabularx,array,hyperref}
+\hypersetup{colorlinks=true,urlcolor=blue,citecolor=blue,pdftitle={Reliable Draft-Length Selection for Batched Speculative Decoding},pdfauthor={Angelina Quan}}
+\setlength{\parskip}{4pt}
+\setlength{\parindent}{0pt}
+\title{Reliable Draft-Length Selection\\for Batched Speculative Decoding}
 \author{Angelina Quan}
 \date{November 14, 2026}
 \begin{document}
 \maketitle
 \begin{abstract}
-We test a small change to the cost model of an existing adaptive speculative-decoding scheduler: retain measured target-verification costs instead of their monotone envelope. Two expanded studies show modest throughput gains over a globally tuned fixed verification width and native adaptive verification. At batch 64, the gains are 2.56\% and 3.17\%, respectively. Improvement over stronger, prespecified domain-specific fixed widths remains inconclusive. These results support a cost-model ablation in one serving configuration; they do not establish a new scheduler or a benefit from online confidence calibration.
+How much profiling is needed to select a fast draft length, and does that choice transfer across prompt domains? We propose an empirical study of this question using a released parallel drafter. A completed confirmation experiment establishes substantial headroom for configuration tuning: on 768 prompts not used in our earlier runs, native draft length 3 improves throughput over length 8 by 29.75\% at batch size 64 (95\% paired bootstrap interval: 26.81--32.61\%). At batch size 8, length 8 instead improves throughput over length 3 by 34.76\% (33.01--36.49\%). The direction holds across conversation, mathematics, and code prompts and all four engine orders. All outputs match ordinary greedy decoding. These results confirm a batch-dependent configuration effect on one model pair and GPU; the proposed profiling-budget and cross-domain selection experiments remain to be completed.
 \end{abstract}
-\section{Research question and contribution}
-The original proposal asked whether online calibration could make a released drafter's confidence estimates more useful after workload shifts from conversation to mathematics or code. This requires two separate improvements: better probability predictions and better verification decisions after accounting for update overhead. Our calibration pilots did not establish a useful end-to-end speed gain. We therefore report that limitation alongside a narrower positive result: replacing a smoothed target-cost table with measured costs can improve the existing scheduler's throughput.
 
-The method supported by the completed experiments is \textbf{measured-cost adaptive verification}. It is a small modification to vLLM's DSpark implementation, not a new drafter, sampler, or allocation algorithm. The contribution is a controlled empirical study of this modification, including tuned baselines, repeated engine sessions, output checks, and a regime where the modification loses. The original online-calibration hypothesis remains unconfirmed.
+\section{Research question and motivation}
+Speculative decoding drafts several tokens and checks them with a target model. A longer draft can amortize target-model work, but it also spends computation on tokens that may be rejected. Batch size changes that tradeoff: when many requests are processed together, additional speculative work can become more costly. This explains why a single draft length may perform poorly across operating conditions, although it does not by itself predict the best length on a particular runtime.
 
-\section{Related work}
-\paragraph{Speculative decoding.}
-Leviathan, Kalman, and Matias~\cite{leviathan} establish draft-and-verify decoding that preserves the target distribution under the algorithm's assumptions. This is the foundation of our implementation, not our contribution. In this report, the completed speed experiments use greedy decoding and enforce token equality against ordinary decoding; those checks are not a general proof for stochastic generation.
+Our research question is: \textbf{Can a small profiling set reliably recover most of the throughput benefit of draft-length tuning, and when does the selected length transfer across domains?} We propose to measure the tradeoff between profiling cost and held-out performance, rather than introduce another acceptance head. The completed experiment supplies the motivation and a reproducible baseline. It does not yet measure the sample efficiency of a selector.
 
-\paragraph{Adaptive candidate lengths.}
-SpecDec++~\cite{specdec} models candidate-length choice as an MDP and uses a trained acceptance predictor to guide stopping. BanditSpec~\cite{bandit} treats speculative configuration selection as online bandit learning. These methods establish that confidence-guided lengths and online configuration selection already have substantial prior work. Neither is reproduced as a matched serving baseline in our final tables, so we make no superiority claim against them.
+\section{Related work and positioning}
+\textbf{Foundations.} Leviathan et al.~\cite{leviathan} describe exact speculative sampling. Our measurements use greedy decoding and require token equality against an ordinary-decoding reference. That finite test is not a proof of stochastic distribution equivalence.
 
-\paragraph{DSpark and the closest implementation baseline.}
-DSpark~\cite{dspark} combines a parallel backbone with a lightweight sequential component and schedules verification using estimated prefix survival and engine throughput profiles. Its released drafter and confidence head are reused here. The vLLM implementation~\cite{vllmav} allocates a shared verification budget using confidence scores and a profiled cost model. Its documentation explicitly discusses nonmonotonic measurements and intentionally applies a monotone envelope. Our experiment tests removing that envelope inside the captured-graph range; it does not discover hardware-dependent costs or confidence scheduling.
+\textbf{Batch-dependent lengths.} Su et al.~\cite{su} directly study the interaction between batching and speculation length. They profile configurations and build a batch-size-to-length mapping. Thus both the qualitative effect and a profiling lookup table precede this project. TurboSpec~\cite{turbo} combines execution profiling with feedback-based runtime speculation control. Our offline batch experiment does not reproduce its live-serving evaluation.
 
-\paragraph{Online probability calibration.}
-Gupta and Ramdas~\cite{ops} introduce Online Platt Scaling (OPS), which fits a logistic mapping online, and tracking-based calibeating (TOPS), which uses historical outcome frequencies in forecast bins. These are relevant statistical controls for the original proposal. Their paper distinguishes TOPS from randomized variants with stronger adversarial calibration guarantees; such guarantees should not be transferred automatically to our structured prefix forecasts. vLLM's later online estimator~\cite{online} also fits acceptance estimates from draft-logit features and verification feedback for drafters without confidence heads. Thus, merely updating an acceptance estimate online is not a sufficient novelty claim.
+\textbf{Online selection and parallel drafting.} BanditSpec~\cite{bandit} formulates configuration selection as a bandit problem and analyzes UCBSpec and EXP3Spec. ForeSpark~\cite{fore} predicts acceptance for candidate draft lengths and jointly schedules draft and verification budgets for parallel drafters. We use the ForeSpark runtime with a released DFlash2 drafter, but our confirmation uses its native fixed-width path, not its learned scheduler. Neither method is a matched empirical comparator here; we make no superiority claim against either.
 
-\paragraph{Recent joint scheduling.}
-ForeSpark~\cite{forespark}, released November 10, 2026, predicts acceptance before drafting and jointly schedules draft and verification budgets. It is particularly relevant because our intervention changes verification decisions after drafting and leaves draft generation unchanged. We do not reproduce its system or compare its published speedup numbers to ours: models, serving objectives, and configurations differ.
-
-Taken together, this literature supports a narrow positioning: our report studies the practical sensitivity of an existing confidence scheduler to its cost table, while recording why the initial calibration intervention did not produce a clear speed benefit. It does not establish a first-of-its-kind or state-of-the-art result.
-
-\section{Proposed method}
-\subsection{Forecasts and the original calibration proposal}
-For request $i$, let $c_{i,k}$ estimate conditional acceptance at draft position $k$, and define the prefix-survival forecast and outcome
-\[
- S_{i,k}=\prod_{j=1}^{k}c_{i,j},\qquad
- Y_{i,k}=\mathbf{1}\{\text{the first $k$ draft tokens pass verification}\}.
-\]
-A candidate calibration model from the proposal is
-\[
- \widetilde c_{t,k}=\sigma(z_{t,k}/T_k+b_t),\qquad
- \widetilde S_{t,k}=\prod_{j=1}^{k}\widetilde c_{t,j},
-\]
-where $T_k>0$ is fitted on source prompts and $b_t$ is updated from past feedback. Predictions must be scored before their labels update the model. Only observed prefix labels may be used: an unverified suffix is not automatically a rejection. A verified earlier rejection does determine later joint-prefix labels to be zero. This formulation describes the original candidate, not a component responsible for the final speed gains.
-
-Brier loss $K^{-1}\sum_k(\widetilde S_{t,k}-Y_{t,k})^2$ measures probability prediction quality, not calibration alone. Reliability plots and within-domain comparisons are needed to separate miscalibration from intrinsic difficulty. Independent per-position OPS/TOPS forecasts can violate prefix monotonicity, so any projection is a separate modification requiring evaluation.
-
-\subsection{The implemented cost-table intervention}
-Keep the native confidence head, budget selector, prefix allocator, sampler, and model weights fixed. Profile the target's forward time at sizes $n_1<\cdots<n_J$, and compute the median $m_j$ at each size. Write $j(n)=\min\{j:n_j\geq n\}$, capped at $J$. Within the graph-capture range, the native and proposed tables are
-\[
- C_{\rm native}(n)=\max_{\ell\leq j(n)}m_\ell,
- \qquad C_{\rm measured}(n)=m_{j(n)}.
-\]
-The draft-cost table and all target-cost entries beyond the capture limit are unchanged. This is exactly the intervention in \texttt{cost\_only\_v26.py}. Profiling occurs before timed generation; the method introduces no online fitting or per-step diagnostic logging.
-
-Conceptually, the existing scheduler balances expected committed tokens against predicted step time. A schematic objective is
-\[
- B^*\in\arg\max_B
- \frac{N_{\rm sampling}+\sum_{(i,k)\in A(B)}S_{i,k}}
- {\widehat C_{\rm step}(B;\text{current state})},
-\]
-where $A(B)$ contains the selected prefix slots. This equation explains the tradeoff; our code does not replace the native objective or allocation logic. It changes only the target-cost component of the denominator. CPU budget sizing and GPU allocation retain the implementation's existing timing of confidence inputs.
-
-The intuition is that smoothing can hide a cheaper execution shape and therefore change a discrete budget choice. Removing smoothing can also expose profiling noise or choose a shape whose startup measurement transfers poorly to the workload. The experiment must test both possibilities. Shorter verification does not imply less drafting work for the parallel drafter, because the draft-generation path remains unchanged.
-
-\section{Baselines and comparison scope}
-\begin{center}\small
-\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{.24\linewidth}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
-\toprule
-Baseline & What it controls & Evidence in this report \\
-\midrule
-Ordinary decoding & Target model without speculative drafts & Reference tokens for all speed gates; contextual throughput in batch-32 study. \\
-Globally tuned fixed width & Best width from 1--7 on separate exploratory prompts & Expanded throughput comparator; width 7 at batches 32/64, width 3 in batch-128 screen. \\
-Domain-specific fixed widths & Stronger comparator allowed prior domain identity & Width 3 for chat and 7 for math/code, frozen before the batch-64 test. \\
-Native adaptive verification & Same released head and scheduler, native smoothed cost table & Direct ablation baseline in both expanded studies. \\
-Frozen / online calibration & Whether updating confidence adds value & Separate serving pilots; not the cause of expanded cost-model gains. \\
-OPS / TOPS & Published online probability-calibration controls & Implementation in repository; not a completed expanded throughput comparison here. \\
-SpecDec++, BanditSpec, ForeSpark & Related adaptive speculation systems & Literature comparisons only; no matched reproduction or performance ranking. \\
-\bottomrule
-\end{tabularx}\end{center}
-The domain-specific baseline is assembled from the measured timings of its prespecified widths on each domain. It is not a deployable system that infers unknown domains for free, nor a width selected after seeing test timings. It is a deliberately strong comparator with known benchmark domain labels.
-
-For OPS/TOPS, the repository implements independent binary calibrators per prefix position and records paper-versus-released-code initialization conventions. These statistical implementations should not be confused with an end-to-end serving benchmark. A claim that our method beats OPS/TOPS in throughput would require a separate matched integration and measurement, which the final tables do not provide.
-
-\section{Experimental setup}
-We use Qwen3-4B with the released DSpark Qwen3-4B block-7 drafter, vLLM 0.33.0, and one H200 GPU. Decoding is greedy with a 128-token output cap. All methods use FP32 tensors, batch-invariant Triton attention, disabled prefix caching, and a 2,048-token context limit. Strict IEEE arithmetic throughout the kernel stack is not established.
-
-The batch-32 study uses 384 prompts; the batch-64 study uses 768 different prompts. Each has equal numbers of conversation, mathematics, and code prompts from Alpaca, GSM8K, and MBPP. The latter study expands MBPP from the sanitized subset to the full official test split, excluding previously used task IDs and normalized text. Prompts were unused at the launch of each expanded study. Subsequent reuse does not create additional independent test data.
-
-Fixed widths are selected on separate exploratory sweeps over widths 1--7. Global width 7 is selected for both studies. The stronger batch-64 comparator uses width 3 for conversation and width 7 for mathematics and code, selected before the expanded run. Each study has four balanced engine orders and two timed passes per session after two full passes for correctness and warmup. Every output in every pass must match the ordinary-decoding reference. Initialization and profiling are outside the timed generation calls; gains describe warmed-up generation throughput, not startup latency.
-\section{Results}
-\subsection{Exploratory screen and independent expansion}
-The batch-64 exploratory sweep on 384 reused prompts tested all fixed widths 1--7. Measured costs improved throughput by 4.68\% over the best global fixed width and 4.98\% over native adaptive verification. Its unbalanced engine order and reused prompts made this a selection experiment, not a confirmed speedup. The method and comparator choices were then frozen for the separate 768-prompt expanded study. The smaller effect below is the result to report.
-
-\subsection{Expanded cost-model comparisons}
-\begin{center}
-\resizebox{\linewidth}{!}{\input{cost_evidence_table.tex}}
-\end{center}
-Intervals are paired, domain-stratified batch-and-round bootstrap intervals (10,000 draws). Repeats stay together; identical prompt groups and rounds are resampled across methods. Gain is $100(T_b/T_m-1)$, where $T_b$ and $T_m$ are aggregate baseline and measured-cost generation times for identical output-token counts. It is not the percentage reduction in latency.
-
-All output checks passed in all 16 sessions in each study. At batch 64, measured-cost throughput is 6,250.80 tokens/s, versus 6,095.03 for global fixed width 7 and 6,058.87 for native adaptive verification. The domain-specific comparator achieves 6,174.37 tokens/s. Its interval crosses zero. The prespecified 5\% mixed-workload target failed. Earlier exploratory chat gains around 10--15\% did not reproduce at that magnitude against stronger baselines.
-\begin{center}
-\includegraphics[width=.78\linewidth]{../docs/figures/cost_v38_confirmation.pdf}
-\end{center}
-\subsection{Calibration pilots}
-With measured costs at batch 64, the matched-extension calibration pilot (v32) found online updates 0.24\% slower than frozen source calibration, with negative differences in all three rounds. Online updates improved only 0.04\% over identity confidence. These were exploratory measurements on reused prompts, not fresh confirmations. An earlier pilot (v18) also found negligible benefit over frozen calibration. This does not prove that calibration cannot help elsewhere; it shows that the tested calibration approach did not produce our speedup.
+The contribution is an empirical study of selection reliability and transfer in a modern parallel-drafter configuration. Changing the model or GPU alone does not establish methodological novelty.
 
 \newpage
-\section{Interpretation and limits}
-The supported finding is a modest benefit from changing the target-cost table in this configuration. Online calibration pilots did not show a meaningful additional speed gain; these results must not be attributed to calibration. Domain findings are descriptive: batch-64 gains against the prespecified domain baseline are 2.12\% for conversation, 0.25\% for mathematics, and 1.05\% for code.
+\section{Proposed method and evaluation}
+For batch size $b$, draft length $k$, and profiling workload $D$, define measured throughput
+\[
+ \widehat R(b,k;D)=\frac{\sum_{j\in D}N_j}{\sum_{j\in D}T_j(b,k)},
+ \qquad \widehat k_b(D)=\arg\max_{k\in\mathcal K}\widehat R(b,k;D).
+\]
+Here $N_j$ is the number of generated output tokens and $T_j$ is the measured generation-call time for batch $j$. The sum-of-tokens divided by sum-of-times weights actual work; it is not an average of per-batch throughput ratios. Exact output matching makes $N_j$ equal across configurations. We propose $\mathcal K=\{1,\ldots,8\}$, with a fixed tie rule and a length chosen before processing the test workload.
 
-There are only four prompt batches per domain at batch 64 and four engine rounds. Intervals do not cover uncertainty across devices, model pairs, backends, or workload families, and are not adjusted for the broader exploratory search. A targeted batch-128 sweep tested all fixed widths 1--7 on 384 reused prompts. All output checks passed. Measured costs improved 2.09\% over native adaptive but lost 4.10\% to the best fixed width (3). Because it failed the predeclared positive-comparison gate, no larger batch-128 run was launched. These unbalanced-order exploratory estimates do not establish significance.
-\section{Reproducibility}
-The repository contains frozen plans, manifests, raw outputs and timings, source hashes, and analyzers. Independent analysis reproduced both expanded summaries and reconstructed all eight batch-64 adaptive target-cost tables. \texttt{scripts/summarize\_cost\_evidence.py} generates the table from audited results.
+\textbf{Profiling budget.} Partition new prompts into profiling, validation, and test sets before selection. Evaluate increasing profiling-set sizes using paired configurations and balanced timing orders. Validation fixes any selection settings; test prompts only evaluate the frozen choice. Repeated profiling subsets measure selection variability, but overlapping subsets are not independent new workloads. Any uncertainty-based stopping rule would need a fixed-budget or sequentially valid analysis; repeatedly inspecting ordinary 95\% intervals is not sufficient.
 
-\noindent\href{https://github.com/angelinaquan/adaptive-verification-for-speculative-decoding}{Code and raw results}\quad
-\href{https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/vxw4i4v4}{Batch-32 audit}\quad
-\href{https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/az4k5l1i}{Batch-64 audit}
-\section{Conclusion}
-The completed contribution is a reproducible cost-table ablation: retaining measured target-verification costs yields modest throughput gains over native adaptive verification and globally tuned fixed widths at batches 32 and 64. Improvement over domain-specific fixed widths is unresolved, and the batch-128 screen loses to tuned fixed width. Online calibration remains an unconfirmed part of the original proposal. These qualifications are part of the result, not omitted failures.
+\textbf{Baselines.} Compare default length 8; one global fixed length chosen on validation data using prespecified batch-size weights; a separate fixed length for each batch size; and domain-specific tables fitted on their own profiling data. The batch-specific table is established prior work and our main practical baseline. An exhaustive test-set winner supplies a hindsight reference, not a deployable method. For transfer, fit on one domain and evaluate on a disjoint target domain, alongside pooled and target-domain profiling controls.
+
+\textbf{Outcomes.} Report held-out throughput, relative throughput loss to the hindsight reference, selection frequency, profiling GPU time, and paired uncertainty. If profiling costs $C$ seconds and saves $\delta>0$ seconds per output token, the estimated amortization point is $C/\delta$ tokens under that workload. Include initialization and compilation in profiling cost when deployment must pay them. A runtime controller would additionally require switching overhead and request-latency measurements.
+
+\section{Completed confirmation: experimental setup}
+The completed v76 experiment tests a narrower, frozen hypothesis: length 3 beats length 8 at batch 64, with the opposite direction at batch 8. These choices were locked from earlier screens before viewing the confirmation outputs. It is not the proposed full profiling-budget experiment.
+
+\begin{center}\small
+\begin{tabularx}{\linewidth}{@{}lX@{}}\toprule
+Component & Configuration \\\midrule
+Model and hardware & Qwen3-4B target; RedHatAI/Qwen3-4B-speculator.dflash2; one H200 \\
+Runtime & ForeSpark/vLLM, BF16, native DFlash fixed lengths; adaptive verification disabled \\
+Workload & 768 prompts: 256 each from Alpaca, GSM8K, and MBPP \\
+Generation & Greedy, maximum 64 new tokens, thinking disabled, prefix caching disabled \\
+Design & Batch sizes 8 and 64; native lengths 3 and 8; four balanced engine orders \\
+Timing & Two full warmup passes, then two timed passes per session; startup excluded \\
+Reference & Ordinary decoding at both batch sizes; identical full token outputs required \\
+\bottomrule\end{tabularx}
+\end{center}
+
+Previously used normalized prompt text was excluded, and MBPP task IDs were also excluded to catch edited variants. MBPP draws from all official partitions. These prompts are fresh to our experiments, not necessarily unseen in model pretraining. Length filtering and the frozen manifest define the evaluated population. Each generation call handles a finite batch; this is offline batched inference, not a server under varying arrivals.
+
+\newpage
+\section{Results: held-out configuration effects}
+Table~\ref{tab:main} reports the complete confirmation, using the same prompts for both configurations at each batch size. Positive gains compare the faster prespecified configuration against the other length. They do not compare against an optimally tuned length at that batch size.
+
+\begin{table}[h]\centering\small
+\begin{tabular}{@{}rrrrl@{}}\toprule
+Batch & Length 3 & Length 8 & Gain & 95\% interval \\
+ & tokens/s & tokens/s & & \\\midrule
+8 & 1,240.31 & 1,671.41 & 34.76\% (8 over 3) & [33.01, 36.49]\% \\
+64 & 9,146.79 & 7,049.68 & 29.75\% (3 over 8) & [26.81, 32.61]\% \\\bottomrule
+\end{tabular}
+\caption{Native fixed-length comparison on 768 confirmation prompts.}\label{tab:main}
+\end{table}
+
+The batch-64 result exceeds the prespecified 10\% point-estimate threshold, and its entire bootstrap interval also exceeds 10\%. The direction reverses at batch 8. The log-time interaction,
+\[
+ I=\log\!\left(\frac{T_{8,3}}{T_{8,8}}\right)
+   -\log\!\left(\frac{T_{64,3}}{T_{64,8}}\right),
+\]
+where $T_{b,k}$ is total timed duration, is 0.559 with interval [0.540, 0.578]. This quantifies the change in relative performance across the two batch sizes; it is not a live-controller speedup.
+
+\subsection{Consistency across domains and engine orders}
+\begin{table}[h]\centering\small
+\begin{tabular}{@{}lrr@{}}\toprule
+Prompt domain (256 prompts each) & Batch 8: length 8 over 3 & Batch 64: length 3 over 8 \\\midrule
+Alpaca: instruction/conversation & +24.60\% & +37.03\% \\
+GSM8K: mathematics & +53.82\% & +19.98\% \\
+MBPP: code & +32.60\% & +30.55\% \\
+\bottomrule
+\end{tabular}
+\caption{Descriptive domain-level gains. These are not separately fitted selectors or domain-level confidence intervals.}
+\end{table}
+
+Every domain shows the same preferred length at each tested batch size, although effect sizes differ. At batch 64, the four engine-order gains are 30.56\%, 30.43\%, 28.48\%, and 29.54\%; at batch 8 they are 34.33\%, 35.07\%, 35.14\%, and 34.49\%. Thus the result does not depend on one measured engine order.
+
+\textbf{Uncertainty.} We use 10,000 paired bootstrap draws, resampling four engine rounds and four contiguous 64-prompt blocks within each of three domains. Batch-8 microbatches are combined into those same blocks; configurations remain paired and repeated passes remain together. The intervals describe variation over these observed rounds and workload blocks on one device. They do not quantify variation over model pairs, GPUs, or deployment environments. Four rounds and twelve blocks provide limited independent units despite many repeated output checks.
+
+\textbf{Correctness and reproducibility.} All 18 sessions completed: two ordinary-decoding references and 16 speculative sessions. All 3,888 batch-output checks, including warmups, match the corresponding reference hashes. Ordinary-decoding outputs also agree across batch sizes. Configuration/source provenance checks passed, and local reanalysis exactly reproduced the remote summary. Checks are repeated executions, not 3,888 independent prompts. Raw sessions, frozen plans, checksums, and W\&B artifacts are retained~\cite{artifact}.
+
+\newpage
+\section{What generalizes, and what remains open}
+\textbf{Supported generalization.} Lengths selected using earlier exploratory runs retained their relative advantage on 768 previously unused prompts. The batch-dependent reversal holds in all three evaluated domains and all four engine orders. This is evidence that the configuration effect transfers beyond the original small screen within this model/runtime/hardware setup.
+
+\textbf{Not yet established.} We have not measured how much profiling data is needed, trained a selector on one domain and tested it on another, or shown that lengths 3 and 8 are globally optimal on the confirmation set. Domain consistency is not an estimate of cross-domain selection accuracy. We have not tested other model pairs, GPUs, longer generations, stochastic sampling, intermediate batch sizes, or live traffic. Combining separate-engine timings would omit switching costs and cannot establish a deployed adaptive-policy gain.
+
+\textbf{Why the stronger baseline matters.} In the earlier batch-64 native sweep (v72, 192 reused prompts), length 3 was the fastest native length among 1--8. A custom forced-length-3 path differed from native length 3 by only +0.056\%, with opposite signs across its two engine orders. Therefore, the large gain is recovered by native configuration tuning; it is not evidence for a new runtime or scheduler. The earlier same-engine 16.38\% length effect motivated confirmation, but the 29.75\% fresh result is a different workload and comparison and should not be treated as a paired increase over that estimate.
+
+The next experiment should evaluate the profiling selector against a well-tuned global fixed configuration and batch-specific profiling tables on disjoint data. The current results justify that study because configuration mistakes cost roughly 30\% in the tested comparisons. They do not guarantee another 30\% improvement once the baseline is already tuned.
+
+\section{Reproduction and scope}
+The frozen plan and prompt manifest are in the repository's \texttt{experiments/} directory, alongside the benchmark and analysis scripts for v76. Raw compressed sessions and the local audit are in \texttt{results/v76/}. Reanalysis requires extracting the session JSON files beside the matching analyzer, plan, manifest, and benchmark source; the analyzer verifies their hashes before computing results. Configuration-specific compilation caches prevent cross-width cache reuse; warmup and initialization are excluded from the reported steady-state timings.
+
+The proposed contribution is a reproducible statistical study of profiling reliability and transfer. Batch-aware speculation is prior work. The completed result is substantial fixed-configuration headroom with exact greedy-output checks; profiling efficiency and deployed adaptation remain research questions.
 
 \begin{thebibliography}{9}\small
-\bibitem{leviathan} Y. Leviathan, M. Kalman, and Y. Matias. \href{https://arxiv.org/abs/2211.17192}{Fast Inference from Transformers via Speculative Decoding}. ICML, 2023.
-\bibitem{specdec} K. Huang, X. Guo, and M. Wang. \href{https://arxiv.org/abs/2405.19715}{SpecDec++: Boosting Speculative Decoding via Adaptive Candidate Lengths}. arXiv:2405.19715, revised 2025.
-\bibitem{bandit} Y. Hou et al. \href{https://proceedings.mlr.press/v267/hou25h.html}{BanditSpec: Adaptive Speculative Decoding via Bandit Algorithms}. ICML, 2025.
-\bibitem{dspark} X. Cheng et al. \href{https://arxiv.org/abs/2607.05147}{DSpark: Confidence-Scheduled Speculative Decoding with Semi-Autoregressive Generation}. arXiv:2607.05147, 2026.
-\bibitem{vllmav} vLLM Team. \href{https://vllm.ai/blog/2026-08-14-dspark-adaptive-verification}{Adaptive Verification in vLLM: DSpark confidence-scheduled verification}. Engineering documentation, August 14, 2026.
-\bibitem{ops} C. Gupta and A. Ramdas. \href{https://proceedings.mlr.press/v202/gupta23c.html}{Online Platt Scaling with Calibeating}. ICML, 2023. TOPS: Section 3.1, Eq. (11).
-\bibitem{online} G. Delfin. \href{https://vllm.ai/blog/2026-10-14-adaptive-verification-online-estimator}{Adaptive Verification Without a Confidence Head}. vLLM engineering documentation, October 14, 2026.
-\bibitem{forespark} J. Song et al. \href{https://arxiv.org/abs/2611.13442}{ForeSpark: Joint Draft and Verification Budget Scheduling for Parallel Speculative Decoding}. arXiv:2611.13442, November 10, 2026.
+\bibitem{leviathan} Y. Leviathan, M. Kalman, and Y. Matias. Fast Inference from Transformers via Speculative Decoding. ICML, 2023. \url{https://arxiv.org/abs/2211.17192}.
+\bibitem{su} Q. Su, C. Giannoula, and G. Pekhimenko. The Synergy of Speculative Decoding and Batching in Serving Large Language Models. 2023. \url{https://arxiv.org/abs/2310.18813}.
+\bibitem{turbo} X. Liu et al. TurboSpec: Closed-loop Speculation Control System for Optimizing LLM Serving Goodput. 2025 revision. \url{https://arxiv.org/abs/2406.14066}.
+\bibitem{bandit} Y. Hou et al. BanditSpec: Adaptive Speculative Decoding via Bandit Algorithms. ICML, 2025. \url{https://proceedings.mlr.press/v267/hou25h.html}.
+\bibitem{fore} J. Song et al. ForeSpark: Joint Draft and Verification Budget Scheduling for Parallel Speculative Decoding. 2026. \url{https://arxiv.org/abs/2611.13442}.
+\bibitem{artifact} A. Quan. Code, frozen protocols, and raw results. \href{https://github.com/angelinaquan/adaptive-verification-for-speculative-decoding}{GitHub repository}. Confirmation logs: \href{https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/0arn12x7}{W\&B run 0arn12x7}.
 \end{thebibliography}
 \end{document}
