@@ -1,0 +1,11 @@
+{
+  "source_sha256": "26f16ea1dddbc3c7aa3465a8b42a33879117658ac78c082b84ce68ef613c0e13",
+  "module_sha256": "55ce1243c78522dd982c2b43a10020c17f901c7de222bcd1c09ec18ac72f8e13",
+  "passed": true,
+  "devices": [
+    "cpu",
+    "cuda"
+  ],
+  "random_steps_per_device": 100,
+  "scope": "Finite algorithm tests only; full-model output gates remain required."
+}
