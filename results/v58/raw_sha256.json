@@ -1,0 +1,11 @@
+{
+  "dynamic_v58_native7-round0.json": "c5ef6168cd4b396ad770456f21d07dd184bfc9238bd4761ba35b36c06c2439dd",
+  "dynamic_v58_native7-round1.json": "aa6312435fa8fc15e8d8ff51eb2b7f6d42d7514679ebe0fbd05e520a9c8cc883",
+  "dynamic_v58_prompt1024-round0.json": "c536b4a101a2d6cf8afa0a4633021b54cb809fac641eea49d51fc32ade4312dc",
+  "dynamic_v58_prompt1024-round1.json": "883596ba42467b96591471adaa35e713878d51254a724f981aa5c414b8677855",
+  "dynamic_v58_recency1024-round0.json": "11491209928fa75907604565d8d360a9c22e91f25ddf78def65ba982fd49398a",
+  "dynamic_v58_recency1024-round1.json": "06df6bf6258ecba7491a449846e75a13f0d42addb2130cfe34992365f8371403",
+  "dynamic_v58_recency4096-round0.json": "9cb5de9c17dc97bbd9c0a846fe50adf1f18946060cf7eb6cf95786d8418cc30e",
+  "dynamic_v58_recency4096-round1.json": "36fb831ff9dffbf479970a34f341e0f94e4ffaa600957eed544fbfba900b1daa",
+  "dynamic_v58_ar-reference.json": "6b7c4629b9deb8b997c7e57bda9534a2a1dd8f549bf44a5087eeb10f72f325f7"
+}
