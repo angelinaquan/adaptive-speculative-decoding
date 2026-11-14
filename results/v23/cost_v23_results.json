@@ -1,0 +1,1102 @@
+{
+  "passed": true,
+  "states": {},
+  "run_url": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/afrlfjlo",
+  "profile": {
+    "initial": [
+      {
+        "num_reqs": 1,
+        "tokens": 1,
+        "forward_ms": 21.185888290405273,
+        "draft_ms": 5.507328033447266,
+        "full_graph": true
+      },
+      {
+        "num_reqs": 1,
+        "tokens": 1,
+        "forward_ms": 20.85820770263672,
+        "draft_ms": 5.5596160888671875,
+        "full_graph": true
+      },
+      {
+        "num_reqs": 1,
+        "tokens": 1,
+        "forward_ms": 20.887680053710938,
+        "draft_ms": 5.523615837097168,
+        "full_graph": true
+      },
+      {
+        "num_reqs": 1,
+        "tokens": 1,
+        "forward_ms": 20.89673614501953,
+        "draft_ms": 5.502624034881592,
+        "full_graph": true
+      },
+      {
+        "num_reqs": 1,
+        "tokens": 1,
+        "forward_ms": 20.9683837890625,
+        "draft_ms": 5.510303974151611,
+        "full_graph": true
+      },
+      {
+        "num_reqs": 2,
+        "tokens": 2,
+        "forward_ms": 21.027679443359375,
+        "draft_ms": 5.477215766906738,
+        "full_graph": true
+      },
+      {
+        "num_reqs": 2,
+        "tokens": 2,
+        "forward_ms": 20.917856216430664,
+        "draft_ms": 5.47219181060791,
+        "full_graph": true
+      },
+      {
+        "num_reqs": 2,
+        "tokens": 2,
+        "forward_ms": 20.826719284057617,
+        "draft_ms": 5.510784149169922,
+        "full_graph": true
+      },
+      {
+        "num_reqs": 2,
+        "tokens": 2,
+        "forward_ms": 20.82169532775879,
+        "draft_ms": 5.467008113861084,
+        "full_graph": true
+      },
+      {
+        "num_reqs": 2,
+        "tokens": 2,
+        "forward_ms": 20.753984451293945,
+        "draft_ms": 5.474656105041504,
+        "full_graph": true
+      },
+      {
+        "num_reqs": 4,
+        "tokens": 4,
+        "forward_ms": 20.992223739624023,
+        "draft_ms": 5.531839847564697,
+        "full_graph": true
+      },
+      {
+        "num_reqs": 4,
+        "tokens": 4,
+        "forward_ms": 20.610111236572266,
+        "draft_ms": 5.480959892272949,
+        "full_graph": true
+      },
+      {
+        "num_reqs": 4,
+        "tokens": 4,
+        "forward_ms": 20.581504821777344,
+        "draft_ms": 5.510272026062012,
+        "full_graph": true
+      },
+      {
+        "num_reqs": 4,
+        "tokens": 4,
+        "forward_ms": 20.481760025024414,
+        "draft_ms": 5.511519908905029,
+        "full_graph": true
+      },
+      {
+        "num_reqs": 4,
+        "tokens": 4,
+        "forward_ms": 20.54742431640625,
+        "draft_ms": 5.509696006774902,
+        "full_graph": true
+      },
+      {
+        "num_reqs": 8,
+        "tokens": 8,
+        "forward_ms": 20.457279205322266,
+        "draft_ms": 5.062399864196777,
+        "full_graph": true
+      },
+      {
+        "num_reqs": 8,
+        "tokens": 8,
+        "forward_ms": 20.335968017578125,
+        "draft_ms": 5.036223888397217,
+        "full_graph": true
+      },
+      {
+        "num_reqs": 8,
+        "tokens": 8,
+        "forward_ms": 20.361087799072266,
+        "draft_ms": 5.0814080238342285,
+        "full_graph": true
+      },
+      {
+        "num_reqs": 8,
+        "tokens": 8,
+        "forward_ms": 20.364511489868164,
+        "draft_ms": 5.111487865447998,
+        "full_graph": true
+      },
+      {
+        "num_reqs": 8,
+        "tokens": 8,
+        "forward_ms": 20.299104690551758,
+        "draft_ms": 5.069632053375244,
+        "full_graph": true
+      },
+      {
+        "num_reqs": 16,
+        "tokens": 16,
+        "forward_ms": 20.169504165649414,
+        "draft_ms": 6.32860803604126,
+        "full_graph": true
+      },
+      {
+        "num_reqs": 16,
+        "tokens": 16,
+        "forward_ms": 20.07823944091797,
+        "draft_ms": 6.250175952911377,
+        "full_graph": true
+      },
+      {
+        "num_reqs": 16,
+        "tokens": 16,
+        "forward_ms": 20.02195167541504,
+        "draft_ms": 6.2669758796691895,
+        "full_graph": true
+      },
+      {
+        "num_reqs": 16,
+        "tokens": 16,
+        "forward_ms": 20.05183982849121,
+        "draft_ms": 6.282656192779541,
+        "full_graph": true
+      },
+      {
+        "num_reqs": 16,
+        "tokens": 16,
+        "forward_ms": 20.039104461669922,
+        "draft_ms": 6.262432098388672,
+        "full_graph": true
+      },
+      {
+        "num_reqs": 32,
+        "tokens": 32,
+        "forward_ms": 19.170303344726562,
+        "draft_ms": 5.448256015777588,
+        "full_graph": true
+      },
+      {
+        "num_reqs": 32,
+        "tokens": 32,
+        "forward_ms": 19.10576057434082,
+        "draft_ms": 5.45030403137207,
+        "full_graph": true
+      },
+      {
+        "num_reqs": 32,
+        "tokens": 32,
+        "forward_ms": 19.042463302612305,
+        "draft_ms": 5.4436798095703125,
+        "full_graph": true
+      },
+      {
+        "num_reqs": 32,
+        "tokens": 32,
+        "forward_ms": 18.994272232055664,
+        "draft_ms": 5.45747184753418,
+        "full_graph": true
+      },
+      {
+        "num_reqs": 32,
+        "tokens": 32,
+        "forward_ms": 19.217248916625977,
+        "draft_ms": 5.464992046356201,
+        "full_graph": true
+      },
+      {
+        "num_reqs": 32,
+        "tokens": 64,
+        "forward_ms": 17.11942481994629,
+        "draft_ms": 5.475615978240967,
+        "full_graph": true
+      },
+      {
+        "num_reqs": 32,
+        "tokens": 64,
+        "forward_ms": 16.943679809570312,
+        "draft_ms": 5.471680164337158,
+        "full_graph": true
+      },
+      {
+        "num_reqs": 32,
+        "tokens": 64,
+        "forward_ms": 16.912607192993164,
+        "draft_ms": 5.48092794418335,
+        "full_graph": true
+      },
+      {
+        "num_reqs": 32,
+        "tokens": 64,
+        "forward_ms": 16.777408599853516,
+        "draft_ms": 5.493728160858154,
+        "full_graph": true
+      },
+      {
+        "num_reqs": 32,
+        "tokens": 64,
+        "forward_ms": 16.78748893737793,
+        "draft_ms": 5.474783897399902,
+        "full_graph": true
+      },
+      {
+        "num_reqs": 32,
+        "tokens": 128,
+        "forward_ms": 13.689760208129883,
+        "draft_ms": 5.561312198638916,
+        "full_graph": true
+      },
+      {
+        "num_reqs": 32,
+        "tokens": 128,
+        "forward_ms": 13.520992279052734,
+        "draft_ms": 5.546815872192383,
+        "full_graph": true
+      },
+      {
+        "num_reqs": 32,
+        "tokens": 128,
+        "forward_ms": 13.52064037322998,
+        "draft_ms": 5.55401611328125,
+        "full_graph": true
+      },
+      {
+        "num_reqs": 32,
+        "tokens": 128,
+        "forward_ms": 13.543328285217285,
+        "draft_ms": 5.559967994689941,
+        "full_graph": true
+      },
+      {
+        "num_reqs": 32,
+        "tokens": 128,
+        "forward_ms": 13.527327537536621,
+        "draft_ms": 5.555232048034668,
+        "full_graph": true
+      },
+      {
+        "num_reqs": 32,
+        "tokens": 256,
+        "forward_ms": 15.500415802001953,
+        "draft_ms": 5.712672233581543,
+        "full_graph": true
+      },
+      {
+        "num_reqs": 32,
+        "tokens": 256,
+        "forward_ms": 15.359807968139648,
+        "draft_ms": 5.733695983886719,
+        "full_graph": true
+      },
+      {
+        "num_reqs": 32,
+        "tokens": 256,
+        "forward_ms": 15.355199813842773,
+        "draft_ms": 5.70300817489624,
+        "full_graph": true
+      },
+      {
+        "num_reqs": 32,
+        "tokens": 256,
+        "forward_ms": 15.34825611114502,
+        "draft_ms": 5.718175888061523,
+        "full_graph": true
+      },
+      {
+        "num_reqs": 32,
+        "tokens": 256,
+        "forward_ms": 15.349247932434082,
+        "draft_ms": 5.724736213684082,
+        "full_graph": true
+      },
+      {
+        "num_reqs": 32,
+        "tokens": 384,
+        "forward_ms": 22.506080627441406,
+        "draft_ms": 6.41264009475708,
+        "full_graph": false
+      },
+      {
+        "num_reqs": 32,
+        "tokens": 384,
+        "forward_ms": 22.451072692871094,
+        "draft_ms": 5.793759822845459,
+        "full_graph": false
+      },
+      {
+        "num_reqs": 32,
+        "tokens": 384,
+        "forward_ms": 22.438560485839844,
+        "draft_ms": 5.80185604095459,
+        "full_graph": false
+      },
+      {
+        "num_reqs": 32,
+        "tokens": 384,
+        "forward_ms": 22.420608520507812,
+        "draft_ms": 5.7824320793151855,
+        "full_graph": false
+      },
+      {
+        "num_reqs": 32,
+        "tokens": 384,
+        "forward_ms": 22.463680267333984,
+        "draft_ms": 5.804512023925781,
+        "full_graph": false
+      },
+      {
+        "num_reqs": 32,
+        "tokens": 512,
+        "forward_ms": 24.41596794128418,
+        "draft_ms": 6.161439895629883,
+        "full_graph": false
+      },
+      {
+        "num_reqs": 32,
+        "tokens": 512,
+        "forward_ms": 24.467872619628906,
+        "draft_ms": 6.1412482261657715,
+        "full_graph": false
+      },
+      {
+        "num_reqs": 32,
+        "tokens": 512,
+        "forward_ms": 24.46086311340332,
+        "draft_ms": 6.120895862579346,
+        "full_graph": false
+      },
+      {
+        "num_reqs": 32,
+        "tokens": 512,
+        "forward_ms": 24.45734405517578,
+        "draft_ms": 6.156832218170166,
+        "full_graph": false
+      },
+      {
+        "num_reqs": 32,
+        "tokens": 512,
+        "forward_ms": 24.45849609375,
+        "draft_ms": 6.132544040679932,
+        "full_graph": false
+      },
+      {
+        "num_reqs": 32,
+        "tokens": 1024,
+        "forward_ms": 44.48169708251953,
+        "draft_ms": 7.152927875518799,
+        "full_graph": false
+      },
+      {
+        "num_reqs": 32,
+        "tokens": 1024,
+        "forward_ms": 44.58256149291992,
+        "draft_ms": 6.885632038116455,
+        "full_graph": false
+      },
+      {
+        "num_reqs": 32,
+        "tokens": 1024,
+        "forward_ms": 44.58918380737305,
+        "draft_ms": 6.890848159790039,
+        "full_graph": false
+      },
+      {
+        "num_reqs": 32,
+        "tokens": 1024,
+        "forward_ms": 44.57747268676758,
+        "draft_ms": 6.889472007751465,
+        "full_graph": false
+      },
+      {
+        "num_reqs": 32,
+        "tokens": 1024,
+        "forward_ms": 44.53510284423828,
+        "draft_ms": 6.887328147888184,
+        "full_graph": false
+      },
+      {
+        "num_reqs": 32,
+        "tokens": 2048,
+        "forward_ms": 78.48194885253906,
+        "draft_ms": 8.27785587310791,
+        "full_graph": false
+      },
+      {
+        "num_reqs": 32,
+        "tokens": 2048,
+        "forward_ms": 78.6058578491211,
+        "draft_ms": 8.044480323791504,
+        "full_graph": false
+      },
+      {
+        "num_reqs": 32,
+        "tokens": 2048,
+        "forward_ms": 78.61325073242188,
+        "draft_ms": 8.042048454284668,
+        "full_graph": false
+      },
+      {
+        "num_reqs": 32,
+        "tokens": 2048,
+        "forward_ms": 78.59040069580078,
+        "draft_ms": 8.02400016784668,
+        "full_graph": false
+      },
+      {
+        "num_reqs": 32,
+        "tokens": 2048,
+        "forward_ms": 78.55302429199219,
+        "draft_ms": 8.042688369750977,
+        "full_graph": false
+      },
+      {
+        "num_reqs": 32,
+        "tokens": 4096,
+        "forward_ms": 148.57557678222656,
+        "draft_ms": 10.882559776306152,
+        "full_graph": false
+      },
+      {
+        "num_reqs": 32,
+        "tokens": 4096,
+        "forward_ms": 148.6065216064453,
+        "draft_ms": 10.86575984954834,
+        "full_graph": false
+      },
+      {
+        "num_reqs": 32,
+        "tokens": 4096,
+        "forward_ms": 149.11631774902344,
+        "draft_ms": 11.034208297729492,
+        "full_graph": false
+      },
+      {
+        "num_reqs": 32,
+        "tokens": 4096,
+        "forward_ms": 148.88156127929688,
+        "draft_ms": 11.08672046661377,
+        "full_graph": false
+      },
+      {
+        "num_reqs": 32,
+        "tokens": 4096,
+        "forward_ms": 148.34559631347656,
+        "draft_ms": 10.83523178100586,
+        "full_graph": false
+      }
+    ],
+    "warmed": {
+      "False": [
+        {
+          "num_reqs": 32,
+          "tokens": 128,
+          "forward_ms": 13.544351577758789,
+          "draft_ms": 5.546048164367676,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 16,
+          "tokens": 16,
+          "forward_ms": 20.10678482055664,
+          "draft_ms": 6.236959934234619,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 32,
+          "tokens": 64,
+          "forward_ms": 16.79350471496582,
+          "draft_ms": 5.506175994873047,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 32,
+          "tokens": 256,
+          "forward_ms": 15.340800285339355,
+          "draft_ms": 5.717984199523926,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 8,
+          "tokens": 8,
+          "forward_ms": 20.450336456298828,
+          "draft_ms": 5.10646390914917,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 32,
+          "tokens": 32,
+          "forward_ms": 18.981279373168945,
+          "draft_ms": 5.452352046966553,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 16,
+          "tokens": 16,
+          "forward_ms": 19.980127334594727,
+          "draft_ms": 6.297215938568115,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 8,
+          "tokens": 8,
+          "forward_ms": 20.444992065429688,
+          "draft_ms": 5.078656196594238,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 32,
+          "tokens": 32,
+          "forward_ms": 18.96143913269043,
+          "draft_ms": 5.469791889190674,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 32,
+          "tokens": 128,
+          "forward_ms": 13.537952423095703,
+          "draft_ms": 5.561823844909668,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 32,
+          "tokens": 64,
+          "forward_ms": 16.95568084716797,
+          "draft_ms": 5.490560054779053,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 32,
+          "tokens": 256,
+          "forward_ms": 15.324928283691406,
+          "draft_ms": 5.720928192138672,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 16,
+          "tokens": 16,
+          "forward_ms": 20.087743759155273,
+          "draft_ms": 6.326784133911133,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 32,
+          "tokens": 256,
+          "forward_ms": 15.344096183776855,
+          "draft_ms": 5.723743915557861,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 32,
+          "tokens": 32,
+          "forward_ms": 18.99065589904785,
+          "draft_ms": 5.465439796447754,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 8,
+          "tokens": 8,
+          "forward_ms": 20.375200271606445,
+          "draft_ms": 5.121535778045654,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 32,
+          "tokens": 128,
+          "forward_ms": 13.54867172241211,
+          "draft_ms": 5.570432186126709,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 32,
+          "tokens": 64,
+          "forward_ms": 16.828832626342773,
+          "draft_ms": 5.483871936798096,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 8,
+          "tokens": 8,
+          "forward_ms": 20.252511978149414,
+          "draft_ms": 5.091519832611084,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 32,
+          "tokens": 128,
+          "forward_ms": 13.535679817199707,
+          "draft_ms": 5.54636812210083,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 32,
+          "tokens": 32,
+          "forward_ms": 19.08153533935547,
+          "draft_ms": 5.455615997314453,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 32,
+          "tokens": 64,
+          "forward_ms": 16.84867286682129,
+          "draft_ms": 5.475327968597412,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 16,
+          "tokens": 16,
+          "forward_ms": 20.072063446044922,
+          "draft_ms": 6.2778239250183105,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 32,
+          "tokens": 256,
+          "forward_ms": 15.34444808959961,
+          "draft_ms": 5.698304176330566,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 32,
+          "tokens": 64,
+          "forward_ms": 16.784799575805664,
+          "draft_ms": 5.483168125152588,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 32,
+          "tokens": 128,
+          "forward_ms": 13.537504196166992,
+          "draft_ms": 5.55075216293335,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 32,
+          "tokens": 256,
+          "forward_ms": 15.33743953704834,
+          "draft_ms": 5.7287678718566895,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 32,
+          "tokens": 32,
+          "forward_ms": 19.11302375793457,
+          "draft_ms": 5.4462080001831055,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 16,
+          "tokens": 16,
+          "forward_ms": 20.085439682006836,
+          "draft_ms": 6.300415992736816,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 8,
+          "tokens": 8,
+          "forward_ms": 20.313695907592773,
+          "draft_ms": 5.078656196594238,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 8,
+          "tokens": 8,
+          "forward_ms": 20.451072692871094,
+          "draft_ms": 5.06601619720459,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 16,
+          "tokens": 16,
+          "forward_ms": 20.059711456298828,
+          "draft_ms": 6.268991947174072,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 32,
+          "tokens": 32,
+          "forward_ms": 18.99955177307129,
+          "draft_ms": 5.452352046966553,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 32,
+          "tokens": 256,
+          "forward_ms": 15.34716796875,
+          "draft_ms": 5.708127975463867,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 32,
+          "tokens": 64,
+          "forward_ms": 16.80246353149414,
+          "draft_ms": 5.486559867858887,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 32,
+          "tokens": 128,
+          "forward_ms": 13.545344352722168,
+          "draft_ms": 5.564352035522461,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 32,
+          "tokens": 128,
+          "forward_ms": 13.51318359375,
+          "draft_ms": 5.539487838745117,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 8,
+          "tokens": 8,
+          "forward_ms": 20.39651107788086,
+          "draft_ms": 5.116384029388428,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 32,
+          "tokens": 32,
+          "forward_ms": 19.018367767333984,
+          "draft_ms": 5.447135925292969,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 32,
+          "tokens": 256,
+          "forward_ms": 15.350751876831055,
+          "draft_ms": 5.708352088928223,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 16,
+          "tokens": 16,
+          "forward_ms": 20.040895462036133,
+          "draft_ms": 6.2948479652404785,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 32,
+          "tokens": 64,
+          "forward_ms": 16.80227279663086,
+          "draft_ms": 5.48956823348999,
+          "full_graph": true
+        }
+      ],
+      "True": [
+        {
+          "num_reqs": 32,
+          "tokens": 128,
+          "forward_ms": 13.52121639251709,
+          "draft_ms": 5.56547212600708,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 16,
+          "tokens": 16,
+          "forward_ms": 20.005952835083008,
+          "draft_ms": 6.28652811050415,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 32,
+          "tokens": 256,
+          "forward_ms": 15.343520164489746,
+          "draft_ms": 5.727968215942383,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 32,
+          "tokens": 64,
+          "forward_ms": 16.831327438354492,
+          "draft_ms": 5.488480091094971,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 32,
+          "tokens": 32,
+          "forward_ms": 18.98531150817871,
+          "draft_ms": 5.466847896575928,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 8,
+          "tokens": 8,
+          "forward_ms": 20.421920776367188,
+          "draft_ms": 5.074495792388916,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 16,
+          "tokens": 16,
+          "forward_ms": 20.067424774169922,
+          "draft_ms": 6.304224014282227,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 32,
+          "tokens": 256,
+          "forward_ms": 15.343551635742188,
+          "draft_ms": 5.719327926635742,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 32,
+          "tokens": 32,
+          "forward_ms": 19.069856643676758,
+          "draft_ms": 5.4396162033081055,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 32,
+          "tokens": 64,
+          "forward_ms": 16.828031539916992,
+          "draft_ms": 5.4844160079956055,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 8,
+          "tokens": 8,
+          "forward_ms": 20.34236717224121,
+          "draft_ms": 5.136735916137695,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 32,
+          "tokens": 128,
+          "forward_ms": 13.527999877929688,
+          "draft_ms": 5.557727813720703,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 8,
+          "tokens": 8,
+          "forward_ms": 20.39801597595215,
+          "draft_ms": 5.074656009674072,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 32,
+          "tokens": 32,
+          "forward_ms": 18.995807647705078,
+          "draft_ms": 5.439648151397705,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 16,
+          "tokens": 16,
+          "forward_ms": 20.016063690185547,
+          "draft_ms": 6.330272197723389,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 32,
+          "tokens": 128,
+          "forward_ms": 13.551199913024902,
+          "draft_ms": 5.571135997772217,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 32,
+          "tokens": 256,
+          "forward_ms": 15.343584060668945,
+          "draft_ms": 5.729440212249756,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 32,
+          "tokens": 64,
+          "forward_ms": 16.833087921142578,
+          "draft_ms": 5.478623867034912,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 32,
+          "tokens": 64,
+          "forward_ms": 16.776159286499023,
+          "draft_ms": 5.486432075500488,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 32,
+          "tokens": 32,
+          "forward_ms": 19.13974380493164,
+          "draft_ms": 5.461184024810791,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 32,
+          "tokens": 128,
+          "forward_ms": 13.512351989746094,
+          "draft_ms": 5.55731201171875,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 16,
+          "tokens": 16,
+          "forward_ms": 20.08380889892578,
+          "draft_ms": 6.3093438148498535,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 8,
+          "tokens": 8,
+          "forward_ms": 20.405567169189453,
+          "draft_ms": 5.088287830352783,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 32,
+          "tokens": 256,
+          "forward_ms": 15.350144386291504,
+          "draft_ms": 5.719488143920898,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 32,
+          "tokens": 64,
+          "forward_ms": 16.784671783447266,
+          "draft_ms": 5.487936019897461,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 32,
+          "tokens": 32,
+          "forward_ms": 19.017887115478516,
+          "draft_ms": 5.456639766693115,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 32,
+          "tokens": 128,
+          "forward_ms": 13.527039527893066,
+          "draft_ms": 5.560351848602295,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 32,
+          "tokens": 256,
+          "forward_ms": 15.338272094726562,
+          "draft_ms": 5.727168083190918,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 8,
+          "tokens": 8,
+          "forward_ms": 20.395584106445312,
+          "draft_ms": 5.101952075958252,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 16,
+          "tokens": 16,
+          "forward_ms": 20.13692855834961,
+          "draft_ms": 6.343584060668945,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 32,
+          "tokens": 256,
+          "forward_ms": 15.344544410705566,
+          "draft_ms": 5.727488040924072,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 32,
+          "tokens": 64,
+          "forward_ms": 16.828479766845703,
+          "draft_ms": 5.4896321296691895,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 32,
+          "tokens": 128,
+          "forward_ms": 13.534303665161133,
+          "draft_ms": 5.55785608291626,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 32,
+          "tokens": 32,
+          "forward_ms": 19.116064071655273,
+          "draft_ms": 5.449664115905762,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 16,
+          "tokens": 16,
+          "forward_ms": 20.048959732055664,
+          "draft_ms": 6.254271984100342,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 8,
+          "tokens": 8,
+          "forward_ms": 20.35603141784668,
+          "draft_ms": 5.082304000854492,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 16,
+          "tokens": 16,
+          "forward_ms": 19.96895980834961,
+          "draft_ms": 6.278560161590576,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 32,
+          "tokens": 128,
+          "forward_ms": 13.537311553955078,
+          "draft_ms": 5.5643839836120605,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 8,
+          "tokens": 8,
+          "forward_ms": 20.379743576049805,
+          "draft_ms": 5.091008186340332,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 32,
+          "tokens": 256,
+          "forward_ms": 15.343199729919434,
+          "draft_ms": 5.7123517990112305,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 32,
+          "tokens": 64,
+          "forward_ms": 16.807231903076172,
+          "draft_ms": 5.4879679679870605,
+          "full_graph": true
+        },
+        {
+          "num_reqs": 32,
+          "tokens": 32,
+          "forward_ms": 19.05344009399414,
+          "draft_ms": 5.452352046966553,
+          "full_graph": true
+        }
+      ]
+    },
+    "sizes": [
+      8,
+      16,
+      32,
+      64,
+      128,
+      256
+    ],
+    "scope": "Diagnostic only; no policy modification or speed claim"
+  }
+}

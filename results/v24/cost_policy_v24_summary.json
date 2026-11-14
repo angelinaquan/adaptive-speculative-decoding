@@ -1,0 +1,118 @@
+{
+  "scope": "Reused validation data, one engine, four balanced method orders. No confidence interval or confirmatory significance claim.",
+  "run_url": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/hlrshalu",
+  "methods": {
+    "original_identity": {
+      "tokens_per_second": 3384.071425007257,
+      "comparisons": {
+        "original_identity": {
+          "gain_percent": 0.0,
+          "round_gains_percent": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "measured_frozen": {
+          "gain_percent": -0.8652468264555235,
+          "round_gains_percent": [
+            -0.8781374700113753,
+            -0.8425199481173262,
+            -0.853702514373067,
+            -0.8866144239118579
+          ]
+        }
+      },
+      "budget_diagnostic": {
+        "steps": 776,
+        "trimmed_steps": 0,
+        "admitted_fraction": 1.0
+      }
+    },
+    "measured_identity": {
+      "tokens_per_second": 3433.5128260571532,
+      "comparisons": {
+        "original_identity": {
+          "gain_percent": 1.4610034730514032,
+          "round_gains_percent": [
+            1.5520950744990047,
+            1.4513383489294984,
+            1.4770404693559946,
+            1.363760628875199
+          ]
+        },
+        "measured_frozen": {
+          "gain_percent": 0.5831153604108907,
+          "round_gains_percent": [
+            0.6603280760682395,
+            0.5965905857077569,
+            0.6107284233577426,
+            0.4650549065201126
+          ]
+        }
+      },
+      "budget_diagnostic": {
+        "steps": 780,
+        "trimmed_steps": 156,
+        "admitted_fraction": 0.9356492251882812
+      }
+    },
+    "measured_frozen": {
+      "tokens_per_second": 3413.6075560536574,
+      "comparisons": {
+        "original_identity": {
+          "gain_percent": 0.8727986894170536,
+          "round_gains_percent": [
+            0.8859170394883265,
+            0.8496786603254591,
+            0.8610533484589622,
+            0.8945455941782976
+          ]
+        },
+        "measured_frozen": {
+          "gain_percent": 0.0,
+          "round_gains_percent": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "budget_diagnostic": {
+        "steps": 788,
+        "trimmed_steps": 188,
+        "admitted_fraction": 0.9141368639586352
+      }
+    },
+    "measured_online100": {
+      "tokens_per_second": 3409.833901351694,
+      "comparisons": {
+        "original_identity": {
+          "gain_percent": 0.7612864242184658,
+          "round_gains_percent": [
+            0.7324303250817454,
+            0.7589753476322514,
+            0.7696680825618252,
+            0.7840770368465089
+          ]
+        },
+        "measured_frozen": {
+          "gain_percent": -0.11054740886283776,
+          "round_gains_percent": [
+            -0.15213889005590842,
+            -0.08993911919017439,
+            -0.09060510758440721,
+            -0.10948912716861603
+          ]
+        }
+      },
+      "budget_diagnostic": {
+        "steps": 788,
+        "trimmed_steps": 184,
+        "admitted_fraction": 0.9153439153439153
+      }
+    }
+  }
+}

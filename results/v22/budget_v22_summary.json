@@ -1,0 +1,22 @@
+{
+  "run_url": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/3g8dgpgv",
+  "passed": true,
+  "policy_responds": true,
+  "methods": {
+    "identity": {
+      "steps": 165,
+      "trimmed_steps": 0,
+      "admitted_fraction": 1.0
+    },
+    "very_low": {
+      "steps": 292,
+      "trimmed_steps": 288,
+      "admitted_fraction": 0.1568684096489961
+    },
+    "very_high": {
+      "steps": 165,
+      "trimmed_steps": 0,
+      "admitted_fraction": 1.0
+    }
+  }
+}
