@@ -1,11 +1,17 @@
 """Audit v39 budget replay and report all exploratory timing comparisons."""
-import argparse,json
+import argparse,json,hashlib
 from pathlib import Path
 import numpy as np
 
 
 def analyze(root):
     x=json.loads((root/'fresh_v39_results.json').read_text());assert x['status']=='completed'
+    ref=json.loads((root/'cost_v29_ar.json').read_text())
+    assert len(x['parity_checks'])==78
+    for row in x['parity_checks']:
+        assert row['output_sha256']==hashlib.sha256(json.dumps(ref['outputs'][row['start']:row['start']+64]).encode()).hexdigest()
+    assert x['source_sha256']==hashlib.sha256((root/'pilot_fresh_v39.py').read_bytes()).hexdigest()
+    assert x['module_sha256']==hashlib.sha256((root/'fresh_confidence_v39.py').read_bytes()).hexdigest()
     costs=x['target_costs']['cost_tables'];diagnostic=[]
     for row in x['diagnostic']:
         cap=np.asarray(row['capacities']);anchors=sum(row['anchors']);n=row['requests']

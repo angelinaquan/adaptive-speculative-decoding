@@ -69,6 +69,8 @@ Measured-cost throughput was 6,250.80 tokens/s, versus 6,095.03 for fixed 7, 6,1
 
 The study has only four prompt batches per domain and four engine rounds, one model pair, and one hardware/backend configuration. The MBPP source expansion and numerical-precision qualifications above remain relevant. These results support a modest cost-model effect, not a substantial online-calibration contribution. Further tuning on these 768 prompts would be exploratory, not another fresh confirmation.
 
+A further pilot (v39) tested whether CPU budget selection suffers from stale confidence inputs. Synchronizing the latest existing host copy changed only **1 of 243** diagnostic budget decisions and made throughput **3.12% worse**; all four round differences were negative. The latest host values exactly matched current GPU confidence in the diagnostic, all 78 batch-level output checks matched the reference, and independent budget replay passed. Thus stale confidence is not a promising bottleneck in this workload. [All exploratory results](results/v39/) · [W&B run](https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/8ryeqsi7). These reused-prompt timings include synchronization overhead; the separate instrumented diagnostic is not speed evidence.
+
 Related work already covers nearby systems ideas: [DScale](https://arxiv.org/html/2609.37532) combines verification tiling and dynamic prefix allocation; [PolyGraph](https://arxiv.org/html/2610.23861) studies shape-dependent graph execution in a trace-driven prototype. Graph-aware verification is therefore not claimed as a new general idea here.
 
 ## Online calibration pilot (v18)
