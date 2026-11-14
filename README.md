@@ -316,3 +316,13 @@ The earlier +16.38% compares different fixed widths within one engine; native wi
 The initial v71 sweep failed during native width-1 initialization because a compiled candidate selector expected width 8. Separate vLLM/Inductor/Triton caches per configuration resolved this without changing model weights or relaxing output checks. Failure records are retained. The two engine orders reuse the same cache only for the same configuration; startup and warmup are excluded.
 
 [Compressed raw results, audit, and decision](results/v72/) · [Frozen protocol](experiments/fixed_v72_plan.json) · [W&B](https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/s8v4nq7d). These are exploratory reused-prompt results, not fresh confirmation or a significance claim.
+
+## Request-level allocation diagnostic (v73–v74)
+
+Independent draft widths 1–8 were evaluated at up to six teacher-trajectory anchors on 48 reused prompts. The token audit passed on **277 anchors**, with **376 independent first-anchor target verifications**. One short prompt had no complete width-8 comparison and is explicitly retained as censored; no replacement prompts were selected. Pre-draft features were invariant across widths, future perturbations did not affect the first-anchor predictions, and exact target cached/full replay passed.
+
+With a budget of at most three draft tokens per state, an exact hindsight allocation increased **accepted-prefix-plus-one reward by 20.99%** over fixed width 3. This uses future labels and **is not a deployable speedup**. Randomly permuting the oracle's selected widths reduced reward below fixed width 3, suggesting that matching widths to states matters. Equal draft-token budget does not guarantee equal runtime. Labels use HF FP32, whereas the serving tests use vLLM BF16.
+
+A prespecified Beta(1,1) history-only controller, updated only from each request's selected-width acceptance feedback, lost **2.00%** to fixed width 3 in a causal-feedback replay. Tests that changed unobserved labels and future labels left the appropriate decisions unchanged. EOS/output-boundary clipping made no numeric difference here. The fixed teacher anchors are not closed-loop trajectories under this policy, so this is a predictive diagnostic, not a serving result. No model was trained and no controller parameters were tuned.
+
+The next gate is predictive performance from past-only context features on disjoint prompts, with fixed width 3 and a frozen contextual predictor as controls. The hindsight opportunity alone does not justify a performance claim. [Label audit](results/v73/) · [History replay and decision](results/v74/) · [W&B labels](https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/t0pnc5bp).

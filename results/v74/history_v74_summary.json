@@ -1,0 +1,73 @@
+{
+  "scope": "Causal-feedback replay on exogenous teacher anchors; NOT closed-loop serving.",
+  "passed": true,
+  "gates": [
+    "Unobserved-label poisoning leaves choices andobservedfeedback identical",
+    "Future-label poisoning leaves currentandearlier choices identical",
+    "Allactualallocationbudgets exactly3*n",
+    "Rewards clippedatEOS/outputboundary"
+  ],
+  "input_sha256": "1a3ef644af5175e3cc963aa8be83144040949a81b31a53cdfa97cf8de151d772",
+  "source_sha256": "0e03159b7848d29a357d8ceef1570e85b2ad961d36a723372fd8236e855601d4",
+  "fixed3_reward": 848,
+  "history_reward": 831,
+  "hindsight_oracle_reward": 1026,
+  "history_gain_percent": -2.004716981132071,
+  "oracle_gain_percent": 20.99056603773586,
+  "groups": [
+    {
+      "offset": 0,
+      "states": 47,
+      "fixed3_reward": 119,
+      "history_reward": 119,
+      "oracle_reward": 133,
+      "oracle_budget_used": 93
+    },
+    {
+      "offset": 8,
+      "states": 46,
+      "fixed3_reward": 137,
+      "history_reward": 131,
+      "oracle_reward": 176,
+      "oracle_budget_used": 138
+    },
+    {
+      "offset": 16,
+      "states": 46,
+      "fixed3_reward": 142,
+      "history_reward": 139,
+      "oracle_reward": 179,
+      "oracle_budget_used": 138
+    },
+    {
+      "offset": 24,
+      "states": 46,
+      "fixed3_reward": 149,
+      "history_reward": 150,
+      "oracle_reward": 178,
+      "oracle_budget_used": 138
+    },
+    {
+      "offset": 32,
+      "states": 46,
+      "fixed3_reward": 153,
+      "history_reward": 142,
+      "oracle_reward": 180,
+      "oracle_budget_used": 138
+    },
+    {
+      "offset": 40,
+      "states": 46,
+      "fixed3_reward": 148,
+      "history_reward": 150,
+      "oracle_reward": 180,
+      "oracle_budget_used": 138
+    }
+  ],
+  "limitations": [
+    "No heldoutnewprompts; same48reusedprompts. No parameters fittedortuned.",
+    "Anchors fixed8tokensapart, notnextstatesfromchosenpolicy; thisisnotvalidclosedlooplatency estimation.",
+    "Beta/geometric model shares acceptanceacrosswidths heuristically; noncausalwidtheffects violateexactmodelassumptions.",
+    "No throughput ornoveltyclaim."
+  ]
+}

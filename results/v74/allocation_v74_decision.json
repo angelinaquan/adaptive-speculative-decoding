@@ -1,0 +1,10 @@
+{
+  "status": "hindsight_headroom_with_negative_simple_controller",
+  "hindsight_reward_gain_percent": 20.99056603773586,
+  "history_only_reward_gain_percent": -2.004716981132071,
+  "reward": "Acceptedprefix+1 clippedtoavailablecontinuation; clipping made no numericdifference inthissample. Notthroughput.",
+  "data": "48reusedprompts,277anchors,47promptswithcompletewidth8 comparisons; shortprompt13 retainedasEOS-censored.376independentfirstanchorverifications.",
+  "checks": "Token-levelreconstruction/sourcehashes/localvsremotev73 match; allocationDP matched120exhaustive cases; unobserved/future-labelpoisoning tests passed.",
+  "conclusion": "Perstateallocation haspotentialbut geometricpast-feedbackbaseline doesnotcaptureit. Do notclaim21%speedup.",
+  "next": "Test whetherpast-onlycontextfeatures predictwidth-specificacceptance ondisjointprompts beforeheadtraining/servingchanges. Need strongfixed3 andfrozencontextpredictor controls."
+}
