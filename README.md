@@ -2,7 +2,7 @@
 
 Experiments by **Angelina Quan** on confidence-based verification lengths for an open-weight LLM.
 
-**Updated validation result:** after testing every fixed proposal width from 1 through 7 on all 32 validation prompts, adaptive verification is **2.22% faster than the best fixed width at batch 8**, but **11.63% slower at batch 1** and **11.17% slower at batch 32**. These are descriptive validation measurements, not statistically established held-out gains. The earlier 11–15% improvements below compare against fixed length 7, not the strongest tuned baseline.
+**Latest validation result:** preserving the measured target-cost curve is **0.90% faster than the best fixed proposal width** (selected from 1–7) and **1.56% faster than the original cost model** at batch 32. All ten candidates passed greedy-output checks. These are validation measurements with unbalanced engine order; a fresh, balanced confirmation is running. Online calibration has not shown a speed benefit. Earlier 11–15% figures below used a weaker fixed-7 comparison in a different numerical configuration.
 
 This repository reproduces **vLLM's existing adaptive-verification implementation** with a released DSpark drafter. It does not claim that the scheduler is new, or that online calibration caused these gains. The broader project asks whether online confidence calibration under workload shifts can improve verification decisions; that contribution remains unproven.
 
@@ -24,7 +24,7 @@ The implementation reuses upstream IRLS with the pretrained confidence-head logi
 
 ## Measured-cost ablation (v24)
 
-Keeping the measured target-cost curve instead of applying the upstream nondecreasing envelope improved throughput **1.46%** over the original cost model on 144 reused validation prompts at batch 32 (last batch: 16), with identity confidence calibration in both cases. All four balanced timing rounds were positive (+1.36% to +1.55%), and every output matched the batch-invariant ordinary-decoding reference. The change trimmed drafts on 156 of 780 steps, versus no trimming in the original-policy comparison. This is a descriptive single-engine validation result; a sweep of all fixed proposal widths under the same configuration is pending.
+Keeping the measured target-cost curve instead of applying the upstream nondecreasing envelope improved throughput **1.46%** over the original cost model on 144 reused validation prompts at batch 32 (last batch: 16), with identity confidence calibration in both cases. All four balanced timing rounds were positive (+1.36% to +1.55%), and every output matched the batch-invariant ordinary-decoding reference. The change trimmed drafts on 156 of 780 steps, versus no trimming in the original-policy comparison. This is a descriptive single-engine validation result; the subsequent all-width sweep is reported below.
 
 The isolated online-calibration comparison remained negative: online updates were **0.11% slower** than frozen calibration with the same measured cost table. The positive result concerns the cost model, not online calibration.
 
@@ -33,6 +33,25 @@ Diagnostics found stable, nonmonotonic profile measurements: approximately 20.9 
 [Cost-model results](results/v24/) · [W&B](https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/hlrshalu) · [profiling diagnostic](results/v23/) · [confidence intervention](results/v22/).
 
 The frozen confirmation plan uses 384 unseen prompts (128 Alpaca, 128 GSM8K, 128 MBPP), four balanced engine orders, and two timed repeats per session. Its launch is conditional on completing and passing the all-width validation sweep. The confirmation implementation changes only the cost table; per-step calibration scoring and diagnostic budget logging are removed from both adaptive comparators. [Frozen plan](experiments/cost_v26_plan.json) · [manifest](experiments/cost_v26_manifest.json). These files describe planned work, not completed results.
+
+## Matched fixed-width sweep (v25)
+
+The same 144 validation prompts, batch size 32 (last batch 16), batch-invariant FP32 configuration, two warmups, and three timing repeats were used for all candidates. All outputs matched the reference. Separate engine order was not balanced, so this selects a baseline rather than establishing significance.
+
+| Method | Tokens/s |
+|---|---:|
+| Ordinary decoding | 1,174.56 |
+| Fixed 1 | 1,742.88 |
+| Fixed 2 | 2,401.22 |
+| Fixed 3 | 2,879.55 |
+| Fixed 4 | 2,658.22 |
+| Fixed 5 | 2,742.82 |
+| Fixed 6 | 2,927.76 |
+| Fixed 7 (best fixed) | 3,355.27 |
+| Original cost model | 3,333.25 |
+| Measured cost model | 3,385.34 |
+
+[Raw measurements and audited selection](results/v25/). The measured-cost policy passed the launch gate for the frozen 384-prompt confirmation. No held-out result is available yet. Fixed-4 teardown hung after its completed measurements and artifact upload; its worker was terminated to let the same sweep continue. Subsequent runners add bounded shutdown outside timing, and both source versions are preserved.
 
 ## Completed results
 

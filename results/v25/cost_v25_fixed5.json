@@ -1,0 +1,132 @@
+{
+  "status": "completed",
+  "method": "fixed5",
+  "run_url": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/nhwqqtjo",
+  "records": [
+    {
+      "repeat": 0,
+      "start": 0,
+      "seconds": 1.4764309651218355,
+      "tokens": 3135
+    },
+    {
+      "repeat": 0,
+      "start": 32,
+      "seconds": 1.4809960110578686,
+      "tokens": 3179
+    },
+    {
+      "repeat": 0,
+      "start": 64,
+      "seconds": 0.9325731850694865,
+      "tokens": 4096
+    },
+    {
+      "repeat": 0,
+      "start": 96,
+      "seconds": 0.9270547449123114,
+      "tokens": 4096
+    },
+    {
+      "repeat": 0,
+      "start": 128,
+      "seconds": 1.2179807019419968,
+      "tokens": 2048
+    },
+    {
+      "repeat": 1,
+      "start": 0,
+      "seconds": 1.4729217251297086,
+      "tokens": 3135
+    },
+    {
+      "repeat": 1,
+      "start": 32,
+      "seconds": 1.4813765799626708,
+      "tokens": 3179
+    },
+    {
+      "repeat": 1,
+      "start": 64,
+      "seconds": 0.9311673510819674,
+      "tokens": 4096
+    },
+    {
+      "repeat": 1,
+      "start": 96,
+      "seconds": 0.9287152078468353,
+      "tokens": 4096
+    },
+    {
+      "repeat": 1,
+      "start": 128,
+      "seconds": 1.2208778969943523,
+      "tokens": 2048
+    },
+    {
+      "repeat": 2,
+      "start": 0,
+      "seconds": 1.4738212218508124,
+      "tokens": 3135
+    },
+    {
+      "repeat": 2,
+      "start": 32,
+      "seconds": 1.482065456919372,
+      "tokens": 3179
+    },
+    {
+      "repeat": 2,
+      "start": 64,
+      "seconds": 0.930853822035715,
+      "tokens": 4096
+    },
+    {
+      "repeat": 2,
+      "start": 96,
+      "seconds": 0.9280478409491479,
+      "tokens": 4096
+    },
+    {
+      "repeat": 2,
+      "start": 128,
+      "seconds": 1.2213234510272741,
+      "tokens": 2048
+    }
+  ],
+  "config": {
+    "model": "/data/scene-rep/u/aquan/.cache/huggingface/hub/models--Qwen--Qwen3-4B/snapshots/1cfa9a7208912126459214e8b04321603b3df60c",
+    "dtype": "float32",
+    "max_model_len": 2048,
+    "max_num_seqs": 32,
+    "max_num_batched_tokens": 4096,
+    "gpu_memory_utilization": 0.65,
+    "enable_prefix_caching": false,
+    "attention_config": {
+      "backend": "TRITON_ATTN"
+    },
+    "compilation_config": {
+      "cudagraph_capture_sizes": [
+        1,
+        2,
+        4,
+        8,
+        16,
+        32,
+        64,
+        128,
+        256
+      ]
+    },
+    "speculative_config": {
+      "method": "dspark",
+      "model": "/data/scene-rep/u/aquan/.cache/huggingface/hub/models--deepseek-ai--dspark_qwen3_4b_block7/snapshots/3457dff1417cb84927f6098a5fcb7cee85c934b7",
+      "num_speculative_tokens": 5,
+      "draft_sample_method": "probabilistic",
+      "enable_adaptive_verification": false
+    }
+  },
+  "manifest_sha256": "ecb02a552d59ab1cbd813872fd21c55bc07bf073b9ecbd78e57b98e7a73bc993",
+  "source_sha256": "210df2062db830cc42d844e8a4d7be10b7b37033f906864dd1b76b8159dbe7c9",
+  "throughput": 2742.8164440377127
+}

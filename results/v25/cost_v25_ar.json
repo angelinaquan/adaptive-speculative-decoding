@@ -1,0 +1,125 @@
+{
+  "status": "completed",
+  "method": "ar",
+  "run_url": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/58ofcfpb",
+  "records": [
+    {
+      "repeat": 0,
+      "start": 0,
+      "seconds": 2.7364929881878197,
+      "tokens": 3135
+    },
+    {
+      "repeat": 0,
+      "start": 32,
+      "seconds": 2.747778648044914,
+      "tokens": 3179
+    },
+    {
+      "repeat": 0,
+      "start": 64,
+      "seconds": 2.807645912049338,
+      "tokens": 4096
+    },
+    {
+      "repeat": 0,
+      "start": 96,
+      "seconds": 2.806789043126628,
+      "tokens": 4096
+    },
+    {
+      "repeat": 0,
+      "start": 128,
+      "seconds": 2.9963497761636972,
+      "tokens": 2048
+    },
+    {
+      "repeat": 1,
+      "start": 0,
+      "seconds": 2.740146867930889,
+      "tokens": 3135
+    },
+    {
+      "repeat": 1,
+      "start": 32,
+      "seconds": 2.7493569490034133,
+      "tokens": 3179
+    },
+    {
+      "repeat": 1,
+      "start": 64,
+      "seconds": 2.805029226001352,
+      "tokens": 4096
+    },
+    {
+      "repeat": 1,
+      "start": 96,
+      "seconds": 2.805732588050887,
+      "tokens": 4096
+    },
+    {
+      "repeat": 1,
+      "start": 128,
+      "seconds": 2.999638839159161,
+      "tokens": 2048
+    },
+    {
+      "repeat": 2,
+      "start": 0,
+      "seconds": 2.735996429109946,
+      "tokens": 3135
+    },
+    {
+      "repeat": 2,
+      "start": 32,
+      "seconds": 2.7481976819690317,
+      "tokens": 3179
+    },
+    {
+      "repeat": 2,
+      "start": 64,
+      "seconds": 2.802918527973816,
+      "tokens": 4096
+    },
+    {
+      "repeat": 2,
+      "start": 96,
+      "seconds": 2.804846494924277,
+      "tokens": 4096
+    },
+    {
+      "repeat": 2,
+      "start": 128,
+      "seconds": 2.9944245249498636,
+      "tokens": 2048
+    }
+  ],
+  "config": {
+    "model": "/data/scene-rep/u/aquan/.cache/huggingface/hub/models--Qwen--Qwen3-4B/snapshots/1cfa9a7208912126459214e8b04321603b3df60c",
+    "dtype": "float32",
+    "max_model_len": 2048,
+    "max_num_seqs": 32,
+    "max_num_batched_tokens": 4096,
+    "gpu_memory_utilization": 0.65,
+    "enable_prefix_caching": false,
+    "attention_config": {
+      "backend": "TRITON_ATTN"
+    },
+    "compilation_config": {
+      "cudagraph_capture_sizes": [
+        1,
+        2,
+        4,
+        8,
+        16,
+        32,
+        64,
+        128,
+        256
+      ]
+    }
+  },
+  "manifest_sha256": "ecb02a552d59ab1cbd813872fd21c55bc07bf073b9ecbd78e57b98e7a73bc993",
+  "source_sha256": "210df2062db830cc42d844e8a4d7be10b7b37033f906864dd1b76b8159dbe7c9",
+  "throughput": 1174.560567815922
+}
