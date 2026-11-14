@@ -1,0 +1,15 @@
+{
+  "scope": "INSTRUMENTED_DIAGNOSTIC_NOT_SPEED_EVIDENCE",
+  "purpose": "Separate loss of accepted-prefix length from vocabulary-update span before selecting a new policy.",
+  "roles": [
+    "identity",
+    "recency4096"
+  ],
+  "details": "Full-vocabulary identity projectioncontrol andunchangedv58recency4096; same48prompts,b8,width7. Two warmups thenoneinstrumentedpass. CUDAevents aroundverifier andupdate, clonedcounts collectedafterevents. Alloutputs mustmatchv58AR.",
+  "limits": [
+    "GPUeventspan includes launchgaps, notjustkernelcost. Instrumentationchangesexecution; neverreportthroughputfromthisrun.",
+    "Labels are sampleracceptance beforeEOS/outputcap.",
+    "Identityprojectioncontrol isnotunmodifiednativeimplementation; priorv54verifiedprojectionidentity."
+  ],
+  "launch": "Onlyafterv58completeandaudited; skipifrecencycandidate>10%inbothrounds."
+}
