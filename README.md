@@ -2,7 +2,7 @@
 
 Experiments by **Angelina Quan** on confidence-based verification lengths for an open-weight LLM.
 
-**Held-out result:** preserving the measured target-cost curve improved throughput **1.25% over the tuned fixed-width baseline** (95% paired batch-and-round bootstrap interval **0.90–1.59%**) and **1.35% over the original adaptive cost model** (**1.07–1.63%**). All 384 prompts matched the ordinary-decoding reference in all 16 sessions. This is a small, confirmed gain in one model/backend/batch-size setting, mainly from conversational prompts. Online calibration has not shown a speed benefit. Earlier 11–15% figures used a weaker comparison in a different numerical configuration.
+**Latest fresh test (v38): the larger-gain target failed.** On 768 unseen prompts at batch 64, measured target costs improved throughput **2.56% over global fixed width 7** (95% paired batch-and-round bootstrap interval **0.85–4.27%**) and **3.17% over original adaptive verification** (**1.13–5.45%**). Against the stronger, prespecified domain-specific fixed baseline, the gain was only **1.24%** (**−1.20–3.94%**), so that advantage is not statistically established. All output and provenance checks passed. Online calibration still has no demonstrated speed benefit; earlier 11–15% figures are not supported as the final improvement.
 
 This repository reproduces **vLLM's existing adaptive-verification implementation** with a released DSpark drafter. It does not claim that the scheduler is new, or that online calibration caused these gains. The broader project asks whether online confidence calibration under workload shifts can improve verification decisions; that contribution remains unproven.
 
@@ -47,9 +47,27 @@ A stronger post-hoc comparator selects a separate fixed width per domain from th
 
 The next experiment (v37) keeps the native total budget but weights allocation toward requests with less already-generated progress, testing finite-batch tail behavior. It uses no future acceptance or response length. The first integration attempt (v36) passed 33 compiled-GPU allocation tests but failed live-manager binding before inference or timing; [the failure is preserved](results/v36/lag_v36_failed.json). The corrected v37 run passed all 33 GPU allocation checks and all output checks. It gave **−0.006%** and **+0.030%** overall for strengths 1 and 4, respectively, versus the shared-overhead identity control: no material improvement. [Plan](experiments/lag_v37_plan.json) · [all results](results/v37/).
 
-A fresh confirmation (v38) is now frozen before generation: 768 unused prompts, equal counts from chat/math/code, batch 64, four balanced engine orders, and two timed repeats per session. It retains the minimal target-cost-only method. Both fixed widths 3 and 7 run on every prompt; the stronger domain-specific comparator uses the previously selected width 3 for chat and 7 for math/code. The primary practical target remains at least 5% overall against that comparator, global fixed 7, and the original adaptive scheduler, with positive round gains and both bootstrap lower bounds above zero. V29's 4.68% exploratory result missed its 5% target; this independent confirmation is warranted by the larger effect, not by reclassifying v29 as a pass. A chat-only gain cannot substitute for primary mixed-workload success.
+The completed fresh confirmation (v38) was frozen before generation: 768 unused prompts, equal counts from chat/math/code, batch 64, four balanced engine orders, and two timed repeats per session. It retains the minimal target-cost-only method. Both fixed widths 3 and 7 run on every prompt; the stronger domain-specific comparator uses the previously selected width 3 for chat and 7 for math/code. The primary practical target remains at least 5% overall against that comparator, global fixed 7, and the original adaptive scheduler, with positive round gains and both bootstrap lower bounds above zero. V29's 4.68% exploratory result missed its 5% target; this independent confirmation is warranted by the larger effect, not by reclassifying v29 as a pass. A chat-only gain cannot substitute for primary mixed-workload success.
 
-The code source expands from MBPP's sanitized 257-test subset to its full official 500-test split (task IDs 11–510), excluding previously used task IDs across edited descriptions as well as normalized text. The [frozen plan](experiments/cost_v38_plan.json), [manifest](experiments/cost_v38_manifest.json), benchmark, and analyzer are published before inference. No v38 results are available yet.
+The code source expands from MBPP's sanitized 257-test subset to its full official 500-test split (task IDs 11–510), excluding previously used task IDs across edited descriptions as well as normalized text. The [frozen plan](experiments/cost_v38_plan.json), [manifest](experiments/cost_v38_manifest.json), benchmark, and analyzer are published before inference. The completed results follow; no changes were made to the frozen success criteria.
+
+## Fresh batch-64 confirmation (v38)
+
+The **5% mixed-workload target failed**. All four round gains were positive for each comparator, but the domain-specific comparison has an interval crossing zero. Local analysis exactly matched the remote audit; all 768 outputs matched the ordinary-decoding reference in all 16 sessions, and every warmup/timed pass enforced output equality. All eight adaptive target tables were independently reconstructed from their raw profiling samples and matched exactly across positions 0–512.
+
+| Comparator | Throughput gain | 95% batch-and-round interval |
+|---|---:|---:|
+| Global fixed width 7 | +2.56% | +0.85% to +4.27% |
+| Prespecified domain-specific fixed width | +1.24% | −1.20% to +3.94% |
+| Original adaptive policy | +3.17% | +1.13% to +5.45% |
+
+Measured-cost throughput was 6,250.80 tokens/s, versus 6,095.03 for fixed 7, 6,174.37 for the domain-specific comparator, and 6,058.87 for original adaptive. Domain changes against the prespecified domain baseline were **+2.12% chat, +0.25% math, and +1.05% code**. The exploratory 10.40% chat improvement against fixed 3 did not reproduce at that magnitude on fresh prompts. These are descriptive domain estimates, not separate confirmed successes.
+
+![Fresh confirmation results](docs/figures/cost_v38_confirmation.png)
+
+[All raw sessions, summary, and independent table audit](results/v38/) · [W&B complete audit](https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/az4k5l1i) · [Statistical analyzer](experiments/analyze_cost_v38.py) · [Independent table reconstruction](experiments/audit_cost_tables_v38.py).
+
+The study has only four prompt batches per domain and four engine rounds, one model pair, and one hardware/backend configuration. The MBPP source expansion and numerical-precision qualifications above remain relevant. These results support a modest cost-model effect, not a substantial online-calibration contribution. Further tuning on these 768 prompts would be exploratory, not another fresh confirmation.
 
 Related work already covers nearby systems ideas: [DScale](https://arxiv.org/html/2609.37532) combines verification tiling and dynamic prefix allocation; [PolyGraph](https://arxiv.org/html/2610.23861) studies shape-dependent graph execution in a trace-driven prototype. Graph-aware verification is therefore not claimed as a new general idea here.
 

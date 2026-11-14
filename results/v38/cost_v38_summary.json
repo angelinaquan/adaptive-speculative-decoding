@@ -1,0 +1,119 @@
+{
+  "scope": "Fresh768 prompts, equal256 chat/math/code, batch64, same model pair/H200/backend. Mixed workload is primary; chat is secondary and cannot replace primary success.",
+  "all_correctness_and_provenance_checks_passed": true,
+  "passed_statistical_criteria": false,
+  "passed_5_percent_practical_target": false,
+  "passed_primary_success": false,
+  "throughputs": {
+    "fixed3": 5951.098541073315,
+    "fixed7": 6095.033716854507,
+    "original": 6058.867953461526,
+    "measured": 6250.800888020105,
+    "domain_fixed": 6174.367491955862
+  },
+  "comparisons": {
+    "fixed7": {
+      "gain_percent": 2.555640844690621,
+      "round_gains_percent": [
+        2.529210380961655,
+        2.47418516101503,
+        2.5809271699570147,
+        2.638336359246063
+      ],
+      "stratified_batch_bootstrap_95": [
+        0.8558057306086198,
+        4.273950188180582
+      ],
+      "batch_and_round_bootstrap_95": [
+        0.8460360837101749,
+        4.271378388007455
+      ]
+    },
+    "domain_fixed": {
+      "gain_percent": 1.237914590665734,
+      "round_gains_percent": [
+        1.1796686318402916,
+        1.1776812238503798,
+        1.2399977577599364,
+        1.3544714049116946
+      ],
+      "stratified_batch_bootstrap_95": [
+        -1.1980830912154772,
+        3.931078715099502
+      ],
+      "batch_and_round_bootstrap_95": [
+        -1.1980395680947689,
+        3.9385435135420974
+      ]
+    },
+    "original": {
+      "gain_percent": 3.1678019067724605,
+      "round_gains_percent": [
+        2.661052581908585,
+        4.350583881666026,
+        2.827871869770626,
+        2.832239467783615
+      ],
+      "stratified_batch_bootstrap_95": [
+        1.2013167584788071,
+        5.154334030189159
+      ],
+      "batch_and_round_bootstrap_95": [
+        1.1347040840731732,
+        5.450674573184121
+      ]
+    }
+  },
+  "domain_gain_percent": {
+    "alpaca": {
+      "fixed3": 2.118131826710279,
+      "fixed7": 5.439865567530999,
+      "domain_fixed": 2.118131826710279,
+      "original": 5.681650176960584
+    },
+    "gsm8k": {
+      "fixed3": 9.006905252342046,
+      "fixed7": 0.25200667909599517,
+      "domain_fixed": 0.25200667909599517,
+      "original": 0.37378891866202135
+    },
+    "mbpp": {
+      "fixed3": 4.978840251747352,
+      "fixed7": 1.0511386133838396,
+      "domain_fixed": 1.0511386133838396,
+      "original": 2.613504308181702
+    }
+  },
+  "hashes": {
+    "manifest_sha256": "7d14dbbf40b88bfee46b2f4a2ca25a474281109caa7935dc337d33408bf6d9bd",
+    "plan_sha256": "9c554c4fcec56bfbb7f95276fba7a40c7e952c6a8bccf65a30aed0b04e578a6b",
+    "source_sha256": "91290e8a6bbbfc1aadeab1acdada0d90643a16a625e645cd16afde29fca00958",
+    "cost_source_sha256": "840ed9054753729b8adadf0eaae0e06f149f55e9f1581352eedc585a017992ac"
+  },
+  "runs": {
+    "fixed3-round0": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/z3xyokcm",
+    "fixed3-round1": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/doo3dwxh",
+    "fixed3-round2": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/hf0qx5fx",
+    "fixed3-round3": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/ohwqm8nb",
+    "fixed7-round0": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/5g5q9aqn",
+    "fixed7-round1": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/sy9167ak",
+    "fixed7-round2": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/fzuoz054",
+    "fixed7-round3": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/n4stqrkr",
+    "original-round0": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/38cr0jt4",
+    "original-round1": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/6x9byrlk",
+    "original-round2": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/iq05mc3p",
+    "original-round3": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/47mrkdlc",
+    "measured-round0": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/7suqe8sg",
+    "measured-round1": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/gllfdz64",
+    "measured-round2": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/p20rin7w",
+    "measured-round3": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/a7un7ii3"
+  },
+  "reference_run": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/c7sx2eqd",
+  "limitations": [
+    "One model pair, H200, batch64 and FP32 tensor/batch-invariant backend only; globally strict IEEE arithmetic not established.",
+    "Only four prompt batches per domain and four engine rounds; repeats are not independent workload samples.",
+    "Code source expands from sanitized MBPP257-test subset to official full500-test split, with task-ID and normalized-text overlap exclusions.",
+    "Domain-specific fixed baseline is assembled from prespecified choices, not selected on this fresh set.",
+    "A positive chat result does not replace mixed-workload primary success; no online-calibration benefit claim."
+  ]
+}
