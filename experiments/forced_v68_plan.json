@@ -1,0 +1,60 @@
+{
+  "scope": "Exploratory24reusedprompts,b8,cap64. BF16targetTRITON,draftFA3, isolatedForeSpark0.30. Untrainedheads bypassed byforcedbudgets. Notnovelmethod orlearnedpolicy.",
+  "indices": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39
+  ],
+  "manifest_sha256": "232a0575125149596c23ff01f996ae44a00c8f77391b95e4f606e685ced72464",
+  "widths": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "warmup_passes": 2,
+  "timed_passes_per_order": 2,
+  "orders": [
+    "ascending",
+    "descending"
+  ],
+  "gates": [
+    "Fresh AR exactgreedy equality for everywarmup andtimedoutput",
+    "Allwidthwarmup beforecustomtiming",
+    "Targettensorversion/pointerinvariance",
+    "Nologging/nosyncdebugmode",
+    "Frozenforcedbudgetcode bypassesuntrainedheads"
+  ],
+  "limitations": [
+    "BF16mustpassparity; no relaxedoutputcriterion",
+    "Native8versuscustomengine orderunbalanced; diagnosticnotconfirmedgain",
+    "Same max8graphengine widths, notindependentlyoptimizedperwidthengines",
+    "No onlinecontroller evaluated; its overheadnotincluded",
+    "No >10% claimunlessfreshstrongbaselineconfirmation"
+  ]
+}

@@ -8,12 +8,12 @@
 \author{Angelina Quan}\date{November 14, 2026}
 \begin{document}\maketitle
 \begin{abstract}
-We study whether feedback from speculative verification can improve inference efficiency under workload shifts. The original online-confidence-calibration pilot did not produce a meaningful speedup. A separate verification-cost ablation produced a modest, expanded result: 2.56\% higher throughput than a tuned global fixed width at batch 64. We then proposed prefix-weighted draft-vocabulary selection, which gives more weight to tokens whose exclusion would destroy a longer accepted prefix. This report describes that objective, the closest literature, matched baselines, and completed experiments. The proposed static rule has not improved end-to-end speed. A deployable recency baseline gains 1.99\% in a small reused-prompt screen; a 17.59\% oracle result uses future tokens and is not a deployable method.
+We study whether feedback from speculative verification can improve inference efficiency under workload shifts. The original online-confidence-calibration pilot did not produce a meaningful speedup. A separate verification-cost ablation produced a modest, expanded result: 2.56\% higher throughput than a tuned global fixed width at batch 64. We then proposed prefix-weighted draft-vocabulary selection, which gives more weight to tokens whose exclusion would destroy a longer accepted prefix. This report describes that objective, the closest literature, matched baselines, and completed experiments. The proposed static rule has not improved end-to-end speed. A deployable recency baseline gains 3.66\% in a small reused-prompt screen; a 17.59\% oracle result uses future tokens and is not a deployable method. We also describe a next-stage test of online calibration for pre-draft length decisions, separating that proposal from completed results. Evidence in this report extends through experiment v67.
 \end{abstract}
 \section{Research question and current contribution}
 The original proposal was to calibrate a released drafter's confidence estimates online as the workload shifts from conversation to mathematics and code. The intended chain was: better acceptance forecasts, better verification-length decisions, and higher throughput. These are separate claims. Better probability scores may not change a discrete scheduling decision, and any benefit must exceed update overhead. Our matched serving pilot found online updates 0.24\% slower than frozen calibration.
 
-The current method hypothesis targets draft computation directly: \textbf{select a compact draft vocabulary by the accepted-prefix loss it prevents, rather than token frequency alone.} This is an extension of the original proposal, not a demonstrated success of online confidence calibration. Its static version is implemented; an online prefix-weighted version remains a research proposal.
+A second, implemented method hypothesis targets draft computation directly: \textbf{select a compact draft vocabulary by the accepted-prefix loss it prevents, rather than token frequency alone.} This is an extension of the original proposal, not a demonstrated success of online confidence calibration. Its static version is implemented; an online prefix-weighted version remains a research proposal.
 
 The reportable contribution so far is an empirical study of where these interventions help or fail, a modest cost-table ablation, and an explicit prefix-loss selection objective with correctness checks. We do not claim a new state-of-the-art decoding algorithm or a confirmed gain above 10\% over strong tuned baselines.
 \section{Literature and positioning}
@@ -22,13 +22,36 @@ The reportable contribution so far is an empirical study of where these interven
 \textbf{Adaptive speculation.} SpecDec++~\cite{specdec} predicts acceptance to adapt candidate length. BanditSpec~\cite{bandit} learns speculative configurations online. DSpark~\cite{dspark} combines a parallel draft backbone, a lightweight sequential component, and confidence-scheduled verification. We reuse its released drafter and implementation. ForeSpark~\cite{forespark} predicts acceptance before drafting and jointly allocates draft and verification budgets. Adaptive lengths and online configuration selection are therefore existing ideas.
 
 \textbf{Calibration.} Gupta and Ramdas~\cite{ops} study online Platt scaling and calibeating. OPS/TOPS are relevant controls for the original proposal. Guarantees for those algorithms do not automatically extend to dependent, partially observed prefix forecasts.
-\newpage
 \textbf{Closest vocabulary methods.} VocabTrim~\cite{vocabtrim} prunes the draft LM head using frequent target tokens. NanoSpec~\cite{nanospec} builds small context-dependent vocabularies with GPU-resident state and asynchronous weight gathering. EvoSpec~\cite{evospec} adapts vocabulary and lightweight draft parameters from verification feedback. Static pruning, dynamic selection, and feedback-based adaptation already exist.
 
 SpecVocab~\cite{specvocab} also selects a vocabulary subset at each decoding step. Thus, per-step vocabulary prediction is not itself a new contribution.
 
 Our candidate distinction is the \emph{selection objective}: value tokens by the accepted-prefix length lost when they are excluded, rather than count all occurrences equally. This is a research hypothesis, not an established novelty claim. A stronger novelty assessment requires comparing the detailed objectives of these and other acceptance-aware methods. Published speedups on different systems are not matched comparisons with our experiments.
 \section{Proposed method}
+\subsection{Original proposal: online acceptance calibration}
+Our proposed statistical intervention is to update acceptance forecasts using past verification feedback while the workload changes. The drafter and target weights stay fixed. A frozen source-domain calibrator is the starting point, not evidence that online updates will help.
+
+Let $z_{t,j}$ be the released confidence-head logit for draft position $j$. A simple implementation estimates conditional acceptance as
+\[
+ q_{t,j}=\sigma(a_t z_{t,j}+b_t),\qquad
+ s_{t,j}=\prod_{r=1}^{j}q_{t,r},
+\]
+where $s_{t,j}$ estimates the probability of accepting the whole prefix through $j$. Conditional scores must be trained and assessed on positions reached by the accepted prefix; positions after the first rejection are not valid acceptance observations along the generated trajectory. The probability forecast is recorded before the verifier supplies its label. Updates use only the observed prefix and first rejection, when one occurs. Neither rejected suffixes nor unverified positions receive invented labels.
+
+The scheduler uses these forecasts together with measured costs. For a single request, an illustrative objective is
+\[
+ (d_t,k_t)\in\arg\max_{1\leq k\leq d\leq D}
+ \frac{1+\sum_{j=1}^{k}s_{t,d,j}}
+ {C_{\mathrm{draft}}(d)+C_{\mathrm{verify}}(k)+C_{\mathrm{update}}}.
+\]
+Here the numerator approximates tokens advanced per round, including a correction or bonus token, away from stopping boundaries. Real batch scheduling must account for shared costs and cannot optimize requests independently. Changing the cost model and changing the calibrator must be separate ablations.
+
+\textbf{Next-stage hypothesis, not a completed method.} Calibrate forecasts \emph{before drafting}, with separate acceptance predictions for each candidate draft width $d$. This can change draft computation as well as verification work. ForeSpark already supplies the pre-draft estimator and joint scheduler; our candidate contribution would be studying lightweight online calibration of those forecasts under workload shifts. We do not claim the estimator, variable draft lengths, or scheduler as new.
+
+The new DFlash2 checkpoint has no pretrained confidence or pre-draft prediction heads. The added heads are currently untrained, so this branch requires source-only training and validation before evaluating calibration. Its correctness smoke test is not evidence of a useful acceptance predictor. Online feedback also reveals only the chosen width: comparing all widths requires independently generated offline labels, or an explicitly designed exploration scheme. Standard OPS guarantees do not resolve this selection issue automatically.
+
+\textbf{Status.} The original post-draft calibration pilot is implemented and negative for meaningful speedup. The pre-draft online-calibration extension is proposed, not yet trained or evaluated end to end. Prefix-weighted vocabulary selection below is a separate implemented exploration.
+
 \subsection{Prefix-loss objective}
 Suppose a full-vocabulary greedy draft has an accepted prefix of length $L$. Removing its first token can lose all $L$ accepted tokens; removing its last token loses only one. Frequency assigns these occurrences equal value. Our rule assigns greater weight to tokens that protect more downstream acceptance.
 
@@ -58,12 +81,14 @@ Baseline & Purpose and evidence status \\
 Ordinary target decoding & Exact greedy output reference; also reports throughput without speculation. \\
 Tuned fixed widths 1--7 & Completed controls in the expanded cost study. Vocabulary candidates still need joint width/budget tuning. \\
 Native adaptive verification & Direct comparator in the cost study; required in final vocabulary evaluation. \\
-Frozen calibration; OPS/TOPS & Controls for the original hypothesis. Code exists, but no expanded serving advantage over these methods is established. \\
+Frozen calibration; OPS/TOPS & Controls for the original hypothesis. No expanded serving advantage over these methods is established; the IRLS serving pilot is not an OPS/TOPS result. \\
 Full-vocabulary identity & Uses the compact projection code with every token retained; checks implementation effects. Completed. \\
 Accepted-token frequency & Same source accepted tokens and vocabulary budget as the prefix rule. Completed. \\
 Prompt/source frequency & Uses prompt tokens and source token counts, including target correction/bonus outputs. Completed. \\
 Online recency & Adds recent target candidates after verification. Completed deployable baseline inspired by NanoSpec; not a faithful paper reproduction. \\
 Future-output oracle & Uses future target outputs to construct the vocabulary. Diagnostic only; excluded from deployable comparisons. \\
+Source-fitted and domain-fitted calibration & Required controls for the next-stage study. Domain fits use separate labeled calibration sets and known domain identity; they are privileged references, not online deployment claims. \\
+Frozen ForeSpark-style scheduler & Required matched control for pre-draft adaptation. Compatibility and label checks passed; a matched trained-head serving comparison is not complete. \\
 \bottomrule
 \end{tabularx}
 
@@ -106,6 +131,7 @@ Prompt + source frequency (v55) & 64 & 8,192 & $-$7.17\% \\
 Prompt + prefix weights (v55) & 64 & 8,192 & $-$6.70\% \\
 Online recency (v58) & 8 & 1,024 & $-$20.39\% \\
 Online recency (v58) & 8 & 4,096 & +1.99\% \\
+Online recency (v60) & 8 & 16,384 & +3.66\% \\
 \midrule
 Future-output oracle (v56) & 64 & 4,096 & +8.03\% \\
 Future-output oracle (v57) & 8 & 1,024 & +17.59\% \\
@@ -119,13 +145,19 @@ Static prefix weighting beats matched frequency by only 0.0023\%; the prompt-aug
 
 \textbf{What limits the deployable recency baseline.} An instrumented diagnostic (v59) compared full-vocabulary identity with recency-4,096 on the same 48 prompts. Mean accepted-prefix length fell from 2.602 to 2.153 for conversation, 5.157 to 4.956 for mathematics, and 4.632 to 4.177 for code. The measured update-event span was roughly 0.46--0.48 ms per step. This points to an acceptance-versus-projection-cost tradeoff. Instrumented spans include launch gaps and are not an independent end-to-end speed measurement.
 
-\textbf{Pending evidence.} At this report's live status check on November 14, job 3055496 was running and its audit 3055500 was pending. It compares native width 7, prompt-only 16,384, recency 16,384, and recency 4,096 on the existing 48-prompt workload. No result is included here. The source prior has only 5,738 observed token types, so its 16,384-token source initialization includes 10,646 zero-frequency fill entries. This is a coverage diagnostic, not a large-corpus frequency baseline or a novel algorithm.
+\textbf{Completed larger-vocabulary screen (v60).} On the same 48 reused prompts at batch 8, recency-16,384 gained 3.66\% over native width 7, versus 1.96\% for recency-4,096 and $-1.81$\% for prompt-only-16,384. Both engine orders were positive for recency-16,384 (3.62\% and 3.69\%). All correctness gates passed. This is an exploratory baseline result, not fresh confirmation or evidence for prefix weighting. The source prior contains only 5,738 observed types; the larger initialization includes 10,646 zero-frequency fill entries.
+
+\textbf{What the oracle actually measures (v61).} Future-token vocabulary selection also improves the drafter's choices: accepted-prefix means changed from 2.602 to 2.888 for conversation, 5.157 to 5.202 for mathematics, and 4.632 to 4.855 for code. Thus the 17.59\% oracle gain mixes reduced projection cost with improved acceptance. It does not isolate computational savings available to a deployable vocabulary policy.
+
+\textbf{Limits of coarse routing (v62).} Hindsight selection of one width per whole batch and generation gained only 0\%, 0.65\%, and 0\% over the best global widths in the reused batch-32, batch-64, and batch-128 records. Selection and evaluation used the same records, making this optimistic. It says little about per-step or per-request control, but gives no reason to expand this coarse routing rule.
+
+\textbf{New pre-draft groundwork (v63--v67).} An isolated ForeSpark environment passed 76 CPU scheduler tests. Loading the released DFlash2 backbone and extending it with untrained heads preserved all serialized backbone weights; synthetic full-width outputs matched. A real-context label check then used three reused prompts, nine anchors, and eight independently drafted widths, with 24 separate target verifications. Token-label reconstruction, target replay, and future-input perturbation checks passed. Different widths can change early draft choices, so truncating a full-width draft is not a valid substitute for independent width labels. This is a small correctness gate, not closed-loop serving parity, learned calibration, or a timing result. The earlier tokenizer-harness failure is retained in v66.
 
 \textbf{A defensible final comparison.} Freeze the candidate, vocabulary budget, width, and update rule using validation data. Compare with independently tuned native fixed/adaptive decoding and matched prompt/recency controls on fresh prompts. Include ordered domain shifts if claiming online adaptation. Charge selection, gathering, and update costs; report tokens/s, acceptance, and per-domain results. For online methods, score predictions before feedback and resample whole independent streams rather than treating dependent tokens or batches as independent. Repeated prompt timing alone cannot establish a new-workload benefit.
 
-\textbf{Proposed method versus established result.} Our method proposal is prefix-loss-weighted vocabulary selection. Its mathematical motivation and implementation are concrete, but its completed static experiments are negative. Online recency is a prior-inspired baseline, not a new contribution. The strongest expanded positive result currently remains the modest verification-cost ablation. The honest project conclusion is that improved calibration or source-fit prefix coverage does not automatically produce faster decoding; acceptance and runtime overhead must be evaluated jointly.
+\textbf{Proposed method versus established result.} The original method proposal is online acceptance calibration under workload shifts; the implemented alternative is prefix-loss-weighted vocabulary selection. The prefix objective and implementation are concrete, but its completed static experiments are negative. Pre-draft adaptation remains a next-stage hypothesis. Online recency is a prior-inspired baseline, not a new contribution. The strongest expanded positive result currently remains the modest verification-cost ablation. The honest project conclusion is that improved calibration or source-fit prefix coverage does not automatically produce faster decoding; acceptance and runtime overhead must be evaluated jointly.
 
-\textbf{Reproducibility.} \href{https://github.com/angelinaquan/adaptive-verification-for-speculative-decoding}{Repository: code, plans, raw results, and analyzers}. W\&B audit runs: \href{https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/vxw4i4v4}{expanded batch 32}; \href{https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/az4k5l1i}{expanded batch 64}; \href{https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/dij1tz6j}{static vocabulary}; \href{https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/qpv8opau}{prompt vocabulary}; \href{https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/amrk97ic}{batch-8 oracle}; \href{https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/xp0unh2g}{online recency}; \href{https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/gkx5aht9}{acceptance diagnostic}. Completed v54--v59 analyses were independently recomputed locally and matched the remote summaries.
+\textbf{Reproducibility.} \href{https://github.com/angelinaquan/adaptive-verification-for-speculative-decoding}{Repository: code, plans, raw results, and analyzers}. W\&B audit runs: \href{https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/vxw4i4v4}{expanded batch 32}; \href{https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/az4k5l1i}{expanded batch 64}; \href{https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/dij1tz6j}{static vocabulary}; \href{https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/qpv8opau}{prompt vocabulary}; \href{https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/amrk97ic}{batch-8 oracle}; \href{https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/xp0unh2g}{online recency}; \href{https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/gkx5aht9}{acceptance diagnostic}. Completed v54--v61 analyses were independently recomputed locally and matched the remote summaries. Additional W\&B records: \href{https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/7v6j6ei1}{larger-vocabulary screen}; \href{https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/60d426bm}{oracle acceptance audit}; \href{https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/16e7ipqo}{real-width label checks}.
 \newpage
 \begin{thebibliography}{10}\small
 \bibitem{leviathan} Leviathan et al. \href{https://arxiv.org/abs/2211.17192}{Fast Inference from Transformers via Speculative Decoding}. ICML, 2023.
