@@ -1,5 +1,5 @@
 {
-  "scope": "Next gate: real-context greedy labels for independently re-drafted widths; no throughput or newmethod claim. Not launched.",
+  "scope": "Real-context greedy label smoke test on3reusedprompts, widths1..8 independently re-drafted. No training, throughput, ornewmethodclaim.",
   "prerequisite": "v65 complete: releasedRedHatAI DFlash2 fullwidthbackbone/candidate scores preserved exactly when addinguntrainedheads.",
   "models": {
     "target": "Qwen/Qwen3-4B pinnedexistingmodel_paths.json",
