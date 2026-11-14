@@ -1,0 +1,20 @@
+{
+  "evidence": {
+    "v54": "Static4096 loses24.84% despite gates passing.",
+    "v55": "Prompt-only8192 best loses6.70%; prefixselection only.51%overfrequency. Independent inputs/source reconstruction passed."
+  },
+  "literature": {
+    "url": "https://arxiv.org/html/2605.26444v2",
+    "section": "4.5",
+    "finding": "NanoSpec ablates fixed prompt/prefill candidates against generation-updated candidates and asynchronous gathering. Our v55 is not a NanoSpec reproduction."
+  },
+  "decision": {
+    "if_oracle_materially_positive": "Test a matched generation-time target-candidate/recency baseline before attributing gains to prefix weighting. Include all GPU gathering/selection costs. No novelty claim for dynamic vocabulary.",
+    "if_oracle_not_material": "Do not keep tuning small static vocabularies in batch64 configuration; profile the draft components or test a materially different serving regime."
+  },
+  "limits": [
+    "Oracle uses future outputs and cannot satisfy deployable goal.",
+    "Oracle is not a universal upper bound on every possible policy.",
+    "No >10% verified method exists yet."
+  ]
+}

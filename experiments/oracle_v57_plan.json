@@ -1,0 +1,34 @@
+{
+  "roles": [
+    "native3",
+    "oracle3",
+    "native7",
+    "oracle7"
+  ],
+  "orders": [
+    [
+      "native3",
+      "oracle3",
+      "native7",
+      "oracle7"
+    ],
+    [
+      "oracle7",
+      "native7",
+      "oracle3",
+      "native3"
+    ]
+  ],
+  "manifest_sha256": "232a0575125149596c23ff01f996ae44a00c8f77391b95e4f606e685ced72464",
+  "priors_sha256": "a2e18b56d42226c005272487063d30ae48101863763a49cb3af9e5885e15f3e7",
+  "oracle_sha256": "28080e586d8cd2ca50dffcdf30ac30412e9c0dde610f46f8bac31db704ab0f39",
+  "scope": "NONDEPLOYABLE ORACLE atbatch8 on48reusedvalidation prompts; futuretargettokens, notmethodsuccess.",
+  "limits": [
+    "Width3 and7 only; no all-width tuned result.",
+    "48 reused prompts,2reverseorders; no significance.",
+    "Future outputs cannot be used by realpolicy.",
+    "Oracle is not universal upperbound."
+  ],
+  "rationale": "V56 b64 oracle only8.03%; test whether lower concurrency offersmaterialheadroom. Width3 is a necessarystrongcontrol from priorlowbatchscreens.",
+  "success": "Oracle must exceed10%over besttestednativewidth inbothorders tojustify implementingonlinevocab inthisregime."
+}

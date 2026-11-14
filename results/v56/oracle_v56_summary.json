@@ -1,0 +1,48 @@
+{
+  "NONDEPLOYABLE_ORACLE_DIAGNOSTIC": true,
+  "all_checks_passed": true,
+  "scope": "NONDEPLOYABLE ORACLE: contains future target output tokens. Diagnostic feasibility only; never count as method success.",
+  "throughputs": {
+    "native": 6096.256254688611,
+    "oracle4096": 6585.8919650592425
+  },
+  "comparisons": {
+    "native": {
+      "native": {
+        "gain_percent": 0.0,
+        "round_gains": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "oracle4096": {
+      "native": {
+        "gain_percent": 8.03174423637547,
+        "round_gains": [
+          7.873331885169765,
+          8.190628259716703
+        ]
+      }
+    }
+  },
+  "runs": {
+    "native-0": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/x3olfr9u",
+    "native-1": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/k84t0zeu",
+    "oracle4096-0": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/9846mawp",
+    "oracle4096-1": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/eg32op4x"
+  },
+  "hashes": {
+    "manifest_sha256": "e23bcb83c93f7a1fbac1eb2c2768adf5d3c6539d0c3054f1bda11f96fbb87430",
+    "plan_sha256": "ebdcd99d742cd20d4c920cf44b1e35bacc30b6196c490898fb3b6781893ba80e",
+    "source_sha256": "f39f5a7f44814dd9ddf8243ddcaa084fee0324644720159c8df45bf6c960058e",
+    "active_module_sha256": "e61b8209ef380ad946f6ebbbde8070afb2d0c2c9a0680daecf7bb3a261b31ef9",
+    "selector_sha256": "70bb34c05968eb2b7fb35eae7ea0e1cb9830484da397b2ff89a76e1513ab2189",
+    "priors_sha256": "a2e18b56d42226c005272487063d30ae48101863763a49cb3af9e5885e15f3e7"
+  },
+  "limitations": [
+    "Not a formal upper bound on all pruning policies; generation trajectories may change.",
+    "Contains future answers; no deployment, novelty or achieved-goal claim.",
+    "B64, width7, greedy only."
+  ]
+}
