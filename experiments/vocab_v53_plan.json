@@ -1,0 +1,45 @@
+{
+  "scope": "Exploratory full-projection vocabulary restriction,192reusedvalidation prompts; notfreshconfirmation.",
+  "roles": [
+    "native",
+    "identity",
+    "prefix4096",
+    "frequency4096"
+  ],
+  "orders": [
+    [
+      "native",
+      "identity",
+      "prefix4096",
+      "frequency4096"
+    ],
+    [
+      "frequency4096",
+      "prefix4096",
+      "identity",
+      "native"
+    ]
+  ],
+  "manifest_sha256": "e23bcb83c93f7a1fbac1eb2c2768adf5d3c6539d0c3054f1bda11f96fbb87430",
+  "vocab_files": {
+    "identity": "vocab_v53_identity.json",
+    "prefix4096": "vocab_v52_prefix_4096.json",
+    "frequency4096": "vocab_v52_frequency_4096.json"
+  },
+  "vocab_hashes": {
+    "identity": "a8783d447f062a54cab926bba3bd260e23939bf0fe772a063871281649a180c5",
+    "prefix4096": "ad9f1d1d7fc3fa772951ae115760d5e5b51bde2e8c0eb9b3855466f154ccd032",
+    "frequency4096": "f12204fbc4e19f440b5b725cc8d015adb4c07e5f386a8838bba5fd2a9a16a4f7"
+  },
+  "source_fit_sha256": "53050e121f31e825094f797a27e10bb77d34f987e9f99ab43fd4e7714d11ee3f",
+  "method": "Prefix-weighted active draft vocabulary compared with frequency-based active vocabulary, both4096. Remove bothfull draft projections; no targetweight mutation. Fixed7greedy to isolatevocabulary; nativefixed7 wasbesttestedcheapstaticcontrol inv50.",
+  "selection": "Budget4096 selected using source-only loss: smaller2048discardedtoo manyacceptedprefix tokens. No v53 generation/timing inspected.",
+  "correctness": "FreshAR outputs; exact output equality everywarmup/timedpass. Full-vocabidentity control distinguishes projectionreplacement from pruning. Stoponfailure.",
+  "success": "Exploratorycandidate should exceed10%vsnative and improvevsfrequency control inbothreverseorders. Not significance; laterwidth/budget/context-vocab retuning andfreshconfirmation required.",
+  "limitations": [
+    "One sourcechat corpus, reusedvalidation, oneH200/modelpair.",
+    "Source-weighted loss is optimistic and predicts single frozenblocks, notclosed-loop speed.",
+    "Vocabularypruning and adaptationare existingideas; objective novelty not established.",
+    "Prototype retains fullweights forpossiblefutureupdates; no memorysavingclaim."
+  ]
+}

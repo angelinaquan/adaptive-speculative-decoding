@@ -1,0 +1,70 @@
+{
+  "source_only": true,
+  "states": 7055,
+  "accepted_tokens": 19018,
+  "unique_accepted_tokens": 4984,
+  "source_sha256": "a72830f060e3f6dc7af53d0118c4629ae279b4becf1af9381ff043493fe90594",
+  "scope": "Source fit only, not held-out calibration quality or timing evidence. Zero-frequency ties filled by token id, explicitly reported.",
+  "fits": [
+    {
+      "source": "prefix_v52 source-only full-width greedy collection",
+      "source_sha256": "a72830f060e3f6dc7af53d0118c4629ae279b4becf1af9381ff043493fe90594",
+      "method": "prefix",
+      "budget": 1024,
+      "zero_weight_fill": 0,
+      "source_mean_positive_prefix_loss": 1.4066619418851878,
+      "selection": "Rank by source weights descending, break ties by token id. No validation/test outcomes used.",
+      "limitation": "Static fit; source loss is optimistic. Prefix loss describes a frozen block and does not predict end-to-end speed."
+    },
+    {
+      "source": "prefix_v52 source-only full-width greedy collection",
+      "source_sha256": "a72830f060e3f6dc7af53d0118c4629ae279b4becf1af9381ff043493fe90594",
+      "method": "prefix",
+      "budget": 2048,
+      "zero_weight_fill": 0,
+      "source_mean_positive_prefix_loss": 0.8374202693125443,
+      "selection": "Rank by source weights descending, break ties by token id. No validation/test outcomes used.",
+      "limitation": "Static fit; source loss is optimistic. Prefix loss describes a frozen block and does not predict end-to-end speed."
+    },
+    {
+      "source": "prefix_v52 source-only full-width greedy collection",
+      "source_sha256": "a72830f060e3f6dc7af53d0118c4629ae279b4becf1af9381ff043493fe90594",
+      "method": "prefix",
+      "budget": 4096,
+      "zero_weight_fill": 0,
+      "source_mean_positive_prefix_loss": 0.1258681785967399,
+      "selection": "Rank by source weights descending, break ties by token id. No validation/test outcomes used.",
+      "limitation": "Static fit; source loss is optimistic. Prefix loss describes a frozen block and does not predict end-to-end speed."
+    },
+    {
+      "source": "prefix_v52 source-only full-width greedy collection",
+      "source_sha256": "a72830f060e3f6dc7af53d0118c4629ae279b4becf1af9381ff043493fe90594",
+      "method": "frequency",
+      "budget": 1024,
+      "zero_weight_fill": 0,
+      "source_mean_positive_prefix_loss": 1.4598157335223245,
+      "selection": "Rank by source weights descending, break ties by token id. No validation/test outcomes used.",
+      "limitation": "Static fit; source loss is optimistic. Prefix loss describes a frozen block and does not predict end-to-end speed."
+    },
+    {
+      "source": "prefix_v52 source-only full-width greedy collection",
+      "source_sha256": "a72830f060e3f6dc7af53d0118c4629ae279b4becf1af9381ff043493fe90594",
+      "method": "frequency",
+      "budget": 2048,
+      "zero_weight_fill": 0,
+      "source_mean_positive_prefix_loss": 0.9715095676824946,
+      "selection": "Rank by source weights descending, break ties by token id. No validation/test outcomes used.",
+      "limitation": "Static fit; source loss is optimistic. Prefix loss describes a frozen block and does not predict end-to-end speed."
+    },
+    {
+      "source": "prefix_v52 source-only full-width greedy collection",
+      "source_sha256": "a72830f060e3f6dc7af53d0118c4629ae279b4becf1af9381ff043493fe90594",
+      "method": "frequency",
+      "budget": 4096,
+      "zero_weight_fill": 0,
+      "source_mean_positive_prefix_loss": 0.32841956059532246,
+      "selection": "Rank by source weights descending, break ties by token id. No validation/test outcomes used.",
+      "limitation": "Static fit; source loss is optimistic. Prefix loss describes a frozen block and does not predict end-to-end speed."
+    }
+  ]
+}

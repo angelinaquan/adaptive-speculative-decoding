@@ -1,0 +1,215 @@
+{
+  "scope": "Exploratory draft-compute headroom screen, reused192prompts, batch64. Existing vLLM optimizations are baselines, NOT novel method.",
+  "all_output_and_provenance_checks_passed": true,
+  "throughputs": {
+    "fixed3_prob": 5859.421687681464,
+    "fixed7_prob": 6087.809512175818,
+    "adaptive_prob": 6072.714021826355,
+    "fixed3_greedy": 5867.39086165282,
+    "fixed7_greedy": 6108.4726985545185,
+    "adaptive_greedy": 6076.501804490255,
+    "adaptive_top64": 5867.151970941915,
+    "adaptive_top256": 6111.665760133535
+  },
+  "best_tested_fixed": "fixed7_greedy",
+  "comparisons": {
+    "fixed3_prob": {
+      "adaptive_prob": {
+        "gain_percent": -3.512306579533986,
+        "round_gains_percent": [
+          -3.5200445063271912,
+          -3.5045636348185694
+        ]
+      },
+      "fixed7_greedy": {
+        "gain_percent": -4.0771404435021585,
+        "round_gains_percent": [
+          -4.097388804579182,
+          -4.056878951685638
+        ]
+      }
+    },
+    "fixed7_prob": {
+      "adaptive_prob": {
+        "gain_percent": 0.24857897630627956,
+        "round_gains_percent": [
+          0.27973881934220124,
+          0.21742330155845035
+        ]
+      },
+      "fixed7_greedy": {
+        "gain_percent": -0.3382709131791617,
+        "round_gains_percent": [
+          -0.3203437070364856,
+          -0.35619572117883136
+        ]
+      }
+    },
+    "adaptive_prob": {
+      "adaptive_prob": {
+        "gain_percent": 0.0,
+        "round_gains_percent": [
+          0.0,
+          0.0
+        ]
+      },
+      "fixed7_greedy": {
+        "gain_percent": -0.5853947212799304,
+        "round_gains_percent": [
+          -0.5984085453790033,
+          -0.5723745470996855
+        ]
+      }
+    },
+    "fixed3_greedy": {
+      "adaptive_prob": {
+        "gain_percent": -3.3810773804853866,
+        "round_gains_percent": [
+          -3.370021874737872,
+          -3.392135749455827
+        ]
+      },
+      "fixed7_greedy": {
+        "gain_percent": -3.946679453257562,
+        "round_gains_percent": [
+          -3.948263921237294,
+          -3.9450945749225586
+        ]
+      }
+    },
+    "fixed7_greedy": {
+      "adaptive_prob": {
+        "gain_percent": 0.588841769917714,
+        "round_gains_percent": [
+          0.6020110308316173,
+          0.5756695329818928
+        ]
+      },
+      "fixed7_greedy": {
+        "gain_percent": 0.0,
+        "round_gains_percent": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "adaptive_greedy": {
+      "adaptive_prob": {
+        "gain_percent": 0.06237380272291482,
+        "round_gains_percent": [
+          0.07750057192879023,
+          0.04724422792115046
+        ]
+      },
+      "fixed7_greedy": {
+        "gain_percent": -0.5233860515056254,
+        "round_gains_percent": [
+          -0.5213717434953358,
+          -0.5254007331141342
+        ]
+      }
+    },
+    "adaptive_top64": {
+      "adaptive_prob": {
+        "gain_percent": -3.385011218140932,
+        "round_gains_percent": [
+          -3.3873803136257763,
+          -3.3826408503826455
+        ]
+      },
+      "fixed7_greedy": {
+        "gain_percent": -3.9505902624351275,
+        "round_gains_percent": [
+          -3.9655184857435577,
+          -3.9356540222349468
+        ]
+      }
+    },
+    "adaptive_top256": {
+      "adaptive_prob": {
+        "gain_percent": 0.6414222399931946,
+        "round_gains_percent": [
+          0.6722519968852536,
+          0.610596330330071
+        ]
+      },
+      "fixed7_greedy": {
+        "gain_percent": 0.05227266677922948,
+        "round_gains_percent": [
+          0.06982063811040717,
+          0.03472688525005818
+        ]
+      }
+    }
+  },
+  "domain_gain_vs_native": {
+    "fixed3_prob": {
+      "alpaca": 0.03732630884931698,
+      "gsm8k": -2.3673065034284235,
+      "mbpp": -9.213805582534063
+    },
+    "fixed7_prob": {
+      "alpaca": 0.25265176875508555,
+      "gsm8k": 0.20215612097105318,
+      "mbpp": 0.29075757645335987
+    },
+    "adaptive_prob": {
+      "alpaca": 0.0,
+      "gsm8k": 0.0,
+      "mbpp": 0.0
+    },
+    "fixed3_greedy": {
+      "alpaca": 0.1444780982168492,
+      "gsm8k": -2.250364087581247,
+      "mbpp": -9.04213439584608
+    },
+    "fixed7_greedy": {
+      "alpaca": 0.5930284910374617,
+      "gsm8k": 0.4911804133269637,
+      "mbpp": 0.683936509963301
+    },
+    "adaptive_greedy": {
+      "alpaca": 0.02087332866866909,
+      "gsm8k": 0.0903835621400173,
+      "mbpp": 0.09276278971814822
+    },
+    "adaptive_top64": {
+      "alpaca": -1.252115855393987,
+      "gsm8k": -7.491692918236859,
+      "mbpp": -1.9132297145410426
+    },
+    "adaptive_top256": {
+      "alpaca": 2.1600454801355973,
+      "gsm8k": -1.031340171051509,
+      "mbpp": 0.26301799964612016
+    }
+  },
+  "runs": {
+    "fixed3_prob-0": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/g08e1809",
+    "fixed3_prob-1": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/67pdx4dx",
+    "fixed7_prob-0": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/iz7d8uxd",
+    "fixed7_prob-1": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/uty6jn5s",
+    "adaptive_prob-0": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/fuhva14q",
+    "adaptive_prob-1": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/cljzqapl",
+    "fixed3_greedy-0": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/awb4x972",
+    "fixed3_greedy-1": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/0pc75oqj",
+    "fixed7_greedy-0": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/14kt6ppy",
+    "fixed7_greedy-1": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/yep0ucxe",
+    "adaptive_greedy-0": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/5a89odog",
+    "adaptive_greedy-1": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/5n6wkxj1",
+    "adaptive_top64-0": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/f2g6bdwl",
+    "adaptive_top64-1": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/kt0g3az2",
+    "adaptive_top256-0": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/hnxz2txx",
+    "adaptive_top256-1": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/fzt7k461"
+  },
+  "hashes": {
+    "manifest_sha256": "e23bcb83c93f7a1fbac1eb2c2768adf5d3c6539d0c3054f1bda11f96fbb87430",
+    "plan_sha256": "5637f46d38a43fd623595656fe7a1a969b79a76e55497eff8158c10ca896052e",
+    "source_sha256": "72669b0473fdced25af777f07bf0f0ba412ba26db962a4760d16b969976c52c4"
+  },
+  "limitations": [
+    "Two reversed engine orders and one prompt batch per domain; no significance or fresh-test claim.",
+    "Existing greedy and top-k options are baseline optimizations, not a proposed adaptive method.",
+    "Fixed widths and top-k combinations not fully retuned; no superiority claim over best achievable static configuration."
+  ]
+}

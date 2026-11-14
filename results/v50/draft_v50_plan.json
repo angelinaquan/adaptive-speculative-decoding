@@ -1,0 +1,44 @@
+{
+  "scope": "Exploratory draft-compute headroom screen, reused192prompts, batch64. Existing vLLM optimizations are baselines, NOT novel method.",
+  "roles": [
+    "fixed3_prob",
+    "fixed7_prob",
+    "adaptive_prob",
+    "fixed3_greedy",
+    "fixed7_greedy",
+    "adaptive_greedy",
+    "adaptive_top64",
+    "adaptive_top256"
+  ],
+  "orders": [
+    [
+      "fixed3_prob",
+      "fixed7_prob",
+      "adaptive_prob",
+      "fixed3_greedy",
+      "fixed7_greedy",
+      "adaptive_greedy",
+      "adaptive_top64",
+      "adaptive_top256"
+    ],
+    [
+      "adaptive_top256",
+      "adaptive_top64",
+      "adaptive_greedy",
+      "fixed7_greedy",
+      "fixed3_greedy",
+      "adaptive_prob",
+      "fixed7_prob",
+      "fixed3_prob"
+    ]
+  ],
+  "manifest_sha256": "e23bcb83c93f7a1fbac1eb2c2768adf5d3c6539d0c3054f1bda11f96fbb87430",
+  "batch": 64,
+  "prompts": 192,
+  "methods": "Full-vocab probabilistic vs greedy drafting; built-in top-k Markov correction64/256; targetgreedy unchanged. Nativecosttable for adaptive methods.",
+  "correctness": "FreshARreference; allwarmup andtimedoutputtokens identical, no silentfiltering. Stop onfailure.",
+  "timing": "Two fullwarmup passes, two timedpasses; independentengine sessions, two reverseorders. Exploratoryonly; two rounds are not robust significance evidence.",
+  "selection": "Reportallroles anddomains. Headroom target >10percent vs fastest optimizedfixedwidthcontrol and nativeadaptive; candidates must later retune fixedwidth1..7 includingcandidate pruning beforeconfirmation.",
+  "proposed_next_method": "Adaptive drafting effort: choose inexpensive vs richer draft computation using pastverifiedfeedback and pre-decisionfeatures. First quantifycost/acceptance tradeoff and compareexistingcheapstaticconfigs; no novelalgorithm orspeedclaim fromthisscreen.",
+  "stop": "Ifcheapstaticconfigs have no meaningfulheadroom, profile actualkernelcosts beforeimplementing adaptiveeffort. Do not rerun confidence-onlycalibration."
+}
