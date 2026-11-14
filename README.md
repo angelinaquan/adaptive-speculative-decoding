@@ -2,7 +2,18 @@
 
 Experiments by **Angelina Quan** on confidence-based verification lengths for an open-weight LLM.
 
-**Latest fresh test (v38): the larger-gain target failed.** On 768 unseen prompts at batch 64, measured target costs improved throughput **2.56% over global fixed width 7** (95% paired batch-and-round bootstrap interval **0.85–4.27%**) and **3.17% over original adaptive verification** (**1.13–5.45%**). Against the stronger, prespecified domain-specific fixed baseline, the gain was only **1.24%** (**−1.20–3.94%**), so that advantage is not statistically established. All output and provenance checks passed. Online calibration still has no demonstrated speed benefit; earlier 11–15% figures are not supported as the final improvement.
+**Expanded result:** keeping the measured verification-cost curve improves throughput over globally tuned fixed widths and native adaptive verification in two balanced studies. The gains are modest; online calibration did not cause them.
+
+| Batch | Prompts | vs tuned global fixed | vs native adaptive |
+|---|---:|---:|---:|
+| 32 | 384 | **+1.25%** [0.90, 1.59] | **+1.35%** [1.07, 1.63] |
+| 64 | 768 | **+2.56%** [0.85, 4.27] | **+3.17%** [1.13, 5.45] |
+
+Brackets give 95% paired batch-and-round bootstrap intervals. Every output matched its ordinary-decoding reference across all 16 sessions in each study. At batch 64, improvement over the stronger domain-specific fixed baseline is **+1.24% [−1.20, 3.94]**, which is not statistically established. The larger 5% target and exploratory 10–15% effects were not confirmed.
+
+[Report-ready CSV](reports/cost_evidence.csv) · [LaTeX table](reports/cost_evidence_table.tex) · [Claims and limitations](reports/cost_evidence.json) · [Table-generation script](scripts/summarize_cost_evidence.py).
+
+**Current scope:** finish this successful cost-model ablation. A targeted batch-128 sweep is running with all fixed widths 1–7 retuned. If it remains positive against the strong comparators, choices will be frozen for a balanced expansion on the existing 768-prompt suite. That is a cross-load replication on reused prompts, not a new unseen test. New stochastic and calibration branches are deferred.
 
 This repository reproduces **vLLM's existing adaptive-verification implementation** with a released DSpark drafter. It does not claim that the scheduler is new, or that online calibration caused these gains. The broader project asks whether online confidence calibration under workload shifts can improve verification decisions; that contribution remains unproven.
 

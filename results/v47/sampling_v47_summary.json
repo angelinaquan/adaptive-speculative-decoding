@@ -1,0 +1,14 @@
+{
+  "status": "completed",
+  "run_url": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/vi4uhb21",
+  "runtime": {
+    "target_dtype": "torch.float32",
+    "draft_dtype": "torch.float32",
+    "block_verification": false,
+    "draft_parameter_dtypes": [
+      "torch.float32"
+    ]
+  },
+  "all_eight_passes_identical": true,
+  "scope": "Scheduling diagnostic only; retained for provenance. Further stochastic exploration deferred by user direction."
+}
