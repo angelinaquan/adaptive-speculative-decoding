@@ -31,3 +31,4 @@ finally:
  art=wandb.Artifact('cost-v25-'+a.method,'validation-selection')
  for path in [out,Path(__file__),r/'cost_policy_v24.py',r/'head_calibration_v18_manifest.json']:art.add_file(str(path))
  run.log_artifact(art);run.finish()
+ if 'llm' in globals():llm.llm_engine.engine_core.shutdown(timeout=10)
