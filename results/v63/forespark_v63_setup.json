@@ -1,0 +1,13 @@
+{
+  "status": "completed",
+  "scope": "Isolated official dependency setup and CPU scheduler tests only; no model or speed result",
+  "commit": "5d457ddab73a76f28db34acc577abfbd9e7c6eee",
+  "versions": {
+    "torch": "2.13.0",
+    "vllm": "0.30.1.dev0+gced6857af.d20261114.precompiled",
+    "speculators": "0.8.0.dev207",
+    "transformers": "5.15.1",
+    "numpy": "2.3.5",
+    "forespark": "0.1.0"
+  }
+}
