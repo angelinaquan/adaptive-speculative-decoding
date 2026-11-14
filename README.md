@@ -187,9 +187,10 @@ After installing the pinned environment, downloading the models with `scripts/do
 ```bash
 python scripts/run_cost_study.py --phase validation --run-dir .local/cost-validation-1
 python scripts/run_cost_study.py --phase confirmation --run-dir .local/cost-confirmation-1
+python scripts/run_cost_study.py --phase confirmation-v38 --run-dir .local/cost-confirmation-v38-1
 ```
 
-The confirmation command reproduces the published fixed-width selection on the frozen prompts; these prompts are not a new unseen test for later research. Each phase runs independently in its own directory. The validation runner requires its outputs to match the published batch-invariant reference; another GPU/backend may fail that numerical gate. Set `WANDB_MODE=offline` to retain logs locally. `--stage-only` copies inputs without starting inference or downloading anything; existing run directories are rejected. Staging and overwrite protection have been checked locally; the complete GPU run of this packaging wrapper has not been tested separately from the underlying cluster scripts.
+The confirmation command reproduces the published fixed-width selection on the frozen prompts; these prompts are not a new unseen test for later research. Each phase runs independently in its own directory. The validation runner requires its outputs to match the published batch-invariant reference; another GPU/backend may fail that numerical gate. Set `WANDB_MODE=offline` to retain logs locally. `--stage-only` copies inputs without starting inference or downloading anything; existing run directories are rejected. Staging and overwrite protection have been checked locally for all three phases; the complete GPU run of this packaging wrapper has not been tested separately from the underlying cluster scripts.
 
 ## Reproduce
 

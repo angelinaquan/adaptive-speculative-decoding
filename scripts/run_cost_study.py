@@ -10,7 +10,7 @@ import sys
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--phase', choices=['validation', 'confirmation'], required=True)
+    parser.add_argument('--phase', choices=['validation', 'confirmation', 'confirmation-v38'], required=True)
     parser.add_argument('--run-dir', type=Path, required=True, help='New directory; existing directories are never overwritten')
     parser.add_argument('--model-paths', type=Path, help='Defaults to experiments/model_paths.json from download_models.py')
     parser.add_argument('--stage-only', action='store_true', help='Copy inputs without importing vLLM, downloading models, or starting inference')
@@ -26,6 +26,11 @@ def main():
         'head_calibration_v18_manifest.json',
     ]]
     files += [repo/'results/v18/head_calibration_v18_ar.json']
+    if args.phase == 'confirmation-v38':
+        files = [repo/'experiments'/name for name in [
+            'cost_only_v26.py', 'benchmark_cost_v38.py', 'run_cost_v38.py',
+            'analyze_cost_v38.py', 'cost_v38_manifest.json', 'cost_v38_plan.json',
+        ]]
     if args.phase == 'confirmation':
         files += [repo/'experiments'/name for name in [
             'cost_only_v26.py', 'benchmark_cost_v26.py', 'run_cost_v26.py',
@@ -45,7 +50,8 @@ def main():
     for path in files:
         shutil.copy2(path, work/path.name)
     (work/'model_paths.json').write_text(json.dumps(models, indent=2)+'\n')
-    entry = 'run_cost_v25.py' if args.phase == 'validation' else 'run_cost_v26.py'
+    version = {'validation': 'v25', 'confirmation': 'v26', 'confirmation-v38': 'v38'}[args.phase]
+    entry = f'run_cost_{version}.py'
     scratch = work/'scratch'
     (scratch/'tmp').mkdir(parents=True)
     (scratch/'cache').mkdir()
@@ -68,7 +74,7 @@ def main():
     if args.stage_only:
         return
     subprocess.run([sys.executable, str(work/entry)], cwd=work, env={**os.environ, **overrides}, check=True)
-    analyzer = 'analyze_cost_v25.py' if args.phase == 'validation' else 'analyze_cost_v26.py'
+    analyzer = f'analyze_cost_{version}.py'
     if (work/'cost_v26_not_launched.json').exists():
         print('Confirmation skipped: published validation gate failed.', flush=True)
         return
