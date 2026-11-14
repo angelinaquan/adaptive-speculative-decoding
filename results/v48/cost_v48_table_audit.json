@@ -1,0 +1,9 @@
+{
+  "passed": true,
+  "checked": [
+    "original",
+    "measured"
+  ],
+  "positions": 1025,
+  "scope": "Independent target-table reconstruction from raw medians at/below graphlimit. No draft/above-limit reconstruction."
+}

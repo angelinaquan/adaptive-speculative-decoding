@@ -73,6 +73,6 @@
     "One model pair and H200; FP32 tensor dtype does not establish globally strict IEEE arithmetic.",
     "V26 and v38 used disjoint prompts at their respective launches; MBPP expanded from sanitized to full official test subset in v38.",
     "The exploratory 10\u201315% chat effects did not reproduce at that magnitude against stronger baselines.",
-    "Batch128 follow-up is pending; no extrapolation from smaller batches."
+    "Batch128 validation passed output checks but lost4.10% to tunedfixed3; no expansion launched. This unbalanced reused-prompt sweep is exploratory."
   ]
 }

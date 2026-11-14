@@ -1,0 +1,62 @@
+{
+  "selected_domain_fixed": {
+    "alpaca": "fixed3",
+    "gsm8k": "fixed3",
+    "mbpp": "fixed3"
+  },
+  "positive_against_strong_baselines": false,
+  "scope": "Targeted batch128 extension of the already positive cost-table ablation. Reused384-prompt validation only; no newmethod or stochastic experiment.",
+  "all_correctness_checks_passed": true,
+  "throughputs": {
+    "ar": 6941.161876647365,
+    "fixed1": 7761.641856409132,
+    "fixed2": 7944.3651987217045,
+    "fixed3": 8824.371464991691,
+    "fixed4": 7026.649860233607,
+    "fixed5": 6954.612365150448,
+    "fixed6": 7086.839192035522,
+    "fixed7": 7585.676988198328,
+    "original": 8288.800120237975,
+    "measured": 8462.3812378279
+  },
+  "selected_fixed": "fixed3",
+  "measured_gain_percent": {
+    "ar": 21.9159182311895,
+    "original": 2.094164596466852,
+    "fixed3": -4.102164427233024,
+    "domain_fixed": -4.102164427233024
+  },
+  "meets_exploratory_5_percent_gate": false,
+  "domain_gain_percent": {
+    "alpaca": {
+      "original": 5.822486941823213,
+      "fixed3": 9.546747180118809
+    },
+    "gsm8k": {
+      "original": -0.9524894772722448,
+      "fixed3": -7.401188757193788
+    },
+    "mbpp": {
+      "original": 1.407466763472054,
+      "fixed3": -14.308620618128431
+    }
+  },
+  "hashes": {
+    "manifest_sha256": "c30b984c4152e7db933dd59067ec2df511e2b60c34eb0a81b7425ed02bad378b",
+    "source_sha256": "4c529292bcfebafff274ae6a2ae0a5eb15ec80677dcb6530b7d280588bd05cfa",
+    "cost_source_sha256": "840ed9054753729b8adadf0eaae0e06f149f55e9f1581352eedc585a017992ac"
+  },
+  "runs": {
+    "ar": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/osb5mf9h",
+    "fixed1": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/unf8lt99",
+    "fixed2": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/5cp9eyec",
+    "fixed3": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/4nm3jwkb",
+    "fixed4": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/6xr0ly7v",
+    "fixed5": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/fm7bwfvy",
+    "fixed6": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/ys8715x1",
+    "fixed7": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/kddq3l2m",
+    "original": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/fg4w913c",
+    "measured": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/66m8y23w"
+  },
+  "limitation": "Unbalanced engine order and reused prompts. Selection only; expanded balanced cross-load benchmark required. Existing v38 suite is reused, not new unseen data."
+}

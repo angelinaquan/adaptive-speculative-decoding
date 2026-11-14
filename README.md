@@ -13,7 +13,7 @@ Brackets give 95% paired batch-and-round bootstrap intervals. Every output match
 
 [Two-page results report](output/pdf/cost_study.pdf) · [Editable LaTeX](reports/cost_study.tex) · [Report-ready CSV](reports/cost_evidence.csv) · [LaTeX table](reports/cost_evidence_table.tex) · [Claims and limitations](reports/cost_evidence.json) · [Table-generation script](scripts/summarize_cost_evidence.py).
 
-**Current scope:** finish this successful cost-model ablation. A targeted batch-128 sweep is running with all fixed widths 1–7 retuned. If it remains positive against the strong comparators, choices will be frozen for a balanced expansion on the existing 768-prompt suite. That is a cross-load replication on reused prompts, not a new unseen test. New stochastic and calibration branches are deferred.
+**Completed scope:** the two expanded studies above are packaged in the results report. The targeted batch-128 sweep passed all output checks but did not qualify for expansion: measured costs gained **2.09%** over native adaptive and lost **4.10%** against the best fixed width (3). The sweep reused 384 prompts and had unbalanced engine order, so these are exploratory estimates. All widths 1–7 were tested; the negative comparison is retained. [Batch-128 results](results/v48/). New stochastic and calibration branches remain deferred.
 
 This repository reproduces **vLLM's existing adaptive-verification implementation** with a released DSpark drafter. It does not claim that the scheduler is new, or that online calibration caused these gains. The broader project asks whether online confidence calibration under workload shifts can improve verification decisions; that contribution remains unproven.
 
