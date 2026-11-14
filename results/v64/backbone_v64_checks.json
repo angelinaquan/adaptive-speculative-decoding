@@ -1,0 +1,27 @@
+{
+  "status": "failed",
+  "scope": "Released DFlash2 -> ForeSpark head extension compatibility. No training/speed claim.",
+  "source_sha256": "9360f91d9f417ed5cdafa0a44882fbe6628277d732a93ed9941d6f63974852f7",
+  "model": "RedHatAI/Qwen3-4B-speculator.dflash2",
+  "revision": "27aa911ddb040c61adeeade08e92949e24c9e17b",
+  "checks": [],
+  "forespark_commit": "5d457ddab73a76f28db34acc577abfbd9e7c6eee",
+  "target_path": "/data/scene-rep/u/aquan/.cache/huggingface/hub/models--Qwen--Qwen3-4B/snapshots/1cfa9a7208912126459214e8b04321603b3df60c",
+  "checkpoint_tensor_count": 83,
+  "target_owned_parameters": [
+    "verifier_lm_head.weight",
+    "verifier_norm.weight"
+  ],
+  "new_head_parameters": [
+    "confidence_head.proj.bias",
+    "confidence_head.proj.weight",
+    "fore_d_predictor.anchor_projection.weight",
+    "fore_d_predictor.context_projection.weight",
+    "fore_d_predictor.fusion_bias",
+    "fore_d_predictor.output_projection.bias",
+    "fore_d_predictor.output_projection.weight"
+  ],
+  "passed": false,
+  "error": "RuntimeError('The size of tensor a (9) must match the size of tensor b (36) at non-singleton dimension 1')",
+  "traceback": "Traceback (most recent call last):\n  File \"/data/scene-rep/u/aquan/speculative-tonight-20261109/check_backbone_v64.py\", line 64, in <module>\n    scores=base.candidate_selector.score_candidates(logits,hidden,base._predecessor_ids(batch[1],indices),ids)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/aquan-forespark-v63/ForeSpark/.venv/src/speculators/src/speculators/models/dflash2/model_definitions.py\", line 296, in score_candidates\n    transition_scores = self.transition_scores(\n                        ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/aquan-forespark-v63/ForeSpark/.venv/src/speculators/src/speculators/models/dflash2/model_definitions.py\", line 283, in transition_scores\n    context = self.context(hidden_states, predecessor_ids)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/aquan-forespark-v63/ForeSpark/.venv/src/speculators/src/speculators/models/dflash2/model_definitions.py\", line 274, in context\n    return predecessor * projected_hidden.to(predecessor.dtype)\n           ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\nRuntimeError: The size of tensor a (9) must match the size of tensor b (36) at non-singleton dimension 1\n"
+}
