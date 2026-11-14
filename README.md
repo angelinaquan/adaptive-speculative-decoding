@@ -2,11 +2,11 @@
 
 Experiments by **Angelina Quan** on confidence-based verification lengths for an open-weight LLM.
 
-**Latest validation result:** preserving the measured target-cost curve is **0.90% faster than the best fixed proposal width** (selected from 1–7) and **1.56% faster than the original cost model** at batch 32. All ten candidates passed greedy-output checks. These are validation measurements with unbalanced engine order; a fresh, balanced confirmation is running. Online calibration has not shown a speed benefit. Earlier 11–15% figures below used a weaker fixed-7 comparison in a different numerical configuration.
+**Held-out result:** preserving the measured target-cost curve improved throughput **1.25% over the tuned fixed-width baseline** (95% paired batch-and-round bootstrap interval **0.90–1.59%**) and **1.35% over the original adaptive cost model** (**1.07–1.63%**). All 384 prompts matched the ordinary-decoding reference in all 16 sessions. This is a small, confirmed gain in one model/backend/batch-size setting, mainly from conversational prompts. Online calibration has not shown a speed benefit. Earlier 11–15% figures used a weaker comparison in a different numerical configuration.
 
 This repository reproduces **vLLM's existing adaptive-verification implementation** with a released DSpark drafter. It does not claim that the scheduler is new, or that online calibration caused these gains. The broader project asks whether online confidence calibration under workload shifts can improve verification decisions; that contribution remains unproven.
 
-**Held-out correctness update:** the fresh 96-prompt run stopped before speculative timing: fixed width 3 at batch 8 differed from ordinary greedy decoding on one prompt (index 88, GSM8K item 901), starting at output token 26. Both outputs reached the 128-token cap. The cause is under investigation; no held-out speedup is established. [Preserved outputs](results/v16/incomplete/) · [failed correctness run](https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/nue79syr).
+**Earlier v16 correctness failure (preserved):** the fresh 96-prompt run stopped before speculative timing: fixed width 3 at batch 8 differed from ordinary greedy decoding on one prompt (index 88, GSM8K item 901), starting at output token 26. Both outputs reached the 128-token cap. That run established no speedup; the subsequent numerical diagnostics and fresh v26 comparison are reported below. [Preserved outputs](results/v16/incomplete/) · [failed correctness run](https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/nue79syr).
 
 The diagnostic reproduced the same single mismatch in two complete repeats. At the first divergence, the target log-probability gap between ` a` and ` enough` changes from +0.000469 in ordinary decoding to −0.002220 in speculative execution. This is consistent with numerical sensitivity between execution paths, but does not establish the root cause or satisfy the strict output-equality gate. [Diagnostic outputs and summary](results/v19/).
 
@@ -26,7 +26,7 @@ The implementation reuses upstream IRLS with the pretrained confidence-head logi
 
 ## Measured-cost ablation (v24)
 
-The [vLLM team's August 2026 description](https://vllm.ai/blog/2026-08-14-dspark-adaptive-verification) already explains profiled budget selection and acknowledges that measured step costs can genuinely decrease as batches grow. It deliberately enforces monotonicity to smooth the profile. Our experiment tests that existing design choice on this model/backend; the nonmonotonic-cost phenomenon and adaptive scheduler are prior work. The current contribution is an empirical ablation, with confirmation still pending.
+The [vLLM team's August 2026 description](https://vllm.ai/blog/2026-08-14-dspark-adaptive-verification) already explains profiled budget selection and acknowledges that measured step costs can genuinely decrease as batches grow. It deliberately enforces monotonicity to smooth the profile. Our experiment tests that existing design choice on this model/backend; the nonmonotonic-cost phenomenon and adaptive scheduler are prior work. The current contribution is an empirical ablation, with a completed held-out confirmation below.
 
 
 
@@ -40,9 +40,9 @@ Diagnostics found stable, nonmonotonic profile measurements: approximately 20.9 
 
 [Cost-model results](results/v24/) · [W&B](https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/hlrshalu) · [profiling diagnostic](results/v23/) · [confidence intervention](results/v22/).
 
-The frozen confirmation plan uses 384 unseen prompts (128 Alpaca, 128 GSM8K, 128 MBPP), four balanced engine orders, and two timed repeats per session. Its launch is conditional on completing and passing the all-width validation sweep. The confirmation implementation changes only the cost table; per-step calibration scoring and diagnostic budget logging are removed from both adaptive comparators. [Frozen plan](experiments/cost_v26_plan.json) · [manifest](experiments/cost_v26_manifest.json). These files describe planned work, not completed results.
+The frozen confirmation plan uses 384 unseen prompts (128 Alpaca, 128 GSM8K, 128 MBPP), four balanced engine orders, and two timed repeats per session. It launched after passing the all-width validation sweep. The confirmation implementation changes only the cost table; per-step calibration scoring and diagnostic budget logging are removed from both adaptive comparators. [Frozen plan](experiments/cost_v26_plan.json) · [manifest](experiments/cost_v26_manifest.json). The original frozen files are preserved; completed results follow below.
 
-An additional CPU-only exploratory check fitted a shared monotone transformation directly to prefix-survival probabilities on 256 old conversational calibration prompts, then scored 128 old chat/math validation prompts before feedback updates. It did not beat frozen baselines on the chat-to-math stream: frozen prefix mapping Brier 0.112531, frozen conditional mapping 0.112511, frozen OPS 0.112444; lower is better. All four online learning rates were worse than frozen OPS on that stream. These are previously examined temperature-1 traces, not fresh tests or greedy-serving speed evidence. [All exploratory scores and fit controls](results/v27/) · [source](experiments/explore_prefix_v27.py). Raw inputs are queued for W&B archival after the GPU confirmation run.
+An additional CPU-only exploratory check fitted a shared monotone transformation directly to prefix-survival probabilities on 256 old conversational calibration prompts, then scored 128 old chat/math validation prompts before feedback updates. It did not beat frozen baselines on the chat-to-math stream: frozen prefix mapping Brier 0.112531, frozen conditional mapping 0.112511, frozen OPS 0.112444; lower is better. All four online learning rates were worse than frozen OPS on that stream. These are previously examined temperature-1 traces, not fresh tests or greedy-serving speed evidence. [All exploratory scores and fit controls](results/v27/) · [source](experiments/explore_prefix_v27.py). [W&B results and raw-input artifact](https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/na4ps55l) are uploaded.
 
 ## Matched fixed-width sweep (v25)
 
@@ -61,7 +61,26 @@ The same 144 validation prompts, batch size 32 (last batch 16), batch-invariant 
 | Original cost model | 3,333.25 |
 | Measured cost model | 3,385.34 |
 
-[Raw measurements and audited selection](results/v25/). The measured-cost policy passed the launch gate for the frozen 384-prompt confirmation. No held-out result is available yet. Fixed-4 teardown hung after its completed measurements and artifact upload; its worker was terminated to let the same sweep continue. Subsequent runners add bounded shutdown outside timing, and both source versions are preserved.
+[Raw measurements and audited selection](results/v25/). The measured-cost policy passed the launch gate for the frozen 384-prompt confirmation. The held-out result is reported below. Fixed-4 teardown hung after its completed measurements and artifact upload; its worker was terminated to let the same sweep continue. Subsequent runners add bounded shutdown outside timing, and both source versions are preserved.
+
+## Held-out confirmation (v26)
+
+Four balanced engine orders tested the frozen methods on 384 unseen prompts: 128 each from Alpaca, GSM8K, and MBPP. Batch size was 32, with at most 128 generated tokens, one full correctness pass, one warmup, and two timed workload repeats per session. Fixed width 7 was selected using the separate v25 validation sweep. Every generated output was checked against the ordinary-decoding reference; all checks passed.
+
+| Comparator | Tokens/s | Measured-cost throughput gain | 95% batch-and-round bootstrap interval |
+|---|---:|---:|---:|
+| Ordinary decoding | 1,366.73 | +192.52% | +182.69 to +202.04% |
+| Tuned fixed width 7 | 3,948.71 | +1.25% | +0.90 to +1.59% |
+| Original adaptive cost model | 3,944.51 | +1.35% | +1.07 to +1.63% |
+| Measured-cost variant | 3,997.95 | — | — |
+
+All four round-level gains were positive against each comparator, and both prespecified bootstrap intervals excluded zero, passing the frozen success criterion. The large gain over ordinary decoding is largely existing speculative decoding; the incremental cost-table benefit is about 1%.
+
+The effect varies by domain: relative to tuned fixed width 7, chat improved **2.88%**, math changed **−0.17%**, and code improved **0.31%**. Relative to the original adaptive scheduler, the corresponding changes were **+2.96%, +0.02%, and +0.38%**. These domain numbers are descriptive, not separately established significant gains. MBPP replaces the exhausted HumanEval validation source.
+
+Only four prompt batches per domain and four engine rounds were observed on one H200, one model pair, and one concurrency setting. The intervals do not establish cross-hardware or cross-model generality. FP32 refers to tensor dtype, not guaranteed strict IEEE arithmetic; see the precision qualification above and [cache audit](results/v28/kernel_precision_v28.json). The raw summary retains its original shorthand precision label; this qualification governs its interpretation.
+
+[All 16 raw sessions, summary, and provenance audit](results/v26/) · [W&B audit and artifacts](https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/vxw4i4v4). [Precision and provenance W&B artifact](https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/2rrld0p0). Independent local reanalysis exactly matched the remote audit; manifest, source, selection hashes, method orders, and environment metadata were checked. This supports an empirical cost-model ablation, not a new scheduler or an online-calibration benefit.
 
 ## Completed results
 

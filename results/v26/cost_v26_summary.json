@@ -1,0 +1,106 @@
+{
+  "scope": "Held-out batch32 greedy throughput on one H200 with one model pair and batch-invariant FP32 kernels",
+  "passed_predeclared_speed_criteria": true,
+  "selected_fixed": "fixed7",
+  "throughputs": {
+    "ar": 1366.728690925271,
+    "fixed": 3948.7105239470325,
+    "original": 3944.5142177870443,
+    "measured": 3997.9478099999355
+  },
+  "comparisons": {
+    "ar": {
+      "gain_percent": 192.51949099666135,
+      "round_gains_percent": [
+        192.47756037098154,
+        192.41487854322892,
+        192.4143879156047,
+        192.77118717371008
+      ],
+      "stratified_batch_bootstrap_95": [
+        182.6851222020167,
+        201.97383890779273
+      ],
+      "batch_and_round_bootstrap_95": [
+        182.68768634832202,
+        202.03866018413746
+      ]
+    },
+    "fixed": {
+      "gain_percent": 1.2469206277416989,
+      "round_gains_percent": [
+        1.2415382482071635,
+        1.2744905014552943,
+        1.224696443065687,
+        1.2469801406058467
+      ],
+      "stratified_batch_bootstrap_95": [
+        0.9008478056606062,
+        1.5923669233576225
+      ],
+      "batch_and_round_bootstrap_95": [
+        0.9018037020936531,
+        1.5939155277333865
+      ]
+    },
+    "original": {
+      "gain_percent": 1.3546304883866878,
+      "round_gains_percent": [
+        1.3471642264064831,
+        1.4043532966685035,
+        1.2848895109300429,
+        1.3821785824099875
+      ],
+      "stratified_batch_bootstrap_95": [
+        1.0719540710111497,
+        1.6174272375733978
+      ],
+      "batch_and_round_bootstrap_95": [
+        1.0668231778096704,
+        1.626789600437183
+      ]
+    }
+  },
+  "domain_gain_percent": {
+    "alpaca": {
+      "ar": 133.15298476026962,
+      "fixed": 2.8804390636986366,
+      "original": 2.9610093239059276
+    },
+    "gsm8k": {
+      "ar": 269.2889745613888,
+      "fixed": -0.16998701517181303,
+      "original": 0.019721775473025005
+    },
+    "mbpp": {
+      "ar": 204.97757554382196,
+      "fixed": 0.31111772457019793,
+      "original": 0.3845293881239886
+    }
+  },
+  "manifest_sha256": "c30b984c4152e7db933dd59067ec2df511e2b60c34eb0a81b7425ed02bad378b",
+  "runs": {
+    "ar-round0": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/71h6h0e1",
+    "ar-round1": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/3xqof5ts",
+    "ar-round2": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/hjs9hozb",
+    "ar-round3": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/tsj34ulj",
+    "fixed-round0": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/fsb8idhd",
+    "fixed-round1": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/oxe0jait",
+    "fixed-round2": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/hj6ckudb",
+    "fixed-round3": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/ouhksvgt",
+    "original-round0": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/kied1rqz",
+    "original-round1": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/hq0iqqzm",
+    "original-round2": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/h62jv8fd",
+    "original-round3": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/cgiyjkrf",
+    "measured-round0": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/xe89l8o1",
+    "measured-round1": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/goh3rrdb",
+    "measured-round2": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/erqu2pg5",
+    "measured-round3": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/9vctxi7z"
+  },
+  "limitations": [
+    "384fresh prompts, only four prompt batches per domain and four engine rounds; intervals do not establish generality across hardware, models or concurrency.",
+    "Conditional interval resamples prompt batches within domain; second interval also resamples the four observed paired engine rounds.",
+    "Code-domain evaluation uses MBPP whereas validation used HumanEval.",
+    "Cost-model correction only; no online calibration benefit or novel scheduler claim."
+  ]
+}
