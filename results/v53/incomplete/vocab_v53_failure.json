@@ -1,0 +1,14 @@
+{
+  "job": "3054381",
+  "audit_job": "3054384 cancelled pending DependencyNeverSatisfied",
+  "status": "FAILED before identity generation; no pruning timings",
+  "cause": "Replacement F.linear did not use native UnquantizedEmbeddingMethod linear_batch_invariant dispatch.",
+  "mismatch_fraction": 0.728,
+  "max_abs": 0.00260162353515625,
+  "tolerance": {
+    "rtol": 0.0001,
+    "atol": 0.0001
+  },
+  "remedy": "Use the same native batch-invariant kernel on compact weights; do not relax tolerances.",
+  "failed_run": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/tj9rpfey"
+}
