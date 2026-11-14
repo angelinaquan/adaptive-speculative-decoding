@@ -1,0 +1,12 @@
+{
+  "scope": "Real-label collector gate passed, not a speed orcalibration result.",
+  "evidence": "3reusedprompts,9anchors,8independentwidths;24independenttargetverifications. Targetgreedycached/fullreplay, causalfeatures andfutureperturbation passed. Localtoken-levelreconstruction passed.",
+  "examples": "Onecodeanchor accepts1token atwidth7 but7tokens atwidth8; onemathanchor accepts7atwidth7 and6atwidth8. Fullwidthtruncation isnotvalidwidth-specificlabeling.",
+  "next_step": "Profile realservingdraft/verification costs with the frozen DFlash2 backbone at forced widths beforelarge headtraining. Configure anyuntrainedheads asignored byforced-width/all-verify collection; noadaptivebaselinewithrandomheads.",
+  "runtime_notes": {
+    "checkpoint_export": "Save a separatecustomdflash2_conf checkpoint withunchangedbackbone andexplicitlyuntrainedheads; do notmodifydownloadedreleasedweights.",
+    "control_flags": "FORESPARK_FORE_D=1, FORESPARK_FORE_D_FIXED_WIDTH=w, FORESPARK_FORE_D_LOG=directory. Official _plan returnsfull/allverify whenconfig.log is set. Need actual outputparitygate against matchedAR beforetiming.",
+    "profile_scope": "Samepinned0.30source/newenvironment for allcontrols; do notmix0.33DSparkoldtimings. Costs mustincludecontextKV/update work and be measuredatmatchedbatch/context.",
+    "later_data": "Ifcostheadroom justified, collectsourcechat anddisjointvalidationchat/math/code realwidthlabels usingprovenv67collector. Boundedasexploration, nofreshconfirmationclaim. PreserveEOS-shortprompt eligibility explicitly; no outcome-basedreplacement."
+  }
+}
