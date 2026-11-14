@@ -1,0 +1,71 @@
+{
+  "all_checks_passed": true,
+  "NONDEPLOYABLE_ORACLE": true,
+  "scope": "Instrumented diagnostic, not throughput evidence. GPU update spans include launch gaps. Acceptance is before finalEOS/cap clipping.",
+  "roles": {
+    "identity": {
+      "domains": {
+        "alpaca": {
+          "steps": 86,
+          "verifier_ms": 4.944480005651712,
+          "update_span_ms": 0.26668800436891615,
+          "accepted": 1262,
+          "full_width_states": 485,
+          "mean_accepted_prefix": 2.602061855670103,
+          "mean_update_span_ms": 0.003101023306615304
+        },
+        "gsm8k": {
+          "steps": 52,
+          "verifier_ms": 3.2185280062258244,
+          "update_span_ms": 0.14992000232450664,
+          "accepted": 1810,
+          "full_width_states": 351,
+          "mean_accepted_prefix": 5.156695156695156,
+          "mean_update_span_ms": 0.0028830769677789738
+        },
+        "mbpp": {
+          "steps": 67,
+          "verifier_ms": 3.9574720077216625,
+          "update_span_ms": 0.19366400316357613,
+          "accepted": 1774,
+          "full_width_states": 383,
+          "mean_accepted_prefix": 4.631853785900783,
+          "mean_update_span_ms": 0.002890507509904121
+        }
+      },
+      "run_url": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/jzjfa4v1"
+    },
+    "oracle1024": {
+      "domains": {
+        "alpaca": {
+          "steps": 77,
+          "verifier_ms": 4.069279991090298,
+          "update_span_ms": 0.22595200431533158,
+          "accepted": 1285,
+          "full_width_states": 445,
+          "mean_accepted_prefix": 2.8876404494382024,
+          "mean_update_span_ms": 0.0029344416144848257
+        },
+        "gsm8k": {
+          "steps": 51,
+          "verifier_ms": 2.974464002996683,
+          "update_span_ms": 0.14976000296883285,
+          "accepted": 1805,
+          "full_width_states": 347,
+          "mean_accepted_prefix": 5.2017291066282425,
+          "mean_update_span_ms": 0.002936470646447703
+        },
+        "mbpp": {
+          "steps": 62,
+          "verifier_ms": 3.4425600059330463,
+          "update_span_ms": 0.18121600337326527,
+          "accepted": 1772,
+          "full_width_states": 365,
+          "mean_accepted_prefix": 4.854794520547945,
+          "mean_update_span_ms": 0.0029228387640849235
+        }
+      },
+      "run_url": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/bgcjakrx"
+    }
+  }
+}
