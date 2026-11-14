@@ -1,0 +1,682 @@
+{
+  "passed": true,
+  "scope": "Instrumented GPU-event diagnostic, not throughput evidence. Matched full-graph decode steps only; unmatched initial steps retained separately.",
+  "alignment": [
+    {
+      "mode": "original",
+      "start": 0,
+      "matched_steps": 53,
+      "unmatched_initial_steps": 1
+    },
+    {
+      "mode": "original",
+      "start": 64,
+      "matched_steps": 51,
+      "unmatched_initial_steps": 1
+    },
+    {
+      "mode": "original",
+      "start": 128,
+      "matched_steps": 32,
+      "unmatched_initial_steps": 1
+    },
+    {
+      "mode": "original",
+      "start": 192,
+      "matched_steps": 32,
+      "unmatched_initial_steps": 1
+    },
+    {
+      "mode": "original",
+      "start": 256,
+      "matched_steps": 36,
+      "unmatched_initial_steps": 1
+    },
+    {
+      "mode": "original",
+      "start": 320,
+      "matched_steps": 42,
+      "unmatched_initial_steps": 1
+    },
+    {
+      "mode": "measured",
+      "start": 0,
+      "matched_steps": 54,
+      "unmatched_initial_steps": 1
+    },
+    {
+      "mode": "measured",
+      "start": 64,
+      "matched_steps": 53,
+      "unmatched_initial_steps": 1
+    },
+    {
+      "mode": "measured",
+      "start": 128,
+      "matched_steps": 32,
+      "unmatched_initial_steps": 1
+    },
+    {
+      "mode": "measured",
+      "start": 192,
+      "matched_steps": 32,
+      "unmatched_initial_steps": 1
+    },
+    {
+      "mode": "measured",
+      "start": 256,
+      "matched_steps": 36,
+      "unmatched_initial_steps": 1
+    },
+    {
+      "mode": "measured",
+      "start": 320,
+      "matched_steps": 42,
+      "unmatched_initial_steps": 1
+    }
+  ],
+  "unmatched_initial_steps": [
+    {
+      "mode": "original",
+      "start": 0,
+      "sample": {
+        "requests": 1,
+        "tokens": 20,
+        "forward_ms": 19.178207397460938,
+        "draft_ms": 5.744480133056641,
+        "full_graph": false
+      }
+    },
+    {
+      "mode": "original",
+      "start": 64,
+      "sample": {
+        "requests": 1,
+        "tokens": 27,
+        "forward_ms": 19.979551315307617,
+        "draft_ms": 5.764095783233643,
+        "full_graph": false
+      }
+    },
+    {
+      "mode": "original",
+      "start": 128,
+      "sample": {
+        "requests": 1,
+        "tokens": 109,
+        "forward_ms": 14.335807800292969,
+        "draft_ms": 5.895616054534912,
+        "full_graph": false
+      }
+    },
+    {
+      "mode": "original",
+      "start": 192,
+      "sample": {
+        "requests": 1,
+        "tokens": 67,
+        "forward_ms": 14.399168014526367,
+        "draft_ms": 5.7821760177612305,
+        "full_graph": false
+      }
+    },
+    {
+      "mode": "original",
+      "start": 256,
+      "sample": {
+        "requests": 1,
+        "tokens": 54,
+        "forward_ms": 17.901792526245117,
+        "draft_ms": 5.82147216796875,
+        "full_graph": false
+      }
+    },
+    {
+      "mode": "original",
+      "start": 320,
+      "sample": {
+        "requests": 1,
+        "tokens": 28,
+        "forward_ms": 20.022079467773438,
+        "draft_ms": 5.748191833496094,
+        "full_graph": false
+      }
+    },
+    {
+      "mode": "measured",
+      "start": 0,
+      "sample": {
+        "requests": 1,
+        "tokens": 20,
+        "forward_ms": 19.175392150878906,
+        "draft_ms": 5.729824066162109,
+        "full_graph": false
+      }
+    },
+    {
+      "mode": "measured",
+      "start": 64,
+      "sample": {
+        "requests": 1,
+        "tokens": 27,
+        "forward_ms": 19.90835189819336,
+        "draft_ms": 5.789440155029297,
+        "full_graph": false
+      }
+    },
+    {
+      "mode": "measured",
+      "start": 128,
+      "sample": {
+        "requests": 1,
+        "tokens": 109,
+        "forward_ms": 15.509759902954102,
+        "draft_ms": 6.699967861175537,
+        "full_graph": false
+      }
+    },
+    {
+      "mode": "measured",
+      "start": 192,
+      "sample": {
+        "requests": 1,
+        "tokens": 67,
+        "forward_ms": 15.230912208557129,
+        "draft_ms": 6.706687927246094,
+        "full_graph": false
+      }
+    },
+    {
+      "mode": "measured",
+      "start": 256,
+      "sample": {
+        "requests": 1,
+        "tokens": 54,
+        "forward_ms": 19.76265525817871,
+        "draft_ms": 7.146463871002197,
+        "full_graph": false
+      }
+    },
+    {
+      "mode": "measured",
+      "start": 320,
+      "sample": {
+        "requests": 1,
+        "tokens": 28,
+        "forward_ms": 19.95088005065918,
+        "draft_ms": 5.7560319900512695,
+        "full_graph": false
+      }
+    }
+  ],
+  "group_medians": [
+    {
+      "mode": "measured",
+      "domain": "alpaca",
+      "bucket": 8,
+      "n": 6,
+      "trimmed_steps": 0,
+      "profile_forward_ms": 20.520511627197266,
+      "actual_forward_ms": 20.91923236846924,
+      "profile_draft_ms": 5.541791915893555,
+      "actual_draft_ms": 5.448544025421143
+    },
+    {
+      "mode": "measured",
+      "domain": "alpaca",
+      "bucket": 16,
+      "n": 1,
+      "trimmed_steps": 0,
+      "profile_forward_ms": 20.079423904418945,
+      "actual_forward_ms": 20.375072479248047,
+      "profile_draft_ms": 5.541791915893555,
+      "actual_draft_ms": 5.375423908233643
+    },
+    {
+      "mode": "measured",
+      "domain": "alpaca",
+      "bucket": 32,
+      "n": 9,
+      "trimmed_steps": 0,
+      "profile_forward_ms": 19.161888122558594,
+      "actual_forward_ms": 19.45894432067871,
+      "profile_draft_ms": 5.541791915893555,
+      "actual_draft_ms": 5.326015949249268
+    },
+    {
+      "mode": "measured",
+      "domain": "alpaca",
+      "bucket": 64,
+      "n": 1,
+      "trimmed_steps": 0,
+      "profile_forward_ms": 16.882911682128906,
+      "actual_forward_ms": 17.197952270507812,
+      "profile_draft_ms": 5.541791915893555,
+      "actual_draft_ms": 4.976863861083984
+    },
+    {
+      "mode": "measured",
+      "domain": "alpaca",
+      "bucket": 128,
+      "n": 16,
+      "trimmed_steps": 8,
+      "profile_forward_ms": 13.55731201171875,
+      "actual_forward_ms": 13.959743976593018,
+      "profile_draft_ms": 7.009215831756592,
+      "actual_draft_ms": 6.34006404876709
+    },
+    {
+      "mode": "measured",
+      "domain": "alpaca",
+      "bucket": 256,
+      "n": 64,
+      "trimmed_steps": 60,
+      "profile_forward_ms": 15.400064468383789,
+      "actual_forward_ms": 15.966479778289795,
+      "profile_draft_ms": 7.562751770019531,
+      "actual_draft_ms": 7.026240110397339
+    },
+    {
+      "mode": "measured",
+      "domain": "alpaca",
+      "bucket": 512,
+      "n": 6,
+      "trimmed_steps": 0,
+      "profile_forward_ms": 20.430912017822266,
+      "actual_forward_ms": 20.80948829650879,
+      "profile_draft_ms": 7.562751770019531,
+      "actual_draft_ms": 7.632688045501709
+    },
+    {
+      "mode": "measured",
+      "domain": "gsm8k",
+      "bucket": 8,
+      "n": 4,
+      "trimmed_steps": 0,
+      "profile_forward_ms": 20.520511627197266,
+      "actual_forward_ms": 21.054256439208984,
+      "profile_draft_ms": 5.541791915893555,
+      "actual_draft_ms": 5.477295875549316
+    },
+    {
+      "mode": "measured",
+      "domain": "gsm8k",
+      "bucket": 16,
+      "n": 2,
+      "trimmed_steps": 0,
+      "profile_forward_ms": 20.079423904418945,
+      "actual_forward_ms": 20.605440139770508,
+      "profile_draft_ms": 5.541791915893555,
+      "actual_draft_ms": 5.413503885269165
+    },
+    {
+      "mode": "measured",
+      "domain": "gsm8k",
+      "bucket": 32,
+      "n": 4,
+      "trimmed_steps": 0,
+      "profile_forward_ms": 19.161888122558594,
+      "actual_forward_ms": 19.714816093444824,
+      "profile_draft_ms": 5.541791915893555,
+      "actual_draft_ms": 5.44593620300293
+    },
+    {
+      "mode": "measured",
+      "domain": "gsm8k",
+      "bucket": 64,
+      "n": 2,
+      "trimmed_steps": 0,
+      "profile_forward_ms": 16.882911682128906,
+      "actual_forward_ms": 17.404288291931152,
+      "profile_draft_ms": 5.541791915893555,
+      "actual_draft_ms": 5.020383834838867
+    },
+    {
+      "mode": "measured",
+      "domain": "gsm8k",
+      "bucket": 128,
+      "n": 3,
+      "trimmed_steps": 1,
+      "profile_forward_ms": 13.55731201171875,
+      "actual_forward_ms": 14.188799858093262,
+      "profile_draft_ms": 6.455679893493652,
+      "actual_draft_ms": 6.348576068878174
+    },
+    {
+      "mode": "measured",
+      "domain": "gsm8k",
+      "bucket": 256,
+      "n": 5,
+      "trimmed_steps": 2,
+      "profile_forward_ms": 15.400064468383789,
+      "actual_forward_ms": 16.053119659423828,
+      "profile_draft_ms": 7.562751770019531,
+      "actual_draft_ms": 7.4700798988342285
+    },
+    {
+      "mode": "measured",
+      "domain": "gsm8k",
+      "bucket": 512,
+      "n": 40,
+      "trimmed_steps": 0,
+      "profile_forward_ms": 20.430912017822266,
+      "actual_forward_ms": 21.443248748779297,
+      "profile_draft_ms": 7.562751770019531,
+      "actual_draft_ms": 7.636655807495117
+    },
+    {
+      "mode": "measured",
+      "domain": "mbpp",
+      "bucket": 8,
+      "n": 3,
+      "trimmed_steps": 0,
+      "profile_forward_ms": 20.520511627197266,
+      "actual_forward_ms": 21.027999877929688,
+      "profile_draft_ms": 5.541791915893555,
+      "actual_draft_ms": 5.472064018249512
+    },
+    {
+      "mode": "measured",
+      "domain": "mbpp",
+      "bucket": 16,
+      "n": 5,
+      "trimmed_steps": 0,
+      "profile_forward_ms": 20.079423904418945,
+      "actual_forward_ms": 20.493759155273438,
+      "profile_draft_ms": 5.541791915893555,
+      "actual_draft_ms": 5.40828800201416
+    },
+    {
+      "mode": "measured",
+      "domain": "mbpp",
+      "bucket": 32,
+      "n": 2,
+      "trimmed_steps": 0,
+      "profile_forward_ms": 19.161888122558594,
+      "actual_forward_ms": 19.488640785217285,
+      "profile_draft_ms": 5.541791915893555,
+      "actual_draft_ms": 5.4015679359436035
+    },
+    {
+      "mode": "measured",
+      "domain": "mbpp",
+      "bucket": 64,
+      "n": 5,
+      "trimmed_steps": 0,
+      "profile_forward_ms": 16.882911682128906,
+      "actual_forward_ms": 17.206432342529297,
+      "profile_draft_ms": 5.541791915893555,
+      "actual_draft_ms": 4.968319892883301
+    },
+    {
+      "mode": "measured",
+      "domain": "mbpp",
+      "bucket": 128,
+      "n": 9,
+      "trimmed_steps": 2,
+      "profile_forward_ms": 13.55731201171875,
+      "actual_forward_ms": 13.949824333190918,
+      "profile_draft_ms": 6.455679893493652,
+      "actual_draft_ms": 6.323488235473633
+    },
+    {
+      "mode": "measured",
+      "domain": "mbpp",
+      "bucket": 256,
+      "n": 8,
+      "trimmed_steps": 4,
+      "profile_forward_ms": 15.400064468383789,
+      "actual_forward_ms": 15.875487804412842,
+      "profile_draft_ms": 7.562751770019531,
+      "actual_draft_ms": 7.42196798324585
+    },
+    {
+      "mode": "measured",
+      "domain": "mbpp",
+      "bucket": 512,
+      "n": 44,
+      "trimmed_steps": 0,
+      "profile_forward_ms": 20.430912017822266,
+      "actual_forward_ms": 21.058783531188965,
+      "profile_draft_ms": 7.562751770019531,
+      "actual_draft_ms": 7.5702080726623535
+    },
+    {
+      "mode": "original",
+      "domain": "alpaca",
+      "bucket": 8,
+      "n": 6,
+      "trimmed_steps": 0,
+      "profile_forward_ms": 21.17967987060547,
+      "actual_forward_ms": 21.03875160217285,
+      "profile_draft_ms": 5.541791915893555,
+      "actual_draft_ms": 5.465152025222778
+    },
+    {
+      "mode": "original",
+      "domain": "alpaca",
+      "bucket": 16,
+      "n": 3,
+      "trimmed_steps": 0,
+      "profile_forward_ms": 21.17967987060547,
+      "actual_forward_ms": 20.577280044555664,
+      "profile_draft_ms": 5.541791915893555,
+      "actual_draft_ms": 5.416800022125244
+    },
+    {
+      "mode": "original",
+      "domain": "alpaca",
+      "bucket": 32,
+      "n": 7,
+      "trimmed_steps": 0,
+      "profile_forward_ms": 21.17967987060547,
+      "actual_forward_ms": 19.475263595581055,
+      "profile_draft_ms": 5.541791915893555,
+      "actual_draft_ms": 5.3384318351745605
+    },
+    {
+      "mode": "original",
+      "domain": "alpaca",
+      "bucket": 64,
+      "n": 2,
+      "trimmed_steps": 0,
+      "profile_forward_ms": 21.17967987060547,
+      "actual_forward_ms": 17.166799545288086,
+      "profile_draft_ms": 5.541791915893555,
+      "actual_draft_ms": 5.188431978225708
+    },
+    {
+      "mode": "original",
+      "domain": "alpaca",
+      "bucket": 128,
+      "n": 8,
+      "trimmed_steps": 0,
+      "profile_forward_ms": 21.17967987060547,
+      "actual_forward_ms": 13.940671920776367,
+      "profile_draft_ms": 6.455679893493652,
+      "actual_draft_ms": 6.284847974777222
+    },
+    {
+      "mode": "original",
+      "domain": "alpaca",
+      "bucket": 256,
+      "n": 10,
+      "trimmed_steps": 0,
+      "profile_forward_ms": 21.17967987060547,
+      "actual_forward_ms": 15.811232089996338,
+      "profile_draft_ms": 7.562751770019531,
+      "actual_draft_ms": 7.3995521068573
+    },
+    {
+      "mode": "original",
+      "domain": "alpaca",
+      "bucket": 512,
+      "n": 66,
+      "trimmed_steps": 0,
+      "profile_forward_ms": 21.17967987060547,
+      "actual_forward_ms": 20.928656578063965,
+      "profile_draft_ms": 7.562751770019531,
+      "actual_draft_ms": 7.235919952392578
+    },
+    {
+      "mode": "original",
+      "domain": "gsm8k",
+      "bucket": 8,
+      "n": 5,
+      "trimmed_steps": 0,
+      "profile_forward_ms": 21.17967987060547,
+      "actual_forward_ms": 21.020416259765625,
+      "profile_draft_ms": 5.541791915893555,
+      "actual_draft_ms": 5.461535930633545
+    },
+    {
+      "mode": "original",
+      "domain": "gsm8k",
+      "bucket": 16,
+      "n": 1,
+      "trimmed_steps": 0,
+      "profile_forward_ms": 21.17967987060547,
+      "actual_forward_ms": 20.663360595703125,
+      "profile_draft_ms": 5.541791915893555,
+      "actual_draft_ms": 5.409664154052734
+    },
+    {
+      "mode": "original",
+      "domain": "gsm8k",
+      "bucket": 32,
+      "n": 4,
+      "trimmed_steps": 0,
+      "profile_forward_ms": 21.17967987060547,
+      "actual_forward_ms": 19.682400703430176,
+      "profile_draft_ms": 5.541791915893555,
+      "actual_draft_ms": 5.412928104400635
+    },
+    {
+      "mode": "original",
+      "domain": "gsm8k",
+      "bucket": 64,
+      "n": 2,
+      "trimmed_steps": 0,
+      "profile_forward_ms": 21.17967987060547,
+      "actual_forward_ms": 17.359423637390137,
+      "profile_draft_ms": 5.541791915893555,
+      "actual_draft_ms": 5.232992172241211
+    },
+    {
+      "mode": "original",
+      "domain": "gsm8k",
+      "bucket": 128,
+      "n": 3,
+      "trimmed_steps": 0,
+      "profile_forward_ms": 21.17967987060547,
+      "actual_forward_ms": 14.190336227416992,
+      "profile_draft_ms": 6.455679893493652,
+      "actual_draft_ms": 6.337440013885498
+    },
+    {
+      "mode": "original",
+      "domain": "gsm8k",
+      "bucket": 256,
+      "n": 3,
+      "trimmed_steps": 0,
+      "profile_forward_ms": 21.17967987060547,
+      "actual_forward_ms": 16.053152084350586,
+      "profile_draft_ms": 7.562751770019531,
+      "actual_draft_ms": 7.380352020263672
+    },
+    {
+      "mode": "original",
+      "domain": "gsm8k",
+      "bucket": 512,
+      "n": 42,
+      "trimmed_steps": 0,
+      "profile_forward_ms": 21.17967987060547,
+      "actual_forward_ms": 21.47158432006836,
+      "profile_draft_ms": 7.562751770019531,
+      "actual_draft_ms": 7.626607894897461
+    },
+    {
+      "mode": "original",
+      "domain": "mbpp",
+      "bucket": 8,
+      "n": 3,
+      "trimmed_steps": 0,
+      "profile_forward_ms": 21.17967987060547,
+      "actual_forward_ms": 21.01046371459961,
+      "profile_draft_ms": 5.541791915893555,
+      "actual_draft_ms": 5.433407783508301
+    },
+    {
+      "mode": "original",
+      "domain": "mbpp",
+      "bucket": 16,
+      "n": 6,
+      "trimmed_steps": 0,
+      "profile_forward_ms": 21.17967987060547,
+      "actual_forward_ms": 20.459728240966797,
+      "profile_draft_ms": 5.541791915893555,
+      "actual_draft_ms": 5.399423837661743
+    },
+    {
+      "mode": "original",
+      "domain": "mbpp",
+      "bucket": 32,
+      "n": 1,
+      "trimmed_steps": 0,
+      "profile_forward_ms": 21.17967987060547,
+      "actual_forward_ms": 19.441600799560547,
+      "profile_draft_ms": 5.541791915893555,
+      "actual_draft_ms": 5.4235520362854
+    },
+    {
+      "mode": "original",
+      "domain": "mbpp",
+      "bucket": 64,
+      "n": 5,
+      "trimmed_steps": 0,
+      "profile_forward_ms": 21.17967987060547,
+      "actual_forward_ms": 17.20751953125,
+      "profile_draft_ms": 5.541791915893555,
+      "actual_draft_ms": 4.9892802238464355
+    },
+    {
+      "mode": "original",
+      "domain": "mbpp",
+      "bucket": 128,
+      "n": 8,
+      "trimmed_steps": 0,
+      "profile_forward_ms": 21.17967987060547,
+      "actual_forward_ms": 13.930960178375244,
+      "profile_draft_ms": 6.455679893493652,
+      "actual_draft_ms": 6.3037919998168945
+    },
+    {
+      "mode": "original",
+      "domain": "mbpp",
+      "bucket": 256,
+      "n": 5,
+      "trimmed_steps": 0,
+      "profile_forward_ms": 21.17967987060547,
+      "actual_forward_ms": 15.822015762329102,
+      "profile_draft_ms": 7.562751770019531,
+      "actual_draft_ms": 7.389984130859375
+    },
+    {
+      "mode": "original",
+      "domain": "mbpp",
+      "bucket": 512,
+      "n": 48,
+      "trimmed_steps": 0,
+      "profile_forward_ms": 21.17967987060547,
+      "actual_forward_ms": 21.08011245727539,
+      "profile_draft_ms": 7.562751770019531,
+      "actual_draft_ms": 7.569584131240845
+    }
+  ],
+  "run_url": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/pxuou5wh",
+  "limitations": [
+    "Sampling and host scheduling overhead are not fully represented by target+draft events.",
+    "Profile and runtime request shapes/contexts differ; aggregate residuals are descriptive, not causal latency estimates.",
+    "Observed methods induce different step distributions. Do not infer speed gains by comparing their median GPU-event times."
+  ]
+}

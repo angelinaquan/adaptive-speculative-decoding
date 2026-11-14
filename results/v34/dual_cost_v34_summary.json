@@ -1,0 +1,29 @@
+{
+  "passed": true,
+  "scope": "Exploration on reused384 prompts,batch64; sameengine,3balancedorders. No held-out claim.",
+  "throughputs": {
+    "original": 6031.76273144416,
+    "target_only": 6242.091782624291,
+    "both": 6329.802397624178
+  },
+  "both_vs": {
+    "original": {
+      "gain_percent": 4.941170259007532,
+      "round_gains_percent": [
+        5.266625016551751,
+        4.705181730174912,
+        4.853212359743431
+      ]
+    },
+    "target_only": {
+      "gain_percent": 1.4051477942705226,
+      "round_gains_percent": [
+        0.004113988525156209,
+        4.47691940835262,
+        -0.27691233646748303
+      ]
+    }
+  },
+  "run_url": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/j1pmbm0g",
+  "interpretation": "No consistent improvement over target-only: mean is driven by one slow target-only block; retain all observations. No fresh or significant gain claim."
+}
