@@ -306,3 +306,13 @@ On 192 reused prompts at batch 64, forced width 3 reached **9,184.18 tokens/s**,
 This is a fixed-width tuning result, not an adaptive-calibration gain or new scheduler. The best hindsight domain widths (chat 3, math 6, code 3) improve only **1.12%** over global width 3 on these same records. Native width 8 is not a sufficient baseline: the next gate is a native fixed-width sweep with balanced engine orders before fresh confirmation. No confidence interval or new-workload generalization is claimed from three reused domain batches.
 
 [Results and decision](results/v70/) · [Frozen protocol](experiments/forced_v70_plan.json) · [W&B](https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/fgad8dsu).
+
+## Strong native baseline comparison (v72)
+
+The batch-64 width benefit does **not** establish an improvement over tuned native decoding. With native widths 1–8 evaluated in two reverse engine orders on the same 192 reused prompts, native width 3 reached **9,219.62 tokens/s** and ForeSpark forced width 3 reached **9,224.79 tokens/s**: **+0.056%**, with round differences of **−0.71%** and **+0.81%**. All 19 sessions completed, including the fresh ordinary-decoding reference. Every warmup/timed output hash matched it. Independent local reanalysis exactly matched the remote summary.
+
+The earlier +16.38% compares different fixed widths within one engine; native width tuning recovers the benefit. It is neither an online-calibration gain nor evidence for a new runtime advantage. Do not expand custom fixed width 3 as a >10% method. A native width-3 baseline is now mandatory for further batch-64 studies. Per-request/per-step adaptation remains untested; any next training effort first needs evidence of decision-level headroom.
+
+The initial v71 sweep failed during native width-1 initialization because a compiled candidate selector expected width 8. Separate vLLM/Inductor/Triton caches per configuration resolved this without changing model weights or relaxing output checks. Failure records are retained. The two engine orders reuse the same cache only for the same configuration; startup and warmup are excluded.
+
+[Compressed raw results, audit, and decision](results/v72/) · [Frozen protocol](experiments/fixed_v72_plan.json) · [W&B](https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/s8v4nq7d). These are exploratory reused-prompt results, not fresh confirmation or a significance claim.

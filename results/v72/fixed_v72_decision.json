@@ -1,0 +1,15 @@
+{
+  "status": "no_incremental_gain_over_tuned_native",
+  "best_native": "native3",
+  "forced3_vs_best_native_percent": 0.056108303254975844,
+  "round_gains_percent": [
+    -0.7084358825057868,
+    0.8145464824801607
+  ],
+  "scope": "NativeDFlash2fixedwidths1-8 versusForeSparkforced3.192reusedprompts,b64,cap64. Balancedreverseengineorders; exploratorynotfreshconfirmation.",
+  "checks": "All19sessionscomplete; exactgreedyoutputhashes,counts,source/planprovenance,forcedgraph/targetchecks passed. Independentlocalreanalysis exactlymatchesremote.",
+  "interpretation": "v70 16.38% relativegain comparesdifferentfixedwidths; nativewidth3 deliverssamebenefit. Not anadaptivecalibration result andnotanewruntimeadvantage.",
+  "decision": "Do notexpand customfixed3 asa>10% method. Native3 nowmandatorybaseline atbatch64.",
+  "next_gate": "Perrequest/perstep control isstilluntested. Beforetraining, useindependentlydraftedwidth labels andmeasuredcoststo check decision-levelheadroom. No morecoarsefixedwidth tuning asnewmethod.",
+  "run": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/s8v4nq7d"
+}

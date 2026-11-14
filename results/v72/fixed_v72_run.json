@@ -1,0 +1,24 @@
+{
+  "url": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/s8v4nq7d",
+  "statuses": {
+    "fixed_v72_ar0_round-1": "completed",
+    "fixed_v72_forced3_round0": "completed",
+    "fixed_v72_forced3_round1": "completed",
+    "fixed_v72_native1_round0": "completed",
+    "fixed_v72_native1_round1": "completed",
+    "fixed_v72_native2_round0": "completed",
+    "fixed_v72_native2_round1": "completed",
+    "fixed_v72_native3_round0": "completed",
+    "fixed_v72_native3_round1": "completed",
+    "fixed_v72_native4_round0": "completed",
+    "fixed_v72_native4_round1": "completed",
+    "fixed_v72_native5_round0": "completed",
+    "fixed_v72_native5_round1": "completed",
+    "fixed_v72_native6_round0": "completed",
+    "fixed_v72_native6_round1": "completed",
+    "fixed_v72_native7_round0": "completed",
+    "fixed_v72_native7_round1": "completed",
+    "fixed_v72_native8_round0": "completed",
+    "fixed_v72_native8_round1": "completed"
+  }
+}
