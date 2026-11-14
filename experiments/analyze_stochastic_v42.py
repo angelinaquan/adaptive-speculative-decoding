@@ -2,7 +2,6 @@
 import argparse,json,hashlib
 from pathlib import Path
 import numpy as np
-from scipy.sparse import csr_matrix
 
 
 def prefix_test(a,b,draws=5000,seed=424242):
@@ -13,14 +12,16 @@ def prefix_test(a,b,draws=5000,seed=424242):
             key=(length,tuple(padded[:length]))
             if key not in vocabulary:vocabulary[key]=len(vocabulary)
             rows.append(i);cols.append(vocabulary[key])
-    features=csr_matrix((np.ones(len(rows),dtype=np.float32),(rows,cols)),shape=(2*n,len(vocabulary)))
+    cols=np.asarray(cols,dtype=np.int64);categories=len(vocabulary)
     signs=np.r_[np.ones(n),-np.ones(n)]
-    observed=float(np.square(features.T@signs).sum()/n**2)
+    observed=float(np.square(np.bincount(cols,weights=np.repeat(signs,4),minlength=categories)).sum()/n**2)
     rng=np.random.default_rng(seed);exceed=0
     for start in range(0,draws,128):
         k=min(128,draws-start);selected=np.argsort(rng.random((k,2*n)),axis=1)[:,:n]
         weights=-np.ones((k,2*n),dtype=np.float32);weights[np.arange(k)[:,None],selected]=1
-        distances=np.square(features.T@weights.T).sum(axis=0)/n**2
+        codes=cols[None,:]+categories*np.arange(k)[:,None]
+        counts=np.bincount(codes.ravel(),weights=np.repeat(weights,4,axis=1).ravel(),minlength=k*categories).reshape(k,categories)
+        distances=np.square(counts).sum(axis=1)/n**2
         exceed+=int(np.count_nonzero(distances>=observed-1e-12))
     return dict(statistic=observed,permutation_p=(exceed+1)/(draws+1),permutations=draws,draws_per_method=n)
 
