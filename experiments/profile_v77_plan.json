@@ -1,0 +1,57 @@
+{
+  "question": "Profiling budget and cross-domain transfer of native fixed draft length selection",
+  "manifest_sha256": "265cce4a12d349f3174c2e0ce3d3dce428aa6748527b390ee59d63bbb2f148ae",
+  "widths": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "batches": [
+    8,
+    64
+  ],
+  "rounds": 2,
+  "warmups": 2,
+  "timed_passes": 2,
+  "cap": 64,
+  "budgets_prompts_per_source_domain": [
+    64,
+    128,
+    256
+  ],
+  "subsets": 1000,
+  "seed": 1865777,
+  "selection": "Minimize total profiling seconds at each batch size; ties choose smaller width. No test feedback. Profile subsets are nested random 64-prompt blocks (1,2,4). Paired across widths and batch sizes. All widths measured independently.",
+  "evaluation": "All 3x3 source-to-target domain pairs at each batch/budget; pooled source with same total budget 192 via one block/domain, and full pooled768. Fixed width8, global fixed width chosen on validation with equal prompt counts across batches/domains, and validation-selected per-batch and per-domain widths. Test oracle is descriptive ceiling only.",
+  "metrics": [
+    "test tokens/s",
+    "gain vs fixed8 and validation baselines",
+    "relative throughput loss to hindsight test best",
+    "fraction within 1% and 5% of test best",
+    "selected width histogram",
+    "profiling generation seconds summed across all8 widths",
+    "amortization output tokens when savings positive"
+  ],
+  "uncertainty": "Selection variability across overlapping profiling subsets is descriptive, not 1000 independent experiments. Report both engine rounds, domain-specific results, and test-block paired bootstrap for frozen full-profile selectors (two64promptblocks/domain; limited precision).",
+  "gates": [
+    "all outputs exact AR, including warmups",
+    "AR agrees across batch sizes",
+    "disjoint splits and fresh validation/test audit",
+    "source/config/manifest hashes",
+    "test-label perturbation leaves selection unchanged",
+    "changing unselected-width test outcomes never changes selected width"
+  ],
+  "limitations": [
+    "One H200/model pair and short greedy generations. No live switch cost.",
+    "GSM8K official training questions and MBPP all partitions are inference workloads; no claim unseen in model pretraining.",
+    "256 profile prompts/domain; profiling may reuse earlier-run examples, validation/test may not.",
+    "Profile cost includes all8 widths; report measured generation cost separately from cold-start/compile cost. Cold-start setup wall time amortization is separate.",
+    "No claimed statistical independence of repeated passes or resampled overlapping subsets."
+  ],
+  "cost_accounting": "Profile generation cost allocates all four timed and four warmup passes across two engine rounds to selected profiling blocks and all8 widths. Engine initialization reported separately. Counterfactual subset cost is not a separately executed small-profile job; full benchmark elapsed also reported."
+}

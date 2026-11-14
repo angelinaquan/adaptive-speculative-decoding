@@ -1,0 +1,47 @@
+{
+  "passed": true,
+  "domains": {
+    "alpaca": {
+      "fresh_available": 50754,
+      "profile_reused_texts": 8,
+      "counts": {
+        "profile": 256,
+        "validation": 64,
+        "test": 128
+      }
+    },
+    "gsm8k": {
+      "fresh_available": 7473,
+      "profile_reused_texts": 0,
+      "counts": {
+        "profile": 256,
+        "validation": 64,
+        "test": 128
+      }
+    },
+    "mbpp": {
+      "fresh_available": 328,
+      "profile_reused_texts": 192,
+      "counts": {
+        "profile": 256,
+        "validation": 64,
+        "test": 128
+      }
+    }
+  },
+  "sources": {
+    "alpaca": {
+      "path": "/Users/angelinaquan/Desktop/Class/18.657/speculative-baseline/DeepSpec/eval_datasets/alpaca.jsonl",
+      "sha256": "c1f1623ac08e4c4f024604bb2689a024963eb7eb9dbbc29e57dda5a11d87e07b"
+    },
+    "gsm8k": {
+      "path": "/Users/angelinaquan/Desktop/Class/18.657/speculative-tonight/gsm8k_official_train.jsonl",
+      "sha256": "17f347dc51477c50d4efb83959dbb7c56297aba886e5544ee2aaed3024813465"
+    },
+    "mbpp": {
+      "path": "/Users/angelinaquan/Desktop/Class/18.657/speculative-tonight/mbpp_official_full.jsonl",
+      "sha256": "ccf64ceae9c5403bf50a044cb6d505bfd2a2963ee58338ba268fd65beab92a9f"
+    }
+  },
+  "manifest_sha256": "265cce4a12d349f3174c2e0ce3d3dce428aa6748527b390ee59d63bbb2f148ae"
+}
