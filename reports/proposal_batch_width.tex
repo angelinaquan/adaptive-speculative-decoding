@@ -1,0 +1,19 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\title{Reliable Draft-Length Selection for Batched Speculative Decoding}
+\author{Angelina Quan}
+\date{}
+\begin{document}
+\maketitle
+
+I propose to study how reliably a small profiling set can select a fast draft length for batched speculative decoding. Prior work shows that the best draft length depends on batch size and proposes profiling-based selection \cite{su2023}; more recent systems adjust speculation using runtime feedback \cite{turbospec} or jointly schedule draft and verification budgets for parallel drafters \cite{forespark}. My project will build on these results as an empirical study of profiling cost and transfer across prompt domains. In an initial confirmation experiment with Qwen3-4B and a released DFlash2 drafter on one H200, draft length 3 improved throughput over length 8 by 29.75\% at batch size 64, while length 8 improved throughput over length 3 by 34.76\% at batch size 8. The experiment used 768 prompts not previously used in our runs, four engine orders, and exact greedy-output checks. These are fixed-configuration effects, not improvements over a tuned batch-specific baseline or evidence for a new scheduling algorithm.
+
+I will measure how profiling-set size affects the selected draft length, held-out throughput, and selection uncertainty. I will compare a default fixed length, a globally tuned fixed length, and batch-specific profiling tables, with disjoint profiling, validation, and test prompts. I will also test whether choices fitted on conversational prompts transfer to mathematical reasoning and code generation. Repeated timings and paired uncertainty estimates will separate configuration effects from timing noise. The evaluation will report profiling GPU time and how much subsequent generation is needed to recover that cost. The immediate scope is offline batched inference; evaluating a live controller would additionally require measuring configuration-switching overhead and request latency. The intended result is a reproducible account of when a small amount of profiling is enough to obtain most of the available tuning benefit.
+
+\begin{thebibliography}{9}
+\bibitem{su2023} Q. Su, C. Giannoula, and G. Pekhimenko. The Synergy of Speculative Decoding and Batching in Serving Large Language Models. 2023. \url{https://arxiv.org/abs/2310.18813}.
+\bibitem{turbospec} X. Liu et al. TurboSpec: Closed-loop Speculation Control System for Optimizing LLM Serving Goodput. 2025 revision. \url{https://arxiv.org/abs/2406.14066}.
+\bibitem{forespark} J. Song et al. ForeSpark: Joint Draft and Verification Budget Scheduling for Parallel Speculative Decoding. 2026. \url{https://arxiv.org/abs/2611.13442}.
+\end{thebibliography}
+\end{document}
