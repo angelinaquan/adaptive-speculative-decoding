@@ -1,0 +1,37 @@
+{
+  "roles": [
+    "native",
+    "static8192",
+    "contextfreq4096",
+    "contextfreq8192",
+    "contextprefix8192"
+  ],
+  "orders": [
+    [
+      "native",
+      "static8192",
+      "contextfreq4096",
+      "contextfreq8192",
+      "contextprefix8192"
+    ],
+    [
+      "contextprefix8192",
+      "contextfreq8192",
+      "contextfreq4096",
+      "static8192",
+      "native"
+    ]
+  ],
+  "scope": "Context coverage screen on192 reusedvalidation prompts; no fresh/significance claim.",
+  "manifest_sha256": "e23bcb83c93f7a1fbac1eb2c2768adf5d3c6539d0c3054f1bda11f96fbb87430",
+  "priors_sha256": "a2e18b56d42226c005272487063d30ae48101863763a49cb3af9e5885e15f3e7",
+  "selection": "Prompt token frequency first; fill remaining slots with source ranking. Same batch prompt inputs only, no output feedback; no state across batches.",
+  "timing": "Prompt-token counting, selection, synchronous worker RPC and weight gathering included in each generate timing; initial tokenization cached for all methods.",
+  "success": "Both rounds >10% vsnative, then width/budget retuning andfreshconfirmation. Compareprefix vscontextfreq8192 to isolate objective.",
+  "limitations": [
+    "Prompt context is a simple control, not NanoSpec reproduction.",
+    "Width7 only and one model/GPU; vocabulary budget unretuned.",
+    "Static8192 may include zero-source-frequency IDs; report count."
+  ],
+  "zero_source_fill8192": 2454
+}
