@@ -1,0 +1,79 @@
+{
+  "scope": "Validation selection only; repeats are timing repeats, not independent prompts or evidence of significance",
+  "output_equality_passed": true,
+  "batches": {
+    "1": {
+      "tokens_per_second": {
+        "ar": 185.25264086276744,
+        "adaptive": 298.1664658698617,
+        "fixed1": 215.93115698022646,
+        "fixed2": 192.185585570538,
+        "fixed3": 286.7217965821676,
+        "fixed4": 313.8623779832026,
+        "fixed5": 337.40804635809474,
+        "fixed6": 279.727087186686,
+        "fixed7": 284.9017997388451
+      },
+      "selected_fixed": "fixed5",
+      "adaptive_vs_selected_fixed_pct": -11.630303696606425,
+      "adaptive_vs_ar_pct": 60.951263356477206,
+      "adaptive_beats_both_descriptively": false
+    },
+    "8": {
+      "tokens_per_second": {
+        "ar": 550.1775133052162,
+        "adaptive": 1079.830091912226,
+        "fixed1": 734.1154187660571,
+        "fixed2": 866.5390281158514,
+        "fixed3": 1056.3587872727192,
+        "fixed4": 850.4676684441498,
+        "fixed5": 837.3090053535803,
+        "fixed6": 837.1626993153045,
+        "fixed7": 1053.2860961439933
+      },
+      "selected_fixed": "fixed3",
+      "adaptive_vs_selected_fixed_pct": 2.221906507741034,
+      "adaptive_vs_ar_pct": 96.26939774857357,
+      "adaptive_beats_both_descriptively": true
+    },
+    "32": {
+      "tokens_per_second": {
+        "ar": 1874.047554774148,
+        "adaptive": 1811.648371169613,
+        "fixed1": 2039.4239497558235,
+        "fixed2": 1784.8801816322289,
+        "fixed3": 1919.7945436907899,
+        "fixed4": 1490.0957239195486,
+        "fixed5": 1542.7444472374302,
+        "fixed6": 1568.764264352839,
+        "fixed7": 1639.731017628708
+      },
+      "selected_fixed": "fixed1",
+      "adaptive_vs_selected_fixed_pct": -11.16862330725702,
+      "adaptive_vs_ar_pct": -3.3296478227338833,
+      "adaptive_beats_both_descriptively": false
+    }
+  },
+  "input_sha256": {
+    "ar": "1344d31e62eafdc73da812d9ab95c814e6717f390769f34233341405af1f8850",
+    "adaptive": "05165b0d5549cd60acd528d50749ec83152152f033d9690975238c8d7a658774",
+    "fixed1": "ad154763ff18c45eea5e3d5e8d3a917a57f5e6e15ea5bd14f962a81e34799619",
+    "fixed2": "2004994103ff197112b3eb50530e345bee164428096a94faad3e79312919e1af",
+    "fixed3": "f7e5d853d35ecf05e5242d4b707a701679c741146d84153759225f675f67052d",
+    "fixed4": "d1ca5f9fd90d51c18549e21356d7a7169492c2ab1aaca9f4ea728a83c63e4029",
+    "fixed5": "eea7a9c2d33e6447b51ea5e6dbca29787efc7da2134b18a9ab383289926250e5",
+    "fixed6": "3c36314a2fc8e78682450e747946060e1944e0f91de1d8db127bfbd3051515aa",
+    "fixed7": "bbbcd6f7ddeecbac6964dacc68018bb4d3f943bf5136063cdb72bbc4c928acad"
+  },
+  "run_urls": {
+    "ar": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/rfi2yby8",
+    "adaptive": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/kujggkxk",
+    "fixed1": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/xur15lf6",
+    "fixed2": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/2os7gw65",
+    "fixed3": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/bk8vkf2c",
+    "fixed4": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/3ma2ikem",
+    "fixed5": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/lae2ykur",
+    "fixed6": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/i9pgpq5w",
+    "fixed7": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/hjnhe8pv"
+  }
+}

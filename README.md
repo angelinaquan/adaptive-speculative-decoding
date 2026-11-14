@@ -2,7 +2,7 @@
 
 Experiments by **Angelina Quan** on confidence-based verification lengths for an open-weight LLM.
 
-**Preliminary result:** on an NVIDIA H200, vLLM adaptive verification increased throughput over fixed seven-token speculation by **15.10% at batch size 1** and **11.16% at batch size 32** in a small validation probe. These are measured results, **not a claim of statistical significance or generalization**. Batch 1 used one prompt. Testing against all fixed proposal widths and fresh prompts is still in progress.
+**Updated validation result:** after testing every fixed proposal width from 1 through 7 on all 32 validation prompts, adaptive verification is **2.22% faster than the best fixed width at batch 8**, but **11.63% slower at batch 1** and **11.17% slower at batch 32**. These are descriptive validation measurements, not statistically established held-out gains. The earlier 11–15% improvements below compare against fixed length 7, not the strongest tuned baseline.
 
 This repository reproduces **vLLM's existing adaptive-verification implementation** with a released DSpark drafter. It does not claim that the scheduler is new, or that online calibration caused these gains. The broader project asks whether online confidence calibration under workload shifts can improve verification decisions; that contribution remains unproven.
 
@@ -23,6 +23,24 @@ All batch sizes are shown, including the negative comparison with ordinary decod
 - [Adaptive-verification W&B run](https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/itgkdqhi)
 - [GPU sampling-correctness W&B run](https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/hvf8or17)
 - [Raw measurements and output token IDs](results/v14/raw/) · [computed summary](results/v14/summary.json)
+
+## Stronger baseline sweep (v15)
+
+All methods processed the same 32 validation prompts at each batch size, with two full-workload warmups and three timing repetitions. All nine methods matched the ordinary-decoding output tokens. Fixed widths were selected on these validation measurements only; engine order was not balanced, so this sweep is for selection rather than significance testing.
+
+| Batch | Best fixed width | Best fixed throughput | Adaptive throughput | Adaptive vs. best fixed |
+|---:|---:|---:|---:|---:|
+| 1 | 5 | 337.41 tok/s | 298.17 tok/s | **−11.63%** |
+| 8 | 3 | 1,056.36 tok/s | 1,079.83 tok/s | **+2.22%** |
+| 32 | 1 | 2,039.42 tok/s | 1,811.65 tok/s | **−11.17%** |
+
+This is evidence that the original fixed-7 comparison was insufficient to establish a general advantage. It is not evidence of an improvement from online confidence-head recalibration. The smaller configured widths also reduce drafting work; adaptive verification at width 7 only trims verification.
+
+[All raw v15 measurements](results/v15/raw/) · [full summary and W&B links](results/v15/summary.json)
+
+```bash
+python experiments/analyze_serving_v15.py results/v15/raw --output /tmp/serving-v15-audit.json
+```
 
 ## What is the idea?
 
@@ -70,11 +88,11 @@ To audit the committed measurements without a GPU or extra packages:
 python scripts/verify_results.py
 ```
 
-## Expanded experiments — not completed results
+## Follow-up experiments and current status
 
-The repository also includes the follow-up code. Its presence does **not** mean its checks have passed or its results support the headline.
+The v15 validation sweep is completed and audited above. The repository also includes the v16 follow-up code; no held-out result is claimed yet.
 
-- **v15:** run every fixed proposal width from 1 through 7, ordinary decoding, and adaptive verification. Evaluate all 32 validation prompts at every batch size, rather than one prompt at batch 1. A shorter configured proposal width may change the parallel drafter computation, not only truncate verification.
+- **v15 (completed):** run every fixed proposal width from 1 through 7, ordinary decoding, and adaptive verification. Evaluate all 32 validation prompts at every batch size, rather than one prompt at batch 1. A shorter configured proposal width may change the parallel drafter computation, not only truncate verification.
 - **v16:** 96 frozen fresh prompts, 32 per domain; batch 8 is the predeclared primary comparison, with batches 1 and 32 secondary. Choose fixed widths using v15 validation only. Compare methods in three balanced engine-order rounds and retain per-batch timings for paired analysis. The driver declines to launch fresh evaluation if adaptive fails to beat both validation comparators at the primary batch size.
 
 ```bash
