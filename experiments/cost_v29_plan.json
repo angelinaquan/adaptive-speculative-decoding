@@ -1,0 +1,33 @@
+{
+  "scope": "Exploration only. Reuse all384 v26 prompts explicitly; no new held-out result.",
+  "hypothesis": "Larger concurrency crosses additional graph buckets where preserving measured nonmonotonic costs may change optimal verification length more strongly.",
+  "batch": 64,
+  "graph_sizes": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    32,
+    64,
+    128,
+    256,
+    512
+  ],
+  "methods": [
+    "ar",
+    "fixed4",
+    "original",
+    "fixed1",
+    "fixed7",
+    "measured",
+    "fixed3",
+    "fixed6",
+    "fixed2",
+    "fixed5"
+  ],
+  "checks": "Fresh AR at batch64; every method and every pass must match; any failure stops sweep.",
+  "comparison": "Retune all widths1..7 at same batch and backend; all outcomes retained. No significance from unbalanced exploratory engine order.",
+  "next_gate": "A materially larger validation effect must be followed by frozen balanced confirmation on unused prompts.",
+  "desired_gain_percent": 5
+}

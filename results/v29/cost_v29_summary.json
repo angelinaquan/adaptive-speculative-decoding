@@ -1,0 +1,55 @@
+{
+  "scope": "Exploration only. Reuse all384 v26 prompts explicitly; no new held-out result.",
+  "all_correctness_checks_passed": true,
+  "throughputs": {
+    "ar": 3081.570695644374,
+    "fixed4": 5466.0028090070455,
+    "original": 6053.175437627268,
+    "fixed1": 4693.893784922825,
+    "fixed7": 6070.693802641658,
+    "measured": 6354.712861878353,
+    "fixed3": 5927.840114109467,
+    "fixed6": 5683.61055744809,
+    "fixed2": 5255.038710818488,
+    "fixed5": 5551.554236695047
+  },
+  "selected_fixed": "fixed7",
+  "measured_gain_percent": {
+    "ar": 106.2166826437044,
+    "original": 4.981475051535611,
+    "fixed7": 4.678527174490399
+  },
+  "meets_exploratory_5_percent_gate": false,
+  "domain_gain_percent": {
+    "alpaca": {
+      "original": 11.663842795610634,
+      "fixed7": 11.308917329305013
+    },
+    "gsm8k": {
+      "original": 0.6988867174524849,
+      "fixed7": 0.45476954053456087
+    },
+    "mbpp": {
+      "original": 1.175220098454055,
+      "fixed7": 0.8772952904755105
+    }
+  },
+  "hashes": {
+    "manifest_sha256": "c30b984c4152e7db933dd59067ec2df511e2b60c34eb0a81b7425ed02bad378b",
+    "source_sha256": "a0748132fbf68ea056e84f1cc4cb2453e16131b7d38575707ed001d5eefcbe66",
+    "cost_source_sha256": "840ed9054753729b8adadf0eaae0e06f149f55e9f1581352eedc585a017992ac"
+  },
+  "runs": {
+    "ar": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/5i8xc29f",
+    "fixed4": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/q8trwetc",
+    "original": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/ortckbhe",
+    "fixed1": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/kk85c3a1",
+    "fixed7": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/1mue1asz",
+    "measured": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/iesfelxn",
+    "fixed3": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/huq0ow11",
+    "fixed6": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/focgq23t",
+    "fixed2": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/4o3t4jx2",
+    "fixed5": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/1lcqm32d"
+  },
+  "limitation": "Unbalanced engine order and reused prompts. Selection only; fresh balanced confirmation required."
+}

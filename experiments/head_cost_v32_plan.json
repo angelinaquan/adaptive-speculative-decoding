@@ -1,0 +1,29 @@
+{
+  "scope": "Exploratory reused384 v26prompts atbatch64. No held-out claim. Same-engine comparison; independent balanced engines required for confirmation.",
+  "methods": [
+    "identity",
+    "frozen",
+    "online100"
+  ],
+  "orders": [
+    [
+      "identity",
+      "frozen",
+      "online100"
+    ],
+    [
+      "frozen",
+      "online100",
+      "identity"
+    ],
+    [
+      "online100",
+      "identity",
+      "frozen"
+    ]
+  ],
+  "fit": "Use existing256-chat greedy source fit unchanged; reset before each stream; scores before updates inherited upstream estimator.",
+  "intervention": "All methods use measured cost curve and identical head-extension machinery; remove diagnostic Brier/logloss kernels. Identity is matched-overhead control, not native zero-overhead implementation.",
+  "checks": "Every warmup and timed output equals fresh b64 AR on all384prompts; explicit context-length gate.",
+  "comparison": "Report allmethods androunds. No independent-prompt bootstrap for coupled online updates. Any effect must beat native zero-overhead measured policy and best fixed baseline in later confirmation."
+}

@@ -14,6 +14,33 @@ The diagnostic reproduced the same single mismatch in two complete repeats. At t
 
 **Precision qualification:** the serving studies request FP32 tensors and set `NVIDIA_TF32_OVERRIDE=0`. A later inspection found cached batch-invariant Triton persistent-matmul kernels containing TF32 instructions despite that setting. This is not proof that every cached kernel executes in every timed step; complete kernel attribution remains unaudited. Accordingly, these results must not be described as globally strict IEEE FP32 arithmetic. The frozen comparison uses the same backend settings for all methods and checks token equality against its ordinary-decoding reference. Historical configuration files retain their original requested settings; this note corrects any stronger interpretation of “TF32 disabled.”
 
+## Larger-gain exploration at batch 64 (v29)
+
+The 1.25% held-out gain above is too small for the current project target, so the search remains open. A new batch-64 sweep reused the 384 v26 prompts explicitly as exploratory data and retuned all fixed widths 1–7 with a graph-capture limit of 512. All ten methods passed output checks against a fresh batch-64 ordinary-decoding reference; independent local analysis matched the remote audit and verified execution-source hashes.
+
+| Method | Tokens/s |
+|---|---:|
+| Ordinary decoding | 3,081.57 |
+| Fixed 1 | 4,693.89 |
+| Fixed 2 | 5,255.04 |
+| Fixed 3 | 5,927.84 |
+| Fixed 4 | 5,466.00 |
+| Fixed 5 | 5,551.55 |
+| Fixed 6 | 5,683.61 |
+| Fixed 7 (best fixed) | 6,070.69 |
+| Original adaptive cost model | 6,053.18 |
+| Measured-cost variant | 6,354.71 |
+
+Measured cost improved **4.68% over the best fixed width** and **4.98% over the original adaptive policy**. This does **not** pass the exploratory 5% gate. Relative to fixed 7, domain changes were **+11.31% chat, +0.45% math, and +0.88% code**. The chat number is not the aggregate result. Engine order was unbalanced and prompts were reused, so no significance or new held-out claim is made. A larger effect still requires frozen, balanced confirmation on unused prompts. Numerical-precision qualifications above apply.
+
+[All raw results and audited summary](results/v29/) · [W&B audit](https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/xq6bb2sz).
+
+A separate causal-history screen (v31) tested whether previous verification residuals help forecast the next block. On old temperature-1 traces, the best of three reported EWMA rates reduced average Brier error only about **0.1%** versus the source-fitted no-history mapping (0.112413 versus 0.112531). This small exploratory change is not serving-speed evidence. [All rates, fits, and checks](results/v31/) · [W&B](https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/kwn91k1d).
+
+The next calibration pilot (v32) compares identity confidence, the unchanged greedy source-fitted calibrator, and online updates at batch 64 with measured costs. All three share the same calibration extension; diagnostic scoring is removed from the timed path. Its [plan](experiments/head_cost_v32_plan.json) and code are included, but results are pending. Any benefit must subsequently beat the native implementation without extension overhead, as well as the strongest fixed baseline.
+
+Related work already covers nearby systems ideas: [DScale](https://arxiv.org/html/2609.37532) combines verification tiling and dynamic prefix allocation; [PolyGraph](https://arxiv.org/html/2610.23861) studies shape-dependent graph execution in a trace-driven prototype. Graph-aware verification is therefore not claimed as a new general idea here.
+
 ## Online calibration pilot (v18)
 
 Under the batch-invariant configuration, fitting on 256 conversational prompts and testing on 144 separate validation prompts gave **no meaningful speed gain** over the fitted frozen calibrator. Updates every 100 verification steps measured **+0.050%** overall; every 25 steps measured **−0.021%**. These are descriptive measurements from three balanced method orders in one engine, not statistically established improvements. The earlier throughput tables use a different numerical configuration and are not directly comparable.
