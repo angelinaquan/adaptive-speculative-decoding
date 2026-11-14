@@ -1,0 +1,36 @@
+{
+  "status": "completed",
+  "scope": "Released DFlash2 -> ForeSpark head extension compatibility. No training/speed claim.",
+  "source_sha256": "418ab5824ca42aeb58735a155cb066e5eb6ef6c250a57ea54e0ecd6d53d559ee",
+  "model": "RedHatAI/Qwen3-4B-speculator.dflash2",
+  "revision": "27aa911ddb040c61adeeade08e92949e24c9e17b",
+  "checks": [
+    {
+      "seed": 18657,
+      "fullwidth_backbone_logits_masks_indices_exact": true,
+      "candidate_scores_exact": true
+    },
+    {
+      "seed": 18658,
+      "fullwidth_backbone_logits_masks_indices_exact": true,
+      "candidate_scores_exact": true
+    }
+  ],
+  "forespark_commit": "5d457ddab73a76f28db34acc577abfbd9e7c6eee",
+  "target_path": "/data/scene-rep/u/aquan/.cache/huggingface/hub/models--Qwen--Qwen3-4B/snapshots/1cfa9a7208912126459214e8b04321603b3df60c",
+  "checkpoint_tensor_count": 83,
+  "target_owned_parameters": [
+    "verifier_lm_head.weight",
+    "verifier_norm.weight"
+  ],
+  "new_head_parameters": [
+    "confidence_head.proj.bias",
+    "confidence_head.proj.weight",
+    "fore_d_predictor.anchor_projection.weight",
+    "fore_d_predictor.context_projection.weight",
+    "fore_d_predictor.fusion_bias",
+    "fore_d_predictor.output_projection.bias",
+    "fore_d_predictor.output_projection.weight"
+  ],
+  "passed": true
+}
