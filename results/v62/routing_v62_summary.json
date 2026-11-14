@@ -1,0 +1,83 @@
+{
+  "scope": "Optimistic whole-batch fixed-width routing on existing timings; NOT a new method.",
+  "studies": {
+    "v25": {
+      "batch": 32,
+      "prompt_groups": 5,
+      "repeats": 3,
+      "best_fixed": "fixed7",
+      "oracle_choices": {
+        "0": "fixed7",
+        "32": "fixed7",
+        "64": "fixed7",
+        "96": "fixed7",
+        "128": "fixed7"
+      },
+      "optimistic_gain_percent": 0.0,
+      "hashes": {
+        "cost_v25_ar.json": "1801a32090da92fff684a504d6fba9f6bb844bb3a15c4d896bd5255c911405a5",
+        "cost_v25_fixed1.json": "9ed6c08844d188d887ce2766723d7bb8fa86644d2194656c64d32d452ec75892",
+        "cost_v25_fixed2.json": "6c543f82792e79b656e1361c24c5d335111d564d86ceaef8d37300bc19fa8768",
+        "cost_v25_fixed3.json": "c8dc691ab540b88e443a13a6cfeb4336a175aa38f68637128b7de6711ee4d890",
+        "cost_v25_fixed4.json": "cea707dc6fd480639d4d256381ff330267dff50173a9f36397f87b82d502be8f",
+        "cost_v25_fixed5.json": "6a8ad4f0201f89842b3eadf716e915aed0ccb8ad17369e82eab2b887f41f234c",
+        "cost_v25_fixed6.json": "cbc35561d1173b564966ea2239382e41506dd792550be5706c5c25e667758501",
+        "cost_v25_fixed7.json": "d0232eb1922ff82fd2a37a409022ed22760fff8b26ca7888b09cc86a9f4a6aa2"
+      }
+    },
+    "v29": {
+      "batch": 64,
+      "prompt_groups": 6,
+      "repeats": 2,
+      "best_fixed": "fixed7",
+      "oracle_choices": {
+        "0": "fixed7",
+        "64": "fixed3",
+        "128": "fixed7",
+        "192": "fixed7",
+        "256": "fixed7",
+        "320": "fixed3"
+      },
+      "optimistic_gain_percent": 0.6533626814132276,
+      "hashes": {
+        "cost_v29_ar.json": "fa0475d1d4af012457696567052c28432f572a2c0a7888900276281ac852038f",
+        "cost_v29_fixed1.json": "06c4fa0eba08c98726d4dd3b9c688b40b8cd37561bcac6722f4e13857a64ae67",
+        "cost_v29_fixed2.json": "1136b78526692e1191cbc57231f0036aa5f315cac5caf2d40bf8150fed8481a6",
+        "cost_v29_fixed3.json": "05ca276f439ee1318ef2d89e771eb40b84501d01e7d323163d81e5484e6ff6dc",
+        "cost_v29_fixed4.json": "cbd08da54f44bf012f057de81a487abf83d6b800668a909e16dde0a902b8a558",
+        "cost_v29_fixed5.json": "336ee9cc5257501b554a94fc95a061682aa57d6f52277a5b109cd2bf1ce66078",
+        "cost_v29_fixed6.json": "f8a9ddb6fa5b709fd3d3fe53418385aa5e14b17510ca8e678926d1626e33ecbc",
+        "cost_v29_fixed7.json": "04a16d54465c3f10e2e6d79628f4e4ac13cbe335f14c9ab59d7e02473c0edb2b"
+      }
+    },
+    "v48": {
+      "batch": 128,
+      "prompt_groups": 3,
+      "repeats": 2,
+      "best_fixed": "fixed3",
+      "oracle_choices": {
+        "0": "fixed3",
+        "128": "fixed3",
+        "256": "fixed3"
+      },
+      "optimistic_gain_percent": 0.0,
+      "hashes": {
+        "cost_v48_ar.json": "01fa364097e893aa8cdb19bc6959e84763c5e09a2cde1b8499dc349d21ac0feb",
+        "cost_v48_fixed1.json": "3c3b220e7d4dc20b5d13902d35b7703cd4fd0e00ccdd6345ea90970eee50a0b7",
+        "cost_v48_fixed2.json": "4a3067b0be899e1d59ea361d1385c41c710d43a1b458c51820393decaa5d8254",
+        "cost_v48_fixed3.json": "7d71fe55a7bda4ff886b0e0e51d3eb7f34e1e31f82b44db24e53cd00d65e5519",
+        "cost_v48_fixed4.json": "6677a24b187bfea9de3dfa61c6b1cba77bfb96c49b797696ee90f687f748d280",
+        "cost_v48_fixed5.json": "8049a9f739aaafe94d31b9461f39e5f2b3a7ce3e56ad5b14a0452faa96957354",
+        "cost_v48_fixed6.json": "1f82be017233010ac5c01ff055fe26fb84ba9fc26d1be00b6de9fbfa0b6f85a5",
+        "cost_v48_fixed7.json": "01a3da7e79d21c6d9be3822f6ce5b11401bd6880f091f281b0b9b1a7e80d94c7"
+      }
+    }
+  },
+  "limitations": [
+    "Same timings select and score the oracle: optimistic descriptive evidence, not generalization or statistical significance.",
+    "Separate engine order was not balanced in these screens; timing variation is retained.",
+    "Whole-batch, whole-generation routing only. Does not bound per-request or per-step scheduling.",
+    "v25 archived raw timing files omit output arrays; rely on its previously completed correctness audit rather than claim a new output audit here.",
+    "No new GPU timing, predictor, calibration result, or deployable speedup."
+  ]
+}

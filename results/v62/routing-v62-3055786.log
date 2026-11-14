@@ -1,0 +1,6 @@
+cpu-bind=MASK - sitzmann-h200-2, task  0  0 [716017]: mask 0x100000000000000000000000000000000000000 set
+Traceback (most recent call last):
+  File "/data/scene-rep/u/aquan/speculative-tonight-20261109/publish_routing_v62.py", line 7, in <module>
+    assert s==json.loads((r/'routing_v62_summary.json').read_text())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
