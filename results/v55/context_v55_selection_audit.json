@@ -1,0 +1,67 @@
+{
+  "passed": true,
+  "source_only_ranks_verified": true,
+  "prompt_only_vocabulary_reconstruction_verified": true,
+  "coverage": {
+    "static8192/alpaca": {
+      "prompt_unique": 0,
+      "target_token_coverage": 0.848229063224098,
+      "scope": "Post-selection descriptive target coverage, not acceptance or speed."
+    },
+    "static8192/gsm8k": {
+      "prompt_unique": 0,
+      "target_token_coverage": 0.8868408203125,
+      "scope": "Post-selection descriptive target coverage, not acceptance or speed."
+    },
+    "static8192/mbpp": {
+      "prompt_unique": 0,
+      "target_token_coverage": 0.8743583475922757,
+      "scope": "Post-selection descriptive target coverage, not acceptance or speed."
+    },
+    "contextfreq4096/alpaca": {
+      "prompt_unique": 497,
+      "target_token_coverage": 0.8310162197947699,
+      "scope": "Post-selection descriptive target coverage, not acceptance or speed."
+    },
+    "contextfreq4096/gsm8k": {
+      "prompt_unique": 899,
+      "target_token_coverage": 0.9534912109375,
+      "scope": "Post-selection descriptive target coverage, not acceptance or speed."
+    },
+    "contextfreq4096/mbpp": {
+      "prompt_unique": 292,
+      "target_token_coverage": 0.848203373258372,
+      "scope": "Post-selection descriptive target coverage, not acceptance or speed."
+    },
+    "contextfreq8192/alpaca": {
+      "prompt_unique": 497,
+      "target_token_coverage": 0.8695796094008607,
+      "scope": "Post-selection descriptive target coverage, not acceptance or speed."
+    },
+    "contextfreq8192/gsm8k": {
+      "prompt_unique": 899,
+      "target_token_coverage": 0.962890625,
+      "scope": "Post-selection descriptive target coverage, not acceptance or speed."
+    },
+    "contextfreq8192/mbpp": {
+      "prompt_unique": 292,
+      "target_token_coverage": 0.8992911268638475,
+      "scope": "Post-selection descriptive target coverage, not acceptance or speed."
+    },
+    "contextprefix8192/alpaca": {
+      "prompt_unique": 497,
+      "target_token_coverage": 0.8702416418404502,
+      "scope": "Post-selection descriptive target coverage, not acceptance or speed."
+    },
+    "contextprefix8192/gsm8k": {
+      "prompt_unique": 899,
+      "target_token_coverage": 0.96337890625,
+      "scope": "Post-selection descriptive target coverage, not acceptance or speed."
+    },
+    "contextprefix8192/mbpp": {
+      "prompt_unique": 292,
+      "target_token_coverage": 0.8995355658763139,
+      "scope": "Post-selection descriptive target coverage, not acceptance or speed."
+    }
+  }
+}
