@@ -1,0 +1,11 @@
+{
+  "reason": "Original audit reused seeds across AR and speculative methods, producing correlated samples inappropriate for an unpaired permutation test. Correct this before inspecting any comparison test statistic.",
+  "timing_changes": "None; retain original timing protocol and all outputs.",
+  "reference": "Collect additional AR-only512 samples per same3prompts with disjoint seeds; originalARsamplingdiagnostic retained but not used as permutation reference.",
+  "new_ar_seed_base": 1700000000,
+  "comparison_seed_base": 4200000,
+  "seed_formula": "base + prompt_index*1000 + sample_index; sample_index0..511, prompt_index0/128/256",
+  "unchanged": "Same prefix statistic,5000permutations,27comparisons,Bonferronifamilyalpha.01; no relaxation of speedpromotiongate.",
+  "scope": "512independent seeds perarm is still finitepower, not equivalence. Shared AR reference across comparisons allowed by Bonferroni without between-test independence.",
+  "applied_before": "Any distribution comparison or speed aggregate inspection; only AR session completion inspected."
+}

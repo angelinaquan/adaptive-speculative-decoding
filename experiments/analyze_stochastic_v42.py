@@ -28,6 +28,13 @@ def prefix_test(a,b,draws=5000,seed=424242):
 def analyze(root):
     plan=json.loads((root/'stochastic_v42_plan.json').read_text());methods=plan['methods']
     data={m:json.loads((root/f'stochastic_v42_{m}.json').read_text()) for m in methods}
+    reference=json.loads((root/'stochastic_v42_independent_ar.json').read_text());assert reference['status']=='completed' and reference['greedy_gate_passed']
+    assert reference['source_sha256']==hashlib.sha256((root/'reference_sampling_v42.py').read_bytes()).hexdigest()
+    assert reference['manifest_sha256']==hashlib.sha256((root/'cost_v26_manifest.json').read_bytes()).hexdigest()
+    assert reference['amendment']==json.loads((root/'stochastic_v42_audit_amendment.json').read_text())
+    assert reference['amendment']['new_ar_seed_base']==1700000000
+    assert [z['prompt_index'] for z in reference['sampling_audit']]==[0,128,256]
+    assert all(len(z['outputs'])==512 for z in reference['sampling_audit'])
     for m,x in data.items():
         assert x['status']=='completed' and x['greedy_gate_passed']
         metadata=x['metadata'];assert metadata['sampling_plan']==plan
@@ -54,9 +61,9 @@ def analyze(root):
     tests=[]
     for m in methods[1:]:
         for i,d in enumerate(domains):
-            z=prefix_test(data['ar']['sampling_audit'][i]['outputs'],data[m]['sampling_audit'][i]['outputs']);z.update(method=m,domain=d);tests.append(z)
+            z=prefix_test(reference['sampling_audit'][i]['outputs'],data[m]['sampling_audit'][i]['outputs']);z.update(method=m,domain=d);tests.append(z)
     threshold=.01/27;detected=[z for z in tests if z['permutation_p']<=threshold]
-    return dict(scope=plan['scope'],rates=rates,best_fixed=best,domain_best_fixed=domain_best,domain_fixed_rate=domain_rate,gain_percent=comparisons,domain_rates={d:{m:rate(m,d) for m in methods} for d in domains},sampling_tests=tests,bonferroni_threshold=threshold,detected_distribution_differences=detected,no_distribution_difference_detected=not detected,passed_exploratory_promotion_gate=not detected and min(comparisons.values())>=5,runs={m:x['run_url'] for m,x in data.items()},limitations=['Unbalanced engine order; reused prompts; selection on exploratory results. No fresh speed claim.','512 samples on one prompt/domain is a finite-power diagnostic; no detected difference is NOT distribution equivalence.','Generated lengths differ between policies; rates use actual output tokens.','Greedy parity, within-policy seeded repeatability, and finite-state kernel/allocator tests cover complementary properties, not a general proof.'])
+    return dict(scope=plan['scope'],rates=rates,best_fixed=best,domain_best_fixed=domain_best,domain_fixed_rate=domain_rate,gain_percent=comparisons,domain_rates={d:{m:rate(m,d) for m in methods} for d in domains},sampling_tests=tests,bonferroni_threshold=threshold,detected_distribution_differences=detected,no_distribution_difference_detected=not detected,passed_exploratory_promotion_gate=not detected and min(comparisons.values())>=5,runs={m:x['run_url'] for m,x in data.items()},independent_reference_run=reference['run_url'],audit_amendment=reference['amendment'],limitations=['Unbalanced engine order; reused prompts; selection on exploratory results. No fresh speed claim.','512 samples on one prompt/domain is a finite-power diagnostic; no detected difference is NOT distribution equivalence.','Generated lengths differ between policies; rates use actual output tokens.','Greedy parity, within-policy seeded repeatability, and finite-state kernel/allocator tests cover complementary properties, not a general proof.'])
 
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('root',type=Path);p.add_argument('--output',type=Path,required=True);a=p.parse_args();s=analyze(a.root);a.output.write_text(json.dumps(s,indent=2)+'\n');print(json.dumps({k:v for k,v in s.items() if k!='sampling_tests'},indent=2))
