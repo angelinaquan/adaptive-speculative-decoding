@@ -1,0 +1,13 @@
+{
+  "status": "no_low_load_headroom",
+  "scope": "Exploratory24reusedprompts,batch8,cap64; alldraftwidths1-8 inonegraphengine.",
+  "passed": "Allwarmup andtimedoutputs matchedfreshAR; targetparameter pointer/versionchecks; graphsactive; logsdisabled.",
+  "finding": "Width8 fastest overall andeachofthree domains; no gainfromgloballyorperdomainshorterwidth.",
+  "not_claimed": [
+    "No speedupfromcalibration",
+    "No adaptivecontroller evaluated",
+    "Custom8vsnative8 4.21% isunbalanced separateengine diagnostic, notnovelcontribution",
+    "Doesnotruleoutperrequest/perstepcontrolorhigherload"
+  ],
+  "next_gate": "Measure forcedwidths athigherconcurrency tosee whether draftreduction savesrealruntime beforetrainingheads."
+}

@@ -1,0 +1,19 @@
+{
+  "scope": "24reusedprompts,3batches,2reversewidthorders. Descriptiveonly; nofreshgeneralizationorindependentconfidenceinterval.",
+  "throughputs": {
+    "ar_0": 581.3386799735927,
+    "native8_8": 1519.921241227197,
+    "forced_1": 798.4291071711905,
+    "forced_2": 1056.6202700593853,
+    "forced_3": 1163.665905399125,
+    "forced_4": 1333.2038799116062,
+    "forced_5": 1380.6006190808,
+    "forced_6": 1427.3517247615525,
+    "forced_7": 1404.4144692579598,
+    "forced_8": 1583.919555648666
+  },
+  "gates_passed": true,
+  "best_forced_width": "forced_8",
+  "best_forced_vs_forced8_percent": 0.0,
+  "best_forced_vs_native8_percent_DIAGNOSTIC_ONLY": 4.210633596369506
+}
