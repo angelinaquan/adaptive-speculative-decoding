@@ -1,0 +1,14 @@
+{
+  "status": "real_draft_reduction_benefit_but_not_adaptive_success",
+  "best_width": 3,
+  "gain_over_same_engine_width8_percent": 16.378298613311102,
+  "order_gains_percent": [
+    16.46407457652268,
+    16.292347546349117
+  ],
+  "hindsight_domain_selection_gain_over_fixed3_percent": 1.116063355069663,
+  "scope": "192reusedprompts,b64,3domainbatches; exactgreedyparity passed, localanalysis matchesremote. No confidenceinterval orfreshconfirmation.",
+  "interpretation": "Shorterdraft work canhelp athigherconcurrency. Fixedwidth3 is nowrequired strongbaseline. ForeSpark runtime ispriorwork. Do notclaimnoveltyoronlinecalibrationbenefit.",
+  "next": "Run nativeDFlash2 fixedwidths1-8 andcustomforced3 withbalancedengineorder, beforeexpanding anyperformanceclaim.",
+  "run": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/fgad8dsu"
+}

@@ -298,3 +298,11 @@ In the isolated ForeSpark runtime, the released DFlash2 drafter and forced width
 Width 8 was fastest overall (1,583.92 tokens/s) and in each domain; widths 1–7 ranged from 798.43 to 1,427.35 tokens/s. This small low-load screen gives no evidence that shorter widths would help. The 4.21% difference between custom width 8 and native width 8 is an unbalanced separate-engine diagnostic, not a calibration or scheduling gain. A higher-concurrency cost screen is needed before investing in head training.
 
 [Raw results and local audit](results/v69/) · [Frozen protocol](experiments/forced_v69_plan.json) · [W&B](https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/2oq472po). The preceding harness failure (assignment to immutable configuration) is preserved in [v68](results/v68/).
+
+## Higher-concurrency draft-width screen (v70)
+
+On 192 reused prompts at batch 64, forced width 3 reached **9,184.18 tokens/s**, versus **7,891.66 tokens/s** at width 8 in the same ForeSpark engine: **+16.38%**. The two width orders measured 16.46% and 16.29%. Every warmup and timed output matched fresh ordinary BF16 greedy decoding; output hashes, target invariance, active graphs, and source provenance passed the audit. Independent local analysis exactly reproduced the remote summary.
+
+This is a fixed-width tuning result, not an adaptive-calibration gain or new scheduler. The best hindsight domain widths (chat 3, math 6, code 3) improve only **1.12%** over global width 3 on these same records. Native width 8 is not a sufficient baseline: the next gate is a native fixed-width sweep with balanced engine orders before fresh confirmation. No confidence interval or new-workload generalization is claimed from three reused domain batches.
+
+[Results and decision](results/v70/) · [Frozen protocol](experiments/forced_v70_plan.json) · [W&B](https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/fgad8dsu).
