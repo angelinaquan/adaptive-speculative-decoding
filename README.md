@@ -326,3 +326,5 @@ With a budget of at most three draft tokens per state, an exact hindsight alloca
 A prespecified Beta(1,1) history-only controller, updated only from each request's selected-width acceptance feedback, lost **2.00%** to fixed width 3 in a causal-feedback replay. Tests that changed unobserved labels and future labels left the appropriate decisions unchanged. EOS/output-boundary clipping made no numeric difference here. The fixed teacher anchors are not closed-loop trajectories under this policy, so this is a predictive diagnostic, not a serving result. No model was trained and no controller parameters were tuned.
 
 The next gate is predictive performance from past-only context features on disjoint prompts, with fixed width 3 and a frozen contextual predictor as controls. The hindsight opportunity alone does not justify a performance claim. [Label audit](results/v73/) · [History replay and decision](results/v74/) · [W&B labels](https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/t0pnc5bp).
+
+[W&B history replay](https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/75oxe18g). The remote replay exactly matched the local summary.
