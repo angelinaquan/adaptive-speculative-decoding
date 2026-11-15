@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "checks": [
+    "First absent candidate is labeled negative; no later censored labels",
+    "Logistic analytic gradient matches finite differences",
+    "Unit coverage exactly reproduces raw tree",
+    "Changing gold labels cannot change frozen tree choices",
+    "Unique nodes, prefix closure, equal node budgets"
+  ]
+}

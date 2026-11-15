@@ -1,0 +1,130 @@
+{
+  "scope": "Censored-shortlist probability calibration for equal-budget trees.\nExploratory screen only: all input prompts have been examined previously.\n",
+  "results": [
+    {
+      "width": 3,
+      "fit_states": 271,
+      "screen_states": 279,
+      "params": {
+        "raw": {
+          "temperature": 1,
+          "fit_rewards": [
+            817,
+            818,
+            819,
+            821,
+            810
+          ]
+        },
+        "position_coverage": {
+          "temperature": 0.5,
+          "fit_rewards": [
+            818,
+            821,
+            822,
+            821,
+            807
+          ]
+        },
+        "feature_coverage": {
+          "temperature": 0.5,
+          "fit_rewards": [
+            817,
+            820,
+            822,
+            821,
+            809
+          ]
+        }
+      },
+      "coverage_coefficients": [
+        2.773985078075232,
+        -0.8084442713256064,
+        -0.704952380211214,
+        1.0170076098646519
+      ],
+      "position_coverage": [
+        0.9816849816849816,
+        0.9553903345724907,
+        0.8798449612403101
+      ],
+      "rewards": {
+        "raw": 826,
+        "position_coverage": 818,
+        "feature_coverage": 819,
+        "static": 816,
+        "chain": 816
+      },
+      "feature_vs_raw_percent": -0.8474576271186418,
+      "feature_vs_strongest_control_percent": -0.8474576271186418
+    },
+    {
+      "width": 8,
+      "fit_states": 271,
+      "screen_states": 279,
+      "params": {
+        "raw": {
+          "temperature": 1,
+          "fit_rewards": [
+            1169,
+            1174,
+            1201,
+            1247,
+            1222
+          ]
+        },
+        "position_coverage": {
+          "temperature": 1,
+          "fit_rewards": [
+            1172,
+            1189,
+            1214,
+            1253,
+            1207
+          ]
+        },
+        "feature_coverage": {
+          "temperature": 1,
+          "fit_rewards": [
+            1172,
+            1191,
+            1209,
+            1254,
+            1205
+          ]
+        }
+      },
+      "coverage_coefficients": [
+        2.0820414654930515,
+        -0.4825793305805347,
+        -0.5851567432230852,
+        1.0530362611549628
+      ],
+      "position_coverage": [
+        0.9816849816849816,
+        0.9479553903345725,
+        0.88671875,
+        0.8947368421052632,
+        0.9219512195121952,
+        0.8842105263157894,
+        0.8461538461538461,
+        0.8819444444444444
+      ],
+      "rewards": {
+        "raw": 1289,
+        "position_coverage": 1291,
+        "feature_coverage": 1295,
+        "static": 1193,
+        "chain": 1193
+      },
+      "feature_vs_raw_percent": 0.4654771140419012,
+      "feature_vs_strongest_control_percent": 0.30983733539891034
+    }
+  ],
+  "limitations": [
+    "Previously exposed v89 fitting pool; not independent validation",
+    "No attention-mask/KV correctness or serving speed measurement",
+    "Temperature tuned on fitting reward with same grid for all probability methods",
+    "Coverage learned only along true prefixes, including first missing candidate; never label later unreachable positions"
+  ]
+}
