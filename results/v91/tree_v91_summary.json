@@ -1,0 +1,101 @@
+{
+  "scope": "Exploratory split of previously exposed v89/v90 training pool; not fresh validation. Equal node counts, no runtime claim. Adaptive product-probability tree is prior-art-style control, not a novelty claim.",
+  "results": [
+    {
+      "width": 3,
+      "node_budget": 3,
+      "fit_states": 271,
+      "screen_states": 279,
+      "selected_temperature": 1,
+      "static_rank_paths": [
+        [
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "rewards": {
+        "chain": 816,
+        "static_empirical": 816,
+        "adaptive": 826
+      },
+      "adaptive_vs_static_percent": 1.225490196078427,
+      "adaptive_vs_chain_percent": 1.225490196078427
+    },
+    {
+      "width": 8,
+      "node_budget": 8,
+      "fit_states": 271,
+      "screen_states": 279,
+      "selected_temperature": 1,
+      "static_rank_paths": [
+        [
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "rewards": {
+        "chain": 1193,
+        "static_empirical": 1193,
+        "adaptive": 1289
+      },
+      "adaptive_vs_static_percent": 8.04694048616932,
+      "adaptive_vs_chain_percent": 8.04694048616932
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "random_score_grids": 100,
+  "exhaustive_optimal_tree_comparisons": 400,
+  "checks": [
+    "prefix closure",
+    "exact node budget",
+    "gold poisoning leaves adaptive choices unchanged",
+    "heap objective equals exhaustive maximum prefix probability mass",
+    "known accepted-prefix reward"
+  ],
+  "limitation": "These are replay construction tests, not target attention mask/KV cache correctness or serving timing."
+}
