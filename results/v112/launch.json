@@ -1,0 +1,11 @@
+{
+  "job": 3072601,
+  "status": "running_correctness_gate",
+  "gate_wandb": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/hj28pf3h",
+  "heldout_started": false,
+  "automatic_sequence": [
+    "v113 diagnostic audit",
+    "v114 full correctness regression",
+    "v112 heldout comparison only if gate passes"
+  ]
+}

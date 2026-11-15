@@ -1,0 +1,3 @@
+# FP32 output-head candidate mitigation: small diagnostic passed
+
+[W&B](https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/uex8urta). The installed engine supports `hf_overrides={"head_dtype":"float32"}` while retaining the BF16 backbone. AR and native width2 agree across four raw repeats and one instrumented repeat on eight diagnostic prompts. At the historical divergence, AR reported log probabilities -0.6653 and -0.7397 rather than a tie. Outputs change relative to the old BF16-head configuration. This is a candidate numerical mitigation, not a demonstrated fix to the original intermittent failure. Full v114 regression is required before held-out v112 timings. No speed result.

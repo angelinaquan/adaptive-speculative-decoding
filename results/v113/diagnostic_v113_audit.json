@@ -1,0 +1,6 @@
+{
+  "passed": true,
+  "ar_native_comparisons": 5,
+  "raw_repeats_per_engine": 4,
+  "scope": "Eight-prompt precision-mitigation diagnostic only. Full regression gate still required. Not an original BF16 root-cause or sampler-fix claim."
+}

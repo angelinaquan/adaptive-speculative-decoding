@@ -1,0 +1,20 @@
+{
+  "graph": {
+    "all_ar_native_equal": true,
+    "repeats": 5,
+    "raw_repeats": 4,
+    "historical_mismatch_indices": []
+  },
+  "eager": {
+    "all_ar_native_equal": true,
+    "repeats": 5,
+    "raw_repeats": 4,
+    "historical_mismatch_indices": [
+      1,
+      3,
+      5,
+      6
+    ]
+  },
+  "conclusion": "Original mismatch not reproduced in graph mode. Graph/eager differ; both modes AR/native agree on8prompt diagnostic. No bugfix established."
+}

@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "scope": "CPU fake engine only",
+  "checks": [
+    "96unused validation prompts, no legacy test access",
+    "Both batches8/64 including partial final batch",
+    "All total-time milestones include prior pipeline interval",
+    "Output corruption aborts",
+    "Failed correctness gate prevents engine construction"
+  ]
+}
