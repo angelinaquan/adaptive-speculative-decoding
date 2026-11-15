@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "checks": [
+    "profile/test/validation isolation",
+    "screen8width schedule",
+    "all3deployment endpoints count imports/startup via global clock",
+    "bad output aborts"
+  ],
+  "scope": "CPU fake engine only"
+}

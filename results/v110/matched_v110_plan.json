@@ -1,0 +1,56 @@
+{
+  "scope": "Prospective matched total profiling-plus-inference cost comparison on validated4B/H200/b64, not steady-state inference gain.",
+  "manifest_sha256": "f570546760de7bcb9ad683242328fe5416de082d24468f4a7226867260e5fbc8",
+  "profile_prompts": 192,
+  "heldout_prompts": 192,
+  "domains": [
+    "alpaca",
+    "gsm8k",
+    "mbpp"
+  ],
+  "model": "Qwen3-4B with released DFlash2",
+  "batch": 64,
+  "max_tokens": 64,
+  "profile_passes_per_width": {
+    "warmup": 1,
+    "timed": 1
+  },
+  "horizons_test_passes": [
+    1,
+    4,
+    16
+  ],
+  "method_orders": [
+    [
+      "zero_transfer",
+      "native_pair",
+      "full_native",
+      "screen_confirm"
+    ],
+    [
+      "screen_confirm",
+      "full_native",
+      "native_pair",
+      "zero_transfer"
+    ]
+  ],
+  "primary_endpoint": "Total measured elapsed seconds through16 held-out test passes (3072 requests). Candidate must reduce time by at least10percent versus each cheap control in both orders for a positive current-setting claim. All endpoints reported.",
+  "methods": {
+    "screen_confirm": "One forced shared engine screens1..8. Select top2 by summed timed profiling seconds, then profile both natively and choose minimum native time.",
+    "zero_transfer": "Prior4B/b64 winner3; no profiling.",
+    "native_pair": "Profile3 and8 natively, choose minimum timed seconds.",
+    "full_native": "Profile1..8 natively, choose minimum timed seconds."
+  },
+  "accounting": "Actual same-host monotonic wall clock from pipeline start through inference milestones. Includes subprocess imports, engine startup, all profiling warmups/timing, stage teardown, selection and deployment startup. Deployment first pass is counted useful inference, with no excluded deployment warmup. Queue time and common freshAR correctness-reference cost excluded; reference cost reported separately. Per-stage files and correctness-check overhead remain included.",
+  "cache_condition": "Existing on-disk caches from v72 native/ar and v105 forced. All methods reuse identical per-role/width caches, with fresh engine processes. Opposite method orders reveal order sensitivity. Not a cold-start or guaranteed identical cache-residency experiment.",
+  "selection_safety": "Only profile data enter ranking; selected width persisted before held-out deployment. Tie chooses smaller width. No hyperparameter tuning after results.",
+  "freshness": "Held-out test split from v103 now allocated to this frozen4B comparison. Its outcomes cannot later be advertised as untouched for another method. v103 eightB sweep still uses profile split only.",
+  "limitations": [
+    "One4B model/GPU and batch64; no generalization claim from this comparison.",
+    "192unique held-out prompts repeated16times; repeated requests are not independent prompt samples.",
+    "Two timing orders are not a population confidence interval.",
+    "Shared-engine selection uses untrained heads only as required runtime scaffolding; forced full verification ignores them.",
+    "A win against full native sweep alone is insufficient if cheaper controls outperform the candidate.",
+    "No novelty claim for generic multi-fidelity screening; this is a practical method feasibility test."
+  ]
+}
