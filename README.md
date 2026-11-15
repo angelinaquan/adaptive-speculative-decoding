@@ -369,3 +369,15 @@ A frozen follow-up (v78) tests the selected widths without retuning on 384 fresh
 Against default width 8 at batch 64, the mixed192 protocol saves 30.80 microseconds per output token on the held-out workload. Its allocated generation cost (92.61 seconds) breaks even after **3.01 million output tokens**. Including the measured 481.43 seconds of engine initialization across all16 native sessions increases that estimate to **18.64 million tokens**. The mixed768 protocol gives the same width choice but needs 12.18 million tokens to amortize generation alone. At batch 8, profiling chooses default width 8, so there is no throughput saving to amortize its cost.
 
 These are retrospective allocations of the repeated experimental protocol, not a separately timed minimal profiler or cold-start measurement. Initialization uses existing compilation caches. Savings assume future workload performance matches the test set; no gain is claimed over an already tuned batch-specific baseline. [Reproducible calculation](scripts/analyze_profiling_cost.py) · [Full cost data and limitations](results/v77/profiling_cost.json).
+
+## Frozen-choice generalization confirmation (v78)
+
+The width choices from v77 were frozen before evaluating 384 fresh prompts (128 each from Alpaca, MATH500, and LBPP) at a doubled 128-token cap. All eight native widths were measured in two reverse engine orders. The frozen choice was best among the eight measured widths on the pooled workload **and every domain**: width 8 at batch 8, width 3 at batch 64. No retuning used these test results.
+
+At batch 64, width 3 improved throughput over width 8 by **29.91% [28.31, 31.63]**, with round gains 29.83% and 29.99%. Gains were 41.91% on Alpaca, 19.53% on MATH500, and 26.12% on LBPP. All34 sessions completed, all3,456 speculative batch-output checks passed, and independent local analysis exactly reproduced the remote summary. Intervals resample two rounds and two64promptblocks per domain: precision beyond this small single-device experiment is not established.
+
+This supports transfer across these datasets and generation lengths on the same model pair and H200. It does not prove transfer across hardware/models or establish a novel method. The dataset and generation cap changed together, so separate causal effects are not identified.
+
+[Audited results and raw files](results/v78/) · [W&B](https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/62e5e0u7).
+
+The next targeted experiment (v79) measures a standalone cheaper profiler at batch64: three disjoint192prompt panels, one warmup and one measured pass per candidate width, with all process/engine startup and teardown wall time included. Kernel caches already exist; this is not a cold-compilation benchmark. Width selection sees profiling data only; performance is subsequently looked up in the already completed v78 benchmark, so it is not another independent test-workload confirmation. [Frozen protocol](experiments/minimal_v79_plan.json).

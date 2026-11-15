@@ -1,0 +1,8 @@
+{
+  "passed": true,
+  "local_summary_exactly_matches_remote": true,
+  "sessions": 34,
+  "speculative_batch_output_checks": 3456,
+  "primary_pass": true,
+  "slurm": "COMPLETED 0:0 01:12:22"
+}

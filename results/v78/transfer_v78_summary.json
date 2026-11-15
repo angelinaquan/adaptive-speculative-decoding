@@ -1,0 +1,224 @@
+{
+  "passed": true,
+  "checks": 3456,
+  "scope": "Frozen profiling-selected widths under new benchmarks and doubled output cap",
+  "comparisons": [
+    {
+      "batch": 8,
+      "domain": "pooled",
+      "frozen_width": 8,
+      "hindsight_best_width": 8,
+      "throughputs": [
+        801.9048082781588,
+        1058.7888444512912,
+        1235.879064691171,
+        1418.7670877339765,
+        1512.0657879895693,
+        1555.881391617626,
+        1632.318859840919,
+        1688.3416035026567
+      ],
+      "loss_to_best_percent": 0.0,
+      "gain_vs8_percent": 0.0,
+      "paired_bootstrap95_vs8": [
+        0.0,
+        0.0
+      ],
+      "gain_vs8_by_round": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "batch": 8,
+      "domain": "alpaca",
+      "frozen_width": 8,
+      "hindsight_best_width": 8,
+      "throughputs": [
+        639.0441983019504,
+        790.4600362649555,
+        885.8035596511763,
+        956.3815325403684,
+        1005.4617967681614,
+        1023.3304596077559,
+        1062.1284986458427,
+        1092.3785107752274
+      ],
+      "loss_to_best_percent": 0.0,
+      "gain_vs8_percent": 0.0,
+      "paired_bootstrap95_vs8": [
+        0.0,
+        0.0
+      ],
+      "gain_vs8_by_round": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "batch": 8,
+      "domain": "math500",
+      "frozen_width": 8,
+      "hindsight_best_width": 8,
+      "throughputs": [
+        924.3246104458343,
+        1311.2514253680918,
+        1614.1297429244305,
+        1974.8999290933814,
+        2155.4088093494233,
+        2300.0943274433293,
+        2435.5900381731158,
+        2540.6959510139945
+      ],
+      "loss_to_best_percent": 0.0,
+      "gain_vs8_percent": 0.0,
+      "paired_bootstrap95_vs8": [
+        0.0,
+        0.0
+      ],
+      "gain_vs8_by_round": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "batch": 8,
+      "domain": "lbpp",
+      "frozen_width": 8,
+      "hindsight_best_width": 8,
+      "throughputs": [
+        856.2374155619815,
+        1136.5256980754764,
+        1328.1153286057079,
+        1559.1441127377386,
+        1659.4606430438334,
+        1684.709701547045,
+        1779.7709191676613,
+        1842.9306918376567
+      ],
+      "loss_to_best_percent": 0.0,
+      "gain_vs8_percent": 0.0,
+      "paired_bootstrap95_vs8": [
+        0.0,
+        0.0
+      ],
+      "gain_vs8_by_round": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "batch": 64,
+      "domain": "pooled",
+      "frozen_width": 3,
+      "hindsight_best_width": 3,
+      "throughputs": [
+        7624.388753419456,
+        7172.6368262733595,
+        8990.459641467134,
+        7828.745615663325,
+        8392.77488831629,
+        7714.516842769457,
+        8621.377723759982,
+        6920.604404794125
+      ],
+      "loss_to_best_percent": 0.0,
+      "gain_vs8_percent": 29.908590573955564,
+      "paired_bootstrap95_vs8": [
+        28.305431064482377,
+        31.6335852309642
+      ],
+      "gain_vs8_by_round": [
+        29.826794472185014,
+        29.99038373177134
+      ]
+    },
+    {
+      "batch": 64,
+      "domain": "alpaca",
+      "frozen_width": 3,
+      "hindsight_best_width": 3,
+      "throughputs": [
+        6465.168696494272,
+        5540.481892052213,
+        7036.2142464229255,
+        5714.3260041912345,
+        6160.31604516108,
+        5436.296341125764,
+        6781.415963685689,
+        4958.184891901539
+      ],
+      "loss_to_best_percent": 0.0,
+      "gain_vs8_percent": 41.91109044593191,
+      "paired_bootstrap95_vs8": [
+        38.06404272961381,
+        46.92547057726344
+      ],
+      "gain_vs8_by_round": [
+        41.78582854321926,
+        42.036563619159416
+      ]
+    },
+    {
+      "batch": 64,
+      "domain": "math500",
+      "frozen_width": 3,
+      "hindsight_best_width": 3,
+      "throughputs": [
+        9038.933283152712,
+        9139.48898873855,
+        11785.765971682631,
+        10930.146625469164,
+        11581.070121061271,
+        10910.884624373904,
+        11605.819098855134,
+        9859.714466156576
+      ],
+      "loss_to_best_percent": 0.0,
+      "gain_vs8_percent": 19.534556625723987,
+      "paired_bootstrap95_vs8": [
+        17.12359419207916,
+        20.666590774475544
+      ],
+      "gain_vs8_by_round": [
+        20.288596595367213,
+        18.779190869420393
+      ]
+    },
+    {
+      "batch": 64,
+      "domain": "lbpp",
+      "frozen_width": 3,
+      "hindsight_best_width": 3,
+      "throughputs": [
+        7484.657178193903,
+        7254.163347042891,
+        8782.461171681756,
+        7834.064765808023,
+        8420.235001265137,
+        7946.406107093904,
+        8221.877668561261,
+        6963.392937865133
+      ],
+      "loss_to_best_percent": 0.0,
+      "gain_vs8_percent": 26.123302965211103,
+      "paired_bootstrap95_vs8": [
+        23.912857660722086,
+        28.48701387240404
+      ],
+      "gain_vs8_by_round": [
+        25.450324916294665,
+        26.794249495432275
+      ]
+    }
+  ],
+  "limitations": [
+    "Only128freshprompts/domain,6independent64promptblocks; twoengineorders.",
+    "Test all8 widths for hindsightreference, not retuning deployedchoice.",
+    "SameH200/modelpair; tests dataset and generationlength transfer, not hardware/model transfer.",
+    "Prior profiling subsets overlap; 64 combinations not64 independent datasets.",
+    "No claim prompts unseen in releasedmodelpretraining.",
+    "Both dataset and outputcap change; this is joint robustness, not isolated causal attribution."
+  ],
+  "primary_pass": true
+}
