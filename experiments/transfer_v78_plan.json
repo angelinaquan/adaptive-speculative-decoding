@@ -1,0 +1,54 @@
+{
+  "question": "Frozen profiling-selected widths under new benchmarks and doubled output cap",
+  "manifest_sha256": "81341dc76fc10fd6d329e26a76f4f98d168b450f3af78d8cc91adf66d35944f0",
+  "batches": [
+    8,
+    64
+  ],
+  "widths": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "cap": 128,
+  "rounds": 2,
+  "warmup_passes": 2,
+  "timed_passes": 2,
+  "frozen_selected_widths": {
+    "8": 8,
+    "64": 3
+  },
+  "selection_provenance": "v77 mixed192 and all64 posthoc mixed subsets chose8/3; locked before v78outputs. No fitting on v78.",
+  "primary": "For each batch, frozen width achieves at least95% of best measured fixed-width pooled test throughput.",
+  "secondary": "Everydomain and round; width3vs8 gain at64; transfer from64tokencap Alpaca/GSM8K/MBPP profiling to128tokencap freshAlpaca/MATH500/LBPP. Paired bootstrap over2rounds and2blocks/domain for comparisonvs8; oracle gap is descriptive due test winner selection.",
+  "freshness": {
+    "alpaca": {
+      "fresh_available": 50314,
+      "selected": 128,
+      "source_sha256": "c1f1623ac08e4c4f024604bb2689a024963eb7eb9dbbc29e57dda5a11d87e07b"
+    },
+    "math500": {
+      "fresh_available": 500,
+      "selected": 128,
+      "source_sha256": "4f530d9d3126dca41c12a96e78ec0dd460b7202052ba86101c4da159cea33aac"
+    },
+    "lbpp": {
+      "fresh_available": 162,
+      "selected": 128,
+      "source_sha256": "0b973ef7ec26993896884a2cbfde640706390261778b4dc7a221ccb95b539ae2"
+    }
+  },
+  "limitations": [
+    "Only128freshprompts/domain,6independent64promptblocks; twoengineorders.",
+    "Test all8 widths for hindsightreference, not retuning deployedchoice.",
+    "SameH200/modelpair; tests dataset and generationlength transfer, not hardware/model transfer.",
+    "Prior profiling subsets overlap; 64 combinations not64 independent datasets.",
+    "No claim prompts unseen in releasedmodelpretraining.",
+    "Both dataset and outputcap change; this is joint robustness, not isolated causal attribution."
+  ]
+}

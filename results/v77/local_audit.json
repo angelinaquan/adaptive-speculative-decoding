@@ -1,0 +1,6 @@
+{
+  "passed": true,
+  "independent_analysis_matches_remote": true,
+  "sessions": 34,
+  "robustness": "Post-hoc exhaustive64 mixed192 panels and equal-budget4 panels per single-domain; all combinations overlap. No claim64 independent trials."
+}

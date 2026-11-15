@@ -349,3 +349,17 @@ A prespecified Beta(1,1) history-only controller, updated only from each request
 The next gate is predictive performance from past-only context features on disjoint prompts, with fixed width 3 and a frozen contextual predictor as controls. The hindsight opportunity alone does not justify a performance claim. [Label audit](results/v73/) · [History replay and decision](results/v74/) · [W&B labels](https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/t0pnc5bp).
 
 [W&B history replay](https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/75oxe18g). The remote replay exactly matched the local summary.
+
+## Profiling-budget and transfer results (v77)
+
+The full native width-1–8 experiment completed all 34 sessions on 1,344 prompts: 256 profiling, 64 validation, and 128 fresh test prompts per domain. Independent local reanalysis exactly reproduced the remote results. A balanced 192-prompt profiling set (64 per domain) selected width 8 at batch 8 and width 3 at batch 64, matching the best fixed width on the pooled test workload. At batch 64 this gained 29.87% over width 8 and matched the independently validation-selected batch-specific baseline. Increasing the pooled profiling set to 768 prompts did not change either choice.
+
+A post-hoc sensitivity analysis exhaustively checked all 64 combinations of one 64-prompt profiling block per domain. Every combination selected the same widths, including when selection and evaluation used opposite timing rounds. Mean-over-rounds loss to the best domain-specific test width was zero except on GSM8K at batch 64 (2.05%; at most 3.04% in the opposite-round checks). These overlapping subsets are not 64 independent replications.
+
+Equal-budget controls qualify the diversity claim: all four possible 192-prompt Alpaca-only and MBPP-only subsets also selected the successful widths. GSM8K-only profiling selected width 7 in two of four subsets, with up to 8.14% loss on Alpaca at batch 64. The evidence supports reliability of small mixed profiling in this setup, not universal superiority of mixed-domain profiling.
+
+The measured generation cost allocated to the mixed192 profiling set, across all eight widths and all warmup/timed repeats, was 586.46 seconds at batch 8 and 92.61 seconds at batch 64. These exclude engine initialization and are retrospective subset cost allocations, not separate small-profile jobs.
+
+[Results and independent audit](results/v77/) · [W&B](https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/saxiid98) · [Post-hoc subset analysis](experiments/robust_profile_v77.py).
+
+A frozen follow-up (v78) tests the selected widths without retuning on 384 fresh prompts, including new MATH500 and LBPP workloads, with a doubled 128-token generation cap. All eight native widths remain controls. Success requires at least 95% of the best measured pooled fixed-width throughput at each batch size; every domain and timing order will be reported. This tests dataset and generation-length transfer jointly, not hardware/model generality. [Frozen follow-up plan](experiments/transfer_v78_plan.json).
