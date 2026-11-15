@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "brute_force_cases": 500,
+  "checks": [
+    "Longest suffix and newest occurrence match exhaustive enumeration",
+    "Every continuation is fully inside observed prefix",
+    "Known lookup and acceptance examples"
+  ],
+  "scope": "CPU lookup correctness only; not serving or lossless-generation integration"
+}

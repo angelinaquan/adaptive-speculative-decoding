@@ -1,0 +1,45 @@
+{
+  "scope": "Previously exposed v89 training-pool even/odd prompt split. Lookup receives only prompt and verified prefix; never future output. Native fallback wins ties. Replay reward only; no runtime or novelty claim.",
+  "results": [
+    {
+      "width": 3,
+      "fit_rewards": {
+        "999": 817,
+        "2": 751,
+        "3": 769,
+        "4": 788,
+        "8": 816,
+        "16": 817
+      },
+      "selected_threshold": 999,
+      "screen_states": 279,
+      "lookup_available": 55,
+      "lookup_used": 0,
+      "native_reward": 816,
+      "hybrid_reward": 816,
+      "hybrid_gain_percent": 0.0,
+      "hindsight_routing_oracle_reward": 817,
+      "oracle_gain_percent": 0.1225490196078427
+    },
+    {
+      "width": 8,
+      "fit_rewards": {
+        "999": 1168,
+        "2": 1025,
+        "3": 1067,
+        "4": 1109,
+        "8": 1164,
+        "16": 1168
+      },
+      "selected_threshold": 999,
+      "screen_states": 279,
+      "lookup_available": 52,
+      "lookup_used": 0,
+      "native_reward": 1193,
+      "hybrid_reward": 1193,
+      "hybrid_gain_percent": 0.0,
+      "hindsight_routing_oracle_reward": 1197,
+      "oracle_gain_percent": 0.3352891869237151
+    }
+  ]
+}
