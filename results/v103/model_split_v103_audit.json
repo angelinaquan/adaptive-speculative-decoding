@@ -1,0 +1,64 @@
+{
+  "passed": true,
+  "domains": {
+    "alpaca": {
+      "fresh_available": 50218,
+      "profile_reused_texts": 2
+    },
+    "gsm8k": {
+      "fresh_available": 7025,
+      "profile_reused_texts": 5
+    },
+    "mbpp": {
+      "fresh_available": 96,
+      "profile_reused_texts": 64
+    }
+  },
+  "freshness_scope": "Disjoint normalized texts and MBPP task IDs against saved workload manifests and fit JSONL files; not a claim about unrecorded historical inputs.",
+  "historical_input_sha256": {
+    "cost_v26_manifest.json": "c30b984c4152e7db933dd59067ec2df511e2b60c34eb0a81b7425ed02bad378b",
+    "cost_v38_manifest.json": "7d14dbbf40b88bfee46b2f4a2ca25a474281109caa7935dc337d33408bf6d9bd",
+    "draft_v50_manifest.json": "e23bcb83c93f7a1fbac1eb2c2768adf5d3c6539d0c3054f1bda11f96fbb87430",
+    "fresh_test_manifest_v5.json": "0e02dafb6042dbb2db48e4b09a1d48dfc7e0f488c86aeff06c867adcd8707414",
+    "head_calibration_v18_manifest.json": "ecb02a552d59ab1cbd813872fd21c55bc07bf073b9ecbd78e57b98e7a73bc993",
+    "labels_v83_manifest.json": "441ff52c87d6f3a09bf693ec06b160ed7969746072ec02cf16d48ac689b38c9a",
+    "load_v76_manifest.json": "c566cdb0fef7a993133220996b8ad1f926c3af567ec98e8e600171a928b5b5bf",
+    "load_v76_manifest_audit.json": "a8e312d2c0ecee9ee1f343301b745364a2aecc37a37559164c95522c35791336",
+    "manifest.json": "add2992cbe13b7ee982ebb090e558c83b55efa9dcc1503ae4cc99dc245a5ed9f",
+    "oracle_v57_manifest.json": "232a0575125149596c23ff01f996ae44a00c8f77391b95e4f606e685ced72464",
+    "path_v89_manifest.json": "1beb33fb35296b7916bd67e70aaac3aa53b30c6684bb1f1ede703c047b3abb4b",
+    "prefix_v52_manifest.json": "633e51c395ae9d3f0415c684a6da11f84b927a29d2537395eb8cca3f7990a317",
+    "profile_v77_manifest.json": "265cce4a12d349f3174c2e0ce3d3dce428aa6748527b390ee59d63bbb2f148ae",
+    "profile_v77_manifest_audit.json": "a0e9824e4d642fec136b70dd434b2d4d1d2599037a6e8b58c5397504b3dd24e4",
+    "score_v90_manifest.json": "98097c91684e6513b7c658eb70b4dce8ca20b3e5184e3d6c4fe9780c8f622b47",
+    "selector_v88_manifest.json": "98bde84025ea9f26f588aef7b386b1e22800c2d6b129cf92c0e0bae8278645a7",
+    "serving_v16_manifest.json": "657576d85aabb04782fc8e105eb5b73fe91134828387d5686f90f35b903c94f0",
+    "shift_v8_manifest.json": "e92df55f88fce130c86a55594886a252795fdbbdb25dfe8b3b899ca44e9221c1",
+    "temperature_v9_manifest.json": "26ee81815638c513b00dc9cdb7546c73932b8a60856ddd306c950913aa3c8feb",
+    "transfer_v78_manifest.json": "81341dc76fc10fd6d329e26a76f4f98d168b450f3af78d8cc91adf66d35944f0",
+    "vocab_v53_manifest.json": "e23bcb83c93f7a1fbac1eb2c2768adf5d3c6539d0c3054f1bda11f96fbb87430",
+    "vocab_v54_manifest.json": "e23bcb83c93f7a1fbac1eb2c2768adf5d3c6539d0c3054f1bda11f96fbb87430",
+    "fresh_v5_alpaca_fit.jsonl": "da2d7861348a4060532885c86ebb3f5acdfb43925fc3c073b60c1ea75e714f37",
+    "fresh_v5_gsm8k_fit.jsonl": "c4cfbe91117569169968a8f985c6556afa464de4774c5d699341eb8c7ef7599b",
+    "fresh_v5_humaneval_fit.jsonl": "3018cd91a52e0d7f886aedee979d0787fc3e9a074ac0984d89d4b8f379eb6cb3",
+    "shift_v8_alpaca_fit.jsonl": "6ca3159774157b75954614aa89897846965f752919b64235e48e2ab68761c1a9",
+    "shift_v8_gsm8k_fit.jsonl": "e27a202f3bd74dcdc1f456d6e0aedb7b44b4a442dd1c625caa175b53ec850e3c"
+  },
+  "sources": {
+    "alpaca": {
+      "path": "/Users/angelinaquan/Desktop/Class/18.657/speculative-baseline/DeepSpec/eval_datasets/alpaca.jsonl",
+      "sha256": "c1f1623ac08e4c4f024604bb2689a024963eb7eb9dbbc29e57dda5a11d87e07b"
+    },
+    "gsm8k": {
+      "path": "/Users/angelinaquan/Desktop/Class/18.657/speculative-tonight/gsm8k_official_train.jsonl",
+      "sha256": "17f347dc51477c50d4efb83959dbb7c56297aba886e5544ee2aaed3024813465"
+    },
+    "mbpp": {
+      "path": "/Users/angelinaquan/Desktop/Class/18.657/speculative-tonight/mbpp_official_full.jsonl",
+      "sha256": "ccf64ceae9c5403bf50a044cb6d505bfd2a2963ee58338ba268fd65beab92a9f"
+    }
+  },
+  "sanitized_sha256": "ca95deaa9a01ef0a6f439f88bcf0dd3db3563d22f22aad6cae04ebb9a8d8c8e9",
+  "manifest_sha256": "f570546760de7bcb9ad683242328fe5416de082d24468f4a7226867260e5fbc8",
+  "results_collected": false
+}

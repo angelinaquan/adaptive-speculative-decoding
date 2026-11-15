@@ -1,0 +1,35 @@
+{
+  "scope": "Frozen second-model data split; no proposed-method or speedup claim.",
+  "manifest_sha256": "f570546760de7bcb9ad683242328fe5416de082d24468f4a7226867260e5fbc8",
+  "counts_per_domain": {
+    "profile": 64,
+    "validation": 32,
+    "test": 64
+  },
+  "widths": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "batches": [
+    8,
+    64
+  ],
+  "max_tokens": 64,
+  "model_gate": "v102 fresh-AR exact parity must pass before collecting profiles.",
+  "profiling": "Sweep native widths 1..7 on profile split only; two opposite engine orders, two warmup and two timed passes. Account for startup and generation separately.",
+  "selection": "Choose strong fixed width separately by batch from pooled profiling seconds; tie chooses smaller width. No validation/test outcomes enter this baseline.",
+  "validation": "Available for explicitly labelled method development; not independent confirmation after use.",
+  "test": "Do not collect test outcomes until method, hyperparameters, baselines, primary metric, timing orders and analysis are frozen in a separate plan.",
+  "primary_target": "At least 10 percent measured steady-state throughput gain over strongest properly tuned applicable baseline, including method overhead. No change to target without user clarification.",
+  "limitations": [
+    "Single H200, second model; freshness is relative to saved workload manifests and fit JSONL inventory, not unrecorded historical inputs or pretraining.",
+    "Only 64 test prompts per domain; repeated timings are not independent prompt samples.",
+    "Profiling can reuse prior 4B texts; exact counts are audited.",
+    "A native width sweep is a baseline, not a proposed method."
+  ]
+}
