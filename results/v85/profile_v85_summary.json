@@ -1,0 +1,32 @@
+{
+  "passed": true,
+  "throughputs_uninstrumented": {
+    "native": 9319.4122628278,
+    "forced": 9065.739614261456
+  },
+  "forced_vs_native_percent": -2.7219811873562483,
+  "profiled_forced_tps": 9058.311370723539,
+  "profile_vs_uninstrumented_forced_percent": -0.0819375346522433,
+  "profile_wall_ms": 1279.2671311181039,
+  "stages": {
+    "pre": {
+      "calls": 92,
+      "total_ms": 6.767711974680424
+    },
+    "context": {
+      "calls": 86,
+      "total_ms": 5.905440006405115
+    },
+    "backbone": {
+      "calls": 92,
+      "total_ms": 143.80931198596954
+    },
+    "tail": {
+      "calls": 92,
+      "total_ms": 65.07932791113853
+    }
+  },
+  "tail_ms_fraction_of_profile_wall": 0.05087235208979219,
+  "scope": "Measured component headroom at native3 vs matched forced3,192reusedprompts,b64,BF16. Profile only after uninstrumented timings; no method gain claim.",
+  "interpretation": "Tail includes output projection and candidate selection. GPU elapsed attribution is not an exact wall-time decomposition; compare instrumentation overhead and actual forced/native throughput before interpreting. Do not infer deployable gain from removing a whole tail."
+}
