@@ -1,0 +1,30 @@
+{
+  "passed": true,
+  "sessions": 7,
+  "batch_output_hash_checks": 90,
+  "untimed_gpu_allocation_audit_batches": 178,
+  "local_throughputs_exactly_match_remote": true,
+  "orders": [
+    {
+      "round": 0,
+      "throughputs": {
+        "native3": 9328.456183602837,
+        "forced3": 8771.528043769315,
+        "forced8": 8459.42310078171
+      },
+      "forced8_vs_native3_percent": -9.315936803655422,
+      "forced8_vs_forced3_percent": -3.5581593244668697
+    },
+    {
+      "round": 1,
+      "throughputs": {
+        "native3": 9364.991524319292,
+        "forced3": 9126.377440187383,
+        "forced8": 8488.30547086513
+      },
+      "forced8_vs_native3_percent": -9.361311766033708,
+      "forced8_vs_forced3_percent": -6.991514141334399
+    }
+  ],
+  "scope": "Raw artifact audit; no statistical significance or generalization claim from two orders/three reused domain batches"
+}

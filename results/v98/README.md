@@ -16,3 +16,5 @@ Calibration improves only0.495% over the tuned raw-confidence control. This is *
 On the separate full v83 diagnostic split, the draft8 adaptive-verification hindsight oracle gives16.76% reward over native3, still excluding extra drafting cost. The immediate decision gate before any elaborate implementation is a paired serving cost test of draft8/verify3 versus native3, with exact output parity and fixed verification quotas. If that overhead consumes the reward opportunity, retire the mechanism in this regime.
 
 Checks pass for disjoint identities/texts, native score-path reconstruction, finite monotone reward curves, label-poisoning invariance of frozen allocation, and every deterministic truncation length. No serving correctness has been tested. W&B upload submitted as3067468; check no earlier than12:45UTC. Report unchanged.
+
+Upload verified complete: https://app.forge.coreweave.com/aquan-world-model/18657-speculative-pilot/runs/j0kvd8d7

@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "throughputs": {
+    "native3": 9346.688150779337,
+    "forced3": 8945.435065168313,
+    "forced8": 8473.839675112371
+  },
+  "forced8_vs_native3_percent": -9.33858562077079,
+  "forced8_vs_forced3_percent": -5.271911166090037,
+  "forced3_vs_native3_percent": -4.292997467531501,
+  "scope": "Paired serving cost gate: native3, forced draft3/verify3, forced draft8/verify3.192reusedprompts,b64,BF16. No learned-method claim.",
+  "interpretation": "Complete output throughput including drafting and verification. Fixed prefix verification is an overhead gate, not adaptive method performance. Do not multiply replay gains into measured speed as a validated prediction."
+}

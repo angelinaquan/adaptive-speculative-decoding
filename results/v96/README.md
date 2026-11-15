@@ -13,3 +13,5 @@ Local fitting session70864 submitted, output /tmp/context_rerank_v96_output.txt.
 ## Completed result
 
 All optimizer fits converged; local process exited0. At width3, native/CE/prefix each score816. At width8, native1193, CE1192 (-0.084%), prefix1198 (+0.419%). Prefix selects native fallback at width3 and penalty.01 at width8. Neither width meets the prespecified10% reward gate. Retire this adaptation candidate; no speedup or novelty claim follows. W&B upload submitted as3067445, unconfirmed. Next check no earlier than12:41UTC. Report unchanged.
+
+Upload verified complete: https://app.forge.coreweave.com/aquan-world-model/18657-speculative-pilot/runs/awkjp2e0
