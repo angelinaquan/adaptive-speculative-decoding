@@ -1,0 +1,127 @@
+{
+  "passed": true,
+  "scope": "Single-path expected-prefix decoding diagnostic,96differentprompts fromv83trainingpool only,48fit48internal-validation; no closedloop orspeed claim.",
+  "results": [
+    {
+      "width": 3,
+      "native_reward": 794,
+      "models": {
+        "greedy": {
+          "temperature": 1.0,
+          "validation_reward": 794,
+          "gain_vs_native_percent": 0.0,
+          "domains": {
+            "alpaca": 211,
+            "gsm8k": 309,
+            "mbpp": 274
+          }
+        },
+        "raw_sum": {
+          "temperature": 1.0,
+          "validation_reward": 700,
+          "gain_vs_native_percent": -11.838790931989928,
+          "domains": {
+            "alpaca": 177,
+            "gsm8k": 264,
+            "mbpp": 259
+          }
+        },
+        "geometric": {
+          "temperature": 1.0,
+          "validation_reward": 730,
+          "gain_vs_native_percent": -8.060453400503775,
+          "domains": {
+            "alpaca": 182,
+            "gsm8k": 270,
+            "mbpp": 278
+          }
+        },
+        "prefix": {
+          "temperature": 1.0,
+          "validation_reward": 792,
+          "gain_vs_native_percent": -0.25188916876573986,
+          "domains": {
+            "alpaca": 210,
+            "gsm8k": 306,
+            "mbpp": 276
+          }
+        },
+        "map": {
+          "temperature": 1.0,
+          "validation_reward": 786,
+          "gain_vs_native_percent": -1.0075566750629705,
+          "domains": {
+            "alpaca": 209,
+            "gsm8k": 301,
+            "mbpp": 276
+          }
+        }
+      },
+      "prefix_reward_gate_passed": false
+    },
+    {
+      "width": 8,
+      "native_reward": 1147,
+      "models": {
+        "greedy": {
+          "temperature": 1.0,
+          "validation_reward": 1147,
+          "gain_vs_native_percent": 0.0,
+          "domains": {
+            "alpaca": 266,
+            "gsm8k": 492,
+            "mbpp": 389
+          }
+        },
+        "raw_sum": {
+          "temperature": 1.0,
+          "validation_reward": 820,
+          "gain_vs_native_percent": -28.509154315605933,
+          "domains": {
+            "alpaca": 188,
+            "gsm8k": 336,
+            "mbpp": 296
+          }
+        },
+        "geometric": {
+          "temperature": 1.0,
+          "validation_reward": 916,
+          "gain_vs_native_percent": -20.13949433304272,
+          "domains": {
+            "alpaca": 214,
+            "gsm8k": 380,
+            "mbpp": 322
+          }
+        },
+        "prefix": {
+          "temperature": 2.0,
+          "validation_reward": 1155,
+          "gain_vs_native_percent": 0.6974716652136115,
+          "domains": {
+            "alpaca": 268,
+            "gsm8k": 497,
+            "mbpp": 390
+          }
+        },
+        "map": {
+          "temperature": 0.25,
+          "validation_reward": 1145,
+          "gain_vs_native_percent": -0.17436791630339732,
+          "domains": {
+            "alpaca": 267,
+            "gsm8k": 488,
+            "mbpp": 390
+          }
+        }
+      },
+      "prefix_reward_gate_passed": false
+    }
+  ],
+  "selection_poison_passed": true,
+  "prior_art": "DCOCO section5.3 tests greedy,Global-Sum,geometric raw-score paths. Expected-prefix reward over calibrated Markov probabilities is the specific candidate here; DP itself standard and novelty unproven.",
+  "limitations": [
+    "Model probabilities need not equal acceptance probabilities",
+    "Internal split of priortraining workload, not fresh test",
+    "Teacher-anchor reward excludes runtime overhead and trajectory changes"
+  ]
+}

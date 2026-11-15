@@ -1,0 +1,32 @@
+{
+  "scope": "Single-path expected-prefix decoding diagnostic,96differentprompts fromv83trainingpool only,48fit48internal-validation; no closedloop orspeed claim.",
+  "widths": [
+    3,
+    8
+  ],
+  "temperatures": [
+    0.1,
+    0.25,
+    0.5,
+    1.0,
+    2.0
+  ],
+  "method": "BackwardDP V_j(a)=max_b p_j(b|a)*(1+V_next(b)), p=softmax(existing selector scores /T). Reuse all candidate transition scores, no backbone change.",
+  "controls": [
+    "native greedy",
+    "MAP path (sum log normalized probabilities)",
+    "raw-score Global-Sum",
+    "geometric raw-score sum discount.75"
+  ],
+  "selection": "Prefix and MAP temperatures independently selected on fit prompts, fixed increasing-temperature tie order; validation never selects parameters. Both widths reported.",
+  "gates": [
+    "Original native paths reproduce priorv83 tokens",
+    "Greedy walk on exported transition grids reproduces native proposals",
+    "400 DP cases match exhaustive enumeration",
+    "All evaluated path rewards reconstructed from token IDs",
+    "Validation label poison leaves temperature selection unchanged"
+  ],
+  "gate": "Selected prefix path requires>=10% internal-validation reward over native before fresh serving investigation; no throughput claim from this gate.",
+  "prior_art": "DCOCO section5.3 tests greedy,Global-Sum,geometric raw-score paths. Expected-prefix reward over calibrated Markov probabilities is the specific candidate here; DP itself standard and novelty unproven.",
+  "manifest_sha256": "1beb33fb35296b7916bd67e70aaac3aa53b30c6684bb1f1ede703c047b3abb4b"
+}
