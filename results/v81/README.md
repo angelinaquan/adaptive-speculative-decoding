@@ -13,3 +13,5 @@ Exploratory nested prompt-grouped cross-validation on 277 teacher anchors from 4
 Outer-label poisoning leaves fitting and predictions unchanged. No candidate meets the 10% reward screening gate. Oracle reward1024 is hindsight, not a deployable result. Remote reproduction and W&B upload submitted as job3064511; completion has not yet been checked.
 
 To reproduce locally, create a scratch directory containing experiments/decision_v81.py, experiments/allocation_headroom_v73.py, this directory's decision_v81_plan.json and context_v75_features.npz, and results/v75/context_v75_summary.json; run decision_v81.py with NumPy installed. Keep output separate from archived results. No GPU needed.
+
+Remote reproduction job3064511 completed0:0; all model rewards match local expected outputs. [W&B](https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/0mvuwuyq).

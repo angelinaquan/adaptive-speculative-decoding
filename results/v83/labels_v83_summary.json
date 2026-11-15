@@ -1,0 +1,22 @@
+{
+  "passed": true,
+  "prompts": 480,
+  "usable_prompts": 478,
+  "states": 2767,
+  "splits": {
+    "train": {
+      "prompts": 384,
+      "states": 2218
+    },
+    "validation": {
+      "prompts": 96,
+      "states": 549
+    }
+  },
+  "censored_prompts": [
+    1,
+    16
+  ],
+  "scope": "Training/validation labels only; no speed or method success claim.",
+  "feature_npz_sha256": "4808cb8b0185d446c7a9b03d9ab5f6fdfabc36410c4060c73156c1602d50db01"
+}

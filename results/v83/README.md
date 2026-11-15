@@ -7,3 +7,7 @@ The fixed plan in experiments/labels_v83_plan.json specifies training-size compa
 The collector inherits v73 checkpoint, causal-feature, independent-verification, and target replay checks. It stops on failures and retains EOS-censored prompts. An independent exporter reconstructs every accepted prefix from saved token IDs. Labels use FP32 HF teacher trajectories, not BF16 serving; future end-to-end validation must establish transfer, output correctness, and actual latency including overhead.
 
 Status: submitted, not yet inspected. No performance conclusion or report change.
+
+## Completed result
+
+Job3064552 completed0:0 in29m16s. All480prompts processed,478usable,2767states; early-EOS prompts1and16 retained. Train2218states, validation549states. Independent local reconstruction checks all22,136 width labels and source/plan/manifest hashes. [W&B](https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/woa3n7n4).
