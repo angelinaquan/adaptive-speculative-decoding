@@ -1,9 +1,13 @@
-# Second-model profiling and evaluation split (submitted)
+# 8B profiling sweep: failed correctness gate
 
-The original v102 gate failed and remains archived. The sweep now follows the audited v109 six-session uninstrumented reproduction, which passed across three cache conditions; the earlier discrepancy remains unexplained. It will measure native widths 1–7 at batches 8 and 64 on the profiling split only. No proposed method or speedup is established by this preparation.
+[W&B logs](https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/5y5lxy7r). Job 3070220 failed after 28 completed sessions. Batch 8, width 2, reverse order diverged from the fresh AR reference during warmup at profile index 6, token index 57. The cause is unresolved. No relaxed correctness gate or selective rerun is used to turn this into a passed experiment.
 
-Each domain has 64 profiling, 32 validation and 64 test prompts. Validation and test texts are disjoint from the saved workload-manifest and fit-JSONL inventory after lowercasing and whitespace normalization; MBPP task IDs also exclude known full/sanitized task overlaps. This is not an audit of unrecorded historical inputs or model pretraining. All splits exclude v102 smoke prompts.
+## Completed batch-64 subset (diagnostic only)
 
-Profiling reuses 2 Alpaca, 5 GSM8K and all 64 MBPP prompts. Validation may be used for development. Test outcomes must remain uncollected until a separate candidate and analysis plan is frozen. The primary target remains a measured 10% throughput improvement over strong tuned controls, including overhead.
+All 14 native sessions passed; 168 batch hashes were independently checked against the AR reference. Width 3 was fastest in both orders: 1.695 and 1.701 seconds per 192 profiling prompts. Maximum width 7 took 1.993 and 1.972 seconds. The full sweep selected the same width 3 already suggested by 4B evidence; it found no better configuration in this subset.
 
-Preparation assertions, Python syntax checks and ten fake-engine CPU integration sessions pass. Injected output mismatches and stale AR references are rejected. These checks cover harness bookkeeping only, not GPU decoding correctness. GPU job3070220 is submitted; its execution and W&B completion are not yet observed. It retains fresh AR checks at both batch sizes and every width. It logs timings and artifacts when launched; it aborts on any exact-output mismatch. The report is unchanged.
+This drafter supports widths 1–7, so the proposed literal {3,8} transfer comparison is unavailable. Reinterpreting it as {3,maximum legal width} gives {3,7}, also selecting 3 in both orders. That reinterpretation is explicitly exploratory, not a preregistered test.
+
+These are profiling-split timings, not held-out inference or a matched total-cost result. The global correctness gate failed, so this partial evidence cannot support a final generalization or end-to-end speedup claim. The report PDF is unchanged.
+
+`model_profile_v103_transfer_audit.json` records the audit and timings. `model_profile_v103_raw.json.gz` contains the stage records, including the failed stage. `../../experiments/analyze_transfer_v103.py` reproduces this analysis from individual records placed beside the script.
