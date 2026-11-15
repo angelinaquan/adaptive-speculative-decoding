@@ -12,3 +12,5 @@ Same previously exposed v89 even/odd prompt split as v91. All three probability 
 Correctness checks pass for censoring, finite-difference gradients, equality to the raw tree at unit coverage, gold-label poisoning, and tree budgets/closure. This candidate does not justify a serving implementation or a claim of 10% improvement. Retired at exploratory-screen stage. Report PDF unchanged.
 
 W&B publishing of v91 and v92 was submitted as CPU job 3066563; completion has not yet been checked. No GPU job was launched for this screen.
+
+Verified upload completed: https://app.forge.coreweave.com/aquan-world-model/18657-speculative-pilot/runs/sx1jha5q

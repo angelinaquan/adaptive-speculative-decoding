@@ -10,3 +10,5 @@ Use the previously exposed v89 even/odd fitting-pool split, grouping requests at
 | 8 | 1289 | 1306 | 1.32% |
 
 150 exhaustive small-case comparisons verify maximum surrogate mass under the global budget. Gold-label poisoning leaves decisions unchanged. This does not verify a serving implementation or attention/KV-cache behavior. Dynamic batch allocation already has prior art; no novelty is claimed. The screen does not justify a GPU implementation for the 10% goal. W&B upload submitted as CPU job 3066610; completion unconfirmed. Report unchanged.
+
+Verified upload completed: https://app.forge.coreweave.com/aquan-world-model/18657-speculative-pilot/runs/hqh5akgp

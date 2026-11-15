@@ -7,7 +7,9 @@ f=json.loads((r/'rerank_v90_fit.json').read_text())
 assert s['passed'] and f['passed']
 assert s['models_sha256']==hashlib.sha256((r/'rerank_v90_models.npz').read_bytes()).hexdigest()
 assert s['heldout_sha256']==hashlib.sha256((r/'score_v90_checks.json').read_bytes()).hexdigest()
-run=wandb.init(entity='aquan-world-model',project='18657-speculative-pilot',group='rerank-v90-frozen-scores',name='heldout-residual-reranker-evaluation',dir=os.environ['SERVING_SCRATCH'],config=json.loads((r/'rerank_v90_plan.json').read_text()))
+artifact_files=['rerank_v90_summary.json', 'rerank_v90_records.json', 'rerank_v90_fit.json', 'rerank_v90_models.npz', 'rerank_v90_plan.json', 'rerank_v90.py', 'fit_rerank_v90.py', 'evaluate_rerank_v90.py', 'publish_rerank_v90.py']
+assert all((r/name).is_file() for name in artifact_files)
+run=wandb.init(id='w9464hrc',resume='must',entity='aquan-world-model',project='18657-speculative-pilot',group='rerank-v90-frozen-scores',name='heldout-residual-reranker-evaluation',dir=os.environ['SERVING_SCRATCH'],config=json.loads((r/'rerank_v90_plan.json').read_text()))
 rows=[]
 for result in s['results']:
  for method,v in result['models'].items():
