@@ -363,3 +363,9 @@ The measured generation cost allocated to the mixed192 profiling set, across all
 [Results and independent audit](results/v77/) · [W&B](https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/saxiid98) · [Post-hoc subset analysis](experiments/robust_profile_v77.py).
 
 A frozen follow-up (v78) tests the selected widths without retuning on 384 fresh prompts, including new MATH500 and LBPP workloads, with a doubled 128-token generation cap. All eight native widths remain controls. Success requires at least 95% of the best measured pooled fixed-width throughput at each batch size; every domain and timing order will be reported. This tests dataset and generation-length transfer jointly, not hardware/model generality. [Frozen follow-up plan](experiments/transfer_v78_plan.json).
+
+## Profiling cost amortization
+
+Against default width 8 at batch 64, the mixed192 protocol saves 30.80 microseconds per output token on the held-out workload. Its allocated generation cost (92.61 seconds) breaks even after **3.01 million output tokens**. Including the measured 481.43 seconds of engine initialization across all16 native sessions increases that estimate to **18.64 million tokens**. The mixed768 protocol gives the same width choice but needs 12.18 million tokens to amortize generation alone. At batch 8, profiling chooses default width 8, so there is no throughput saving to amortize its cost.
+
+These are retrospective allocations of the repeated experimental protocol, not a separately timed minimal profiler or cold-start measurement. Initialization uses existing compilation caches. Savings assume future workload performance matches the test set; no gain is claimed over an already tuned batch-specific baseline. [Reproducible calculation](scripts/analyze_profiling_cost.py) · [Full cost data and limitations](results/v77/profiling_cost.json).
