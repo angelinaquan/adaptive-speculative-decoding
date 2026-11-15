@@ -1,0 +1,34 @@
+{
+  "scope": "Optimistic cost diagnostic for existing v79 eight-engine profiler only, not a universal lower bound. A racing method that still initializes every width cannot remove more than all measured generation time if non-generation overhead is unchanged.",
+  "input_sha256": "4bcc18ffab913a73f373688ddc4423ade0acc77fd97507327bb4dfa98f87a4e4",
+  "rows": [
+    {
+      "panel": 0,
+      "measured_total_seconds": 353.9421423890162,
+      "all_generation_seconds": 23.443070422159508,
+      "optimistic_time_reduction_percent": 6.623418806227752,
+      "optimistic_speedup_percent": 7.093233358461726
+    },
+    {
+      "panel": 1,
+      "measured_total_seconds": 337.66565895755775,
+      "all_generation_seconds": 23.30208979663439,
+      "optimistic_time_reduction_percent": 6.900935638102098,
+      "optimistic_speedup_percent": 7.412465082652764
+    },
+    {
+      "panel": 2,
+      "measured_total_seconds": 335.98371076467447,
+      "all_generation_seconds": 24.093047759262845,
+      "optimistic_time_reduction_percent": 7.170897572512912,
+      "optimistic_speedup_percent": 7.724837777155513
+    }
+  ],
+  "conclusion": "Even eliminating ALL warmup and timed generation would save less than 10 percent total profiling time. Do not launch naive successive elimination as a plausible 10 percent total-cost improvement under this engine lifecycle.",
+  "limitations": [
+    "Counterfactual arithmetic, not measured racing performance.",
+    "Changing number of initialized widths or sharing an engine invalidates this bound.",
+    "A prior shortlist must compete against zero-profile transfer and equal-cost shortlist baselines.",
+    "This is profiling cost only, not steady-state inference throughput."
+  ]
+}
