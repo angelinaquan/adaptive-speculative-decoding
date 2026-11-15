@@ -1,0 +1,65 @@
+{
+  "scope": "480prompt training/validation collection to distinguish small-sample predictor failure from absence of learnable allocation signal. No test set evaluated and no speed claim.",
+  "splits": {
+    "train": 384,
+    "validation": 96
+  },
+  "domains": [
+    "alpaca",
+    "gsm8k",
+    "mbpp"
+  ],
+  "source": "v77 profiling pool only; excludes all v73 prompts by whitespace-normalized exact text; historical timing reuse disclosed.",
+  "manifest_sha256": "441ff52c87d6f3a09bf693ec06b160ed7969746072ec02cf16d48ac689b38c9a",
+  "dtype": "HF FP32 target/draft, so serving must later independently establish BF16 transfer and exact output checks.",
+  "anchors": [
+    0,
+    8,
+    16,
+    24,
+    32,
+    40
+  ],
+  "generation_cap": 96,
+  "widths": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "gates": [
+    "Serialized checkpoint and shared weights exact",
+    "Cached vs full target greedy argmax exact; abort on any mismatch",
+    "Independent first-anchor target verification at every width",
+    "Width-invariant predraft features",
+    "Future-poison first-anchor draft and feature invariance",
+    "EOS-censored prompts retained, never replaced"
+  ],
+  "prespecified_followup": {
+    "controls": [
+      "fixed3",
+      "training-mean reward allocator",
+      "context/anchor ridge with MSE-selected regularization",
+      "frozen context predictor plus request-specific shrunk residual feedback"
+    ],
+    "training_sizes_per_domain": [
+      32,
+      64,
+      128
+    ],
+    "ridge_penalties": [
+      0.01,
+      0.1,
+      1,
+      10
+    ],
+    "residual_grid": "No update, or alpha in [.5,1], prior count in [1,4], decay in [.5,1]; nested selection on training prompts only. Validation used once for gate, not parameter search.",
+    "allocator": "DP budget<=3*n, groups of16prompts at each offset; same groups every method; token reward only.",
+    "gate": "Validation reward >=10% over fixed3 and improves over frozen context baseline. Failure stops this candidate; success requires fresh heldout labels and end-to-end throughput >=10% vs tuned native and context baseline including all overhead.",
+    "novelty": "General context prediction/feedback/packing already prior art (ForeSpark/TurboSpec). Combined method novelty remains to be established; do not claim a new paradigm."
+  }
+}
