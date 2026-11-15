@@ -381,3 +381,11 @@ This supports transfer across these datasets and generation lengths on the same 
 [Audited results and raw files](results/v78/) · [W&B](https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/62e5e0u7).
 
 The next targeted experiment (v79) measures a standalone cheaper profiler at batch64: three disjoint192prompt panels, one warmup and one measured pass per candidate width, with all process/engine startup and teardown wall time included. Kernel caches already exist; this is not a cold-compilation benchmark. Width selection sees profiling data only; performance is subsequently looked up in the already completed v78 benchmark, so it is not another independent test-workload confirmation. [Frozen protocol](experiments/minimal_v79_plan.json).
+
+## Cheaper profiling measured end to end (v79)
+
+All 24 sessions completed and the independent local audit passed 144 exact batch-output checks. Each of three disjoint mixed 192-prompt profiling panels selected width 3 at batch 64 using just one warmup and one timed pass per candidate. The selected width matches the best pooled v78 test configuration, but that performance is a lookup in the completed benchmark, not a new serving trial.
+
+Full measured profiling wall times were **353.94, 337.67, and 335.98 seconds**, including all eight candidate subprocesses and their startup/shutdown. Generation alone used 23.44, 23.30, and 24.09 seconds; non-generation overhead accounted for 92.83–93.38%. Existing kernel caches were reused, so these are not cold-compilation costs. Using v78 throughput, break-even against width 8 is **10.64, 10.15, and 10.10 million output tokens**. One panel had only a 0.055% profiling-time gap between widths 3 and 7; three successful panels do not establish a population-level selection probability.
+
+[W&B](https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/tvk5jo6x) · [Raw sessions and local audit](results/v79/) · [Updated four-page report covering v76–v79](output/pdf/project_report.pdf).

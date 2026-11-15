@@ -1,125 +1,119 @@
 \documentclass[10pt]{article}
 \usepackage[margin=0.85in]{geometry}
-\usepackage{amsmath,amssymb,booktabs,tabularx,array,hyperref}
+\usepackage{amsmath,booktabs,tabularx,array,hyperref}
 \hypersetup{colorlinks=true,urlcolor=blue,citecolor=blue,pdftitle={Reliable Draft-Length Selection for Batched Speculative Decoding},pdfauthor={Angelina Quan}}
-\setlength{\parskip}{4pt}
-\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}\setlength{\parindent}{0pt}
 \title{Reliable Draft-Length Selection\\for Batched Speculative Decoding}
-\author{Angelina Quan}
-\date{November 14, 2026}
-\begin{document}
-\maketitle
+\author{Angelina Quan}\date{}
+\begin{document}\maketitle
 \begin{abstract}
-How much profiling is needed to select a fast draft length, and does that choice transfer across prompt domains? We propose an empirical study of this question using a released parallel drafter. A completed confirmation experiment establishes substantial headroom for configuration tuning: on 768 prompts not used in our earlier runs, native draft length 3 improves throughput over length 8 by 29.75\% at batch size 64 (95\% paired bootstrap interval: 26.81--32.61\%). At batch size 8, length 8 instead improves throughput over length 3 by 34.76\% (33.01--36.49\%). The direction holds across conversation, mathematics, and code prompts and all four engine orders. All outputs match ordinary greedy decoding. These results confirm a batch-dependent configuration effect on one model pair and GPU; the proposed profiling-budget and cross-domain selection experiments remain to be completed.
+We study how much profiling is needed to choose a fast draft length and whether that choice transfers across workloads. On Qwen3-4B with a released DFlash2 drafter and one H200, a balanced 192-prompt profiling set selects the best measured fixed length on a disjoint pooled test workload at batch sizes 8 and 64. All 64 combinations of available mixed-domain profiling blocks select the same lengths. Freezing those choices before a second test on new benchmarks and a doubled generation cap preserves the best measured length in every evaluated domain; at batch 64, throughput improves by 29.91\% over length 8. A cheaper profiler using one warmup and one timed pass also selects length 3 on three disjoint profiling sets. However, its full wall cost is 5.6--5.9 minutes, mostly engine startup and teardown, requiring about 10.1--10.6 million output tokens to amortize against length 8 under the measured test workload. These findings support practical profiling and workload transfer in this setup, not a new scheduling algorithm or universal generalization.
 \end{abstract}
 
-\section{Research question and motivation}
-Speculative decoding drafts several tokens and checks them with a target model. A longer draft can amortize target-model work, but it also spends computation on tokens that may be rejected. Batch size changes that tradeoff: when many requests are processed together, additional speculative work can become more costly. This explains why a single draft length may perform poorly across operating conditions, although it does not by itself predict the best length on a particular runtime.
+\section{Research question and contribution}
+Speculative decoding proposes tokens with a drafter and checks them with a target model. Longer drafts can amortize target work, but also spend computation on rejected tokens. Batch size changes the cost tradeoff. Our question is: \textbf{Can a small profiling set recover most of the available tuning benefit, and when does its selected length transfer across domains?}
 
-Our research question is: \textbf{Can a small profiling set reliably recover most of the throughput benefit of draft-length tuning, and when does the selected length transfer across domains?} We propose to measure the tradeoff between profiling cost and held-out performance, rather than introduce another acceptance head. The completed experiment supplies the motivation and a reproducible baseline. It does not yet measure the sample efficiency of a selector.
+We evaluate an existing profiling-based selection rule rather than introduce another acceptance predictor. The contribution is a controlled empirical study with three parts: profiling-budget and cross-domain sensitivity; a frozen-choice confirmation on new workloads and longer outputs; and measured cost of a shorter profiling procedure. We distinguish unique profiling prompts from repeated timing passes, test-set performance from profiling estimates, and generation cost from total profiler wall time.
 
 \section{Related work and positioning}
-\textbf{Foundations.} Leviathan et al.~\cite{leviathan} describe exact speculative sampling. Our measurements use greedy decoding and require token equality against an ordinary-decoding reference. That finite test is not a proof of stochastic distribution equivalence.
+\textbf{Speculative decoding.} Leviathan et al.~\cite{leviathan} describe exact speculative sampling. Our speed measurements use greedy decoding and enforce token equality against ordinary decoding. These finite checks do not prove stochastic distribution equivalence.
 
-\textbf{Batch-dependent lengths.} Su et al.~\cite{su} directly study the interaction between batching and speculation length. They profile configurations and build a batch-size-to-length mapping. Thus both the qualitative effect and a profiling lookup table precede this project. TurboSpec~\cite{turbo} combines execution profiling with feedback-based runtime speculation control. Our offline batch experiment does not reproduce its live-serving evaluation.
+\textbf{Profiling and batch-aware lengths.} Su et al.~\cite{su} explicitly use a small sample of prompts to profile lengths, construct a batch-size lookup table, and evaluate dynamic traffic on disjoint prompts. Small-set profiling, held-out evaluation, and batch-dependent selection are therefore prior work. TurboSpec~\cite{turbo} combines execution profiling with runtime feedback to control speculation. Our offline finite-batch tests do not reproduce its live-serving evaluation.
 
-\textbf{Online selection and parallel drafting.} BanditSpec~\cite{bandit} formulates configuration selection as a bandit problem and analyzes UCBSpec and EXP3Spec. ForeSpark~\cite{fore} predicts acceptance for candidate draft lengths and jointly schedules draft and verification budgets for parallel drafters. We use the ForeSpark runtime with a released DFlash2 drafter, but our confirmation uses its native fixed-width path, not its learned scheduler. Neither method is a matched empirical comparator here; we make no superiority claim against either.
+\textbf{Online and parallel-drafter scheduling.} BanditSpec~\cite{bandit} treats configuration selection as a bandit problem and analyzes UCBSpec and EXP3Spec. ForeSpark~\cite{fore} predicts acceptance for candidate lengths and jointly schedules draft and verification budgets. We use the ForeSpark runtime and its native fixed-width path with a released DFlash2 drafter; we do not train or evaluate its learned scheduler. Neither system is a matched empirical baseline here, so we make no superiority claim against them.
 
-The contribution is an empirical study of selection reliability and transfer in a modern parallel-drafter configuration. Changing the model or GPU alone does not establish methodological novelty.
+Our empirical question concerns selection reliability, transfer, and amortization. The experiments do not establish novelty for the selection rule. The roughly 30\% gains compare useful and poorly matched fixed configurations, not a new method against an already tuned batch-specific baseline.
 
 \newpage
-\section{Proposed method and evaluation}
-For batch size $b$, draft length $k$, and profiling workload $D$, define measured throughput
+\section{Selection method and experimental design}
+For a profiling workload $D$, batch size $b$, and native draft length $k$, use
 \[
- \widehat R(b,k;D)=\frac{\sum_{j\in D}N_j}{\sum_{j\in D}T_j(b,k)},
- \qquad \widehat k_b(D)=\arg\max_{k\in\mathcal K}\widehat R(b,k;D).
+ \widehat R(b,k;D)=\frac{\sum_{j\in D}N_j}{\sum_{j\in D}T_j(b,k)},\qquad
+ \widehat k_b(D)=\arg\max_{k\in\{1,\ldots,8\}}\widehat R(b,k;D).
 \]
-Here $N_j$ is the number of generated output tokens and $T_j$ is the measured generation-call time for batch $j$. The sum-of-tokens divided by sum-of-times weights actual work; it is not an average of per-batch throughput ratios. Exact output matching makes $N_j$ equal across configurations. We propose $\mathcal K=\{1,\ldots,8\}$, with a fixed tie rule and a length chosen before processing the test workload.
+Here $N_j$ counts generated tokens and $T_j$ measures the generation-call duration. Exact output matching makes token counts equal across configurations, so selection minimizes total time; ties choose the smaller length. The chosen length is fixed before evaluating test prompts. All widths are independently generated, not truncated from a longer parallel draft.
 
-\textbf{Profiling budget.} Partition new prompts into profiling, validation, and test sets before selection. Evaluate increasing profiling-set sizes using paired configurations and balanced timing orders. Validation fixes any selection settings; test prompts only evaluate the frozen choice. Repeated profiling subsets measure selection variability, but overlapping subsets are not independent new workloads. Any uncertainty-based stopping rule would need a fixed-budget or sequentially valid analysis; repeatedly inspecting ordinary 95\% intervals is not sufficient.
+All experiments use Qwen3-4B, RedHatAI/Qwen3-4B-speculator.dflash2, BF16, and one H200, with adaptive verification and prefix caching disabled. Generation is greedy with thinking disabled. Candidate-specific compilation caches prevent cross-width cache reuse. Reported throughput excludes startup and warmup; profiler cost is reported separately. These are offline batches, not a server with changing arrival rates.
 
-\textbf{Baselines.} Compare default length 8; one global fixed length chosen on validation data using prespecified batch-size weights; a separate fixed length for each batch size; and domain-specific tables fitted on their own profiling data. The batch-specific table is established prior work and our main practical baseline. An exhaustive test-set winner supplies a hindsight reference, not a deployable method. For transfer, fit on one domain and evaluate on a disjoint target domain, alongside pooled and target-domain profiling controls.
+\textbf{Profiling study (v77).} Each of Alpaca, GSM8K, and MBPP contributes 256 profiling, 64 validation, and 128 test prompts: 1,344 total. Splits are disjoint. Validation and test prompts are excluded from previous runs; profiling may reuse earlier examples. Native lengths 1--8 run at batches 8 and 64 in two reverse engine orders, each with two warmup and two timed passes. Validation selects global, batch-specific, and domain-specific fixed baselines. The global baseline weights the design by equal prompt counts across batch sizes and domains and selects length 8; batch-specific baselines select 8 and 3. Test data never determine the deployed choice.
 
-\textbf{Outcomes.} Report held-out throughput, relative throughput loss to the hindsight reference, selection frequency, profiling GPU time, and paired uncertainty. If profiling costs $C$ seconds and saves $\delta>0$ seconds per output token, the estimated amortization point is $C/\delta$ tokens under that workload. Include initialization and compilation in profiling cost when deployment must pay them. A runtime controller would additionally require switching overhead and request-latency measurements.
+\textbf{Budget and transfer.} For each source domain, compare 64, 128, and 256 unique profiling prompts, selecting whole 64-prompt blocks and evaluating all nine source-to-target domain pairs. The 1,000 nested subset draws reuse only four available blocks per source; they describe subset sensitivity, not 1,000 independent trials. A prespecified mixed set uses 64 prompts per domain (192 total), compared with all 768 profiling prompts. A post-hoc check exhaustively evaluates all 64 mixed-block combinations and equal-budget single-domain controls.
 
-\section{Completed confirmation: experimental setup}
-The completed v76 experiment tests a narrower, frozen hypothesis: length 3 beats length 8 at batch 64, with the opposite direction at batch 8. These choices were locked from earlier screens before viewing the confirmation outputs. It is not the proposed full profiling-budget experiment.
+\section{Profiling-budget and cross-domain results}
+At batch 8, all source domains and tested budgets select length 8, which is best on every target test domain. At batch 64, small single-domain sets are less reliable. Table~\ref{transfer} reports mean throughput loss relative to each target's best measured test length.
+
+\begin{table}[h]\centering\small
+\begin{tabular}{@{}lrrr@{}}\toprule
+64-prompt profiling source & Alpaca test & GSM8K test & MBPP test \\\midrule
+Alpaca & 2.14\% & 6.68\% & 4.05\% \\
+GSM8K & 3.91\% & 1.06\% & 1.14\% \\
+MBPP & 0.00\% & 2.05\% & 0.00\% \\\bottomrule
+\end{tabular}
+\caption{Batch-64 transfer loss, averaged over overlapping profiling subsets; descriptive, not independent-trial confidence estimates.}\label{transfer}
+\end{table}
+
+The worst source-to-target mean loss is 6.68\%, 8.55\%, and 8.14\% at budgets 64, 128, and 256: more source data does not necessarily fix domain mismatch. Mixed192 and mixed768 both select lengths 8/3 at batches 8/64 and match the best pooled test configuration. At batch 64, mixed192 gains 29.87\% over default length 8 and matches the validation-selected batch-specific baseline.
+
+All 64 mixed192 combinations select 8/3, including when selection and evaluation use opposite timing rounds. Pooled loss is zero; the largest domain loss is 2.05\% using mean timings and 3.04\% with opposite rounds. However, all four equal-budget Alpaca-only and MBPP-only 192-prompt subsets also select 8/3. GSM8K-only selects length 7 in two of four subsets, losing up to 8.14\% on Alpaca. Thus mixed profiling is reliable here, but its universal superiority over single-domain profiling is not established.
+
+\newpage
+\section{Fresh confirmation and scope of generalization}
+\textbf{Initial configuration confirmation (v76).} On 768 previously unused prompts, length 3 beats length 8 at batch 64 by 29.75\% (95\% paired bootstrap interval 26.81--32.61\%). At batch 8, length 8 beats length 3 by 34.76\% (33.01--36.49\%). All four engine orders agree. This motivates profiling; it is a two-length comparison, not evidence that either length is globally optimal.
+
+\textbf{Frozen transfer test (v78).} We freeze the v77 choices, length 8 at batch 8 and length 3 at batch 64, before measuring 384 fresh prompts: 128 each from Alpaca, MATH500, and LBPP. MATH500 and LBPP replace the original math and code benchmarks, and the output cap doubles from 64 to 128 tokens. All eight native lengths are evaluated in two reverse engine orders, with two warmup and two timed passes. No retuning uses this test set.
+
+\begin{table}[h]\centering\small
+\begin{tabular}{@{}lrrrr@{}}\toprule
+Batch-64 workload & Length 3 & Length 8 & Gain & 95\% interval \\
+ & tokens/s & tokens/s & & \\\midrule
+Pooled & 8,990.46 & 6,920.60 & 29.91\% & [28.31, 31.63]\% \\
+Alpaca & 7,036.21 & 4,958.18 & 41.91\% & [38.06, 46.93]\% \\
+MATH500 & 11,785.77 & 9,859.71 & 19.53\% & [17.12, 20.67]\% \\
+LBPP & 8,782.46 & 6,963.39 & 26.12\% & [23.91, 28.49]\% \\\bottomrule
+\end{tabular}
+\caption{Frozen length 3 transfers to fresh workloads at batch 64 with a 128-token cap. Intervals are nominal paired bootstrap intervals.}
+\end{table}
+
+The frozen choice is best among all eight measured lengths on the pooled workload \emph{and each domain}, at both batch sizes. At batch 8, length 8 reaches 1,688.34 tokens/s pooled; it is also the default, so there is no gain over default length 8. At batch 64, pooled gains are 29.83\% and 29.99\% in the two engine orders. Both batches satisfy the prespecified criterion of retaining at least 95\% of the best measured pooled throughput.
+
+\textbf{Uncertainty and limitations.} The v78 intervals use 5,000 paired bootstrap draws over two engine rounds and two contiguous 64-prompt blocks per domain; batch-8 microbatches are combined into the same blocks. Repeated passes remain together. Only six workload blocks and two rounds support pooled inference, and only two blocks support a domain interval. These are small-sample, single-device intervals, not population-level guarantees. Hindsight best-width comparisons are descriptive, because the test winner itself is selected from eight candidates.
+
+The evidence supports transfer across the tested datasets and generation lengths on the same model pair and GPU. Dataset and generation cap change together, so their separate effects are not identified. We have not established transfer to other models or GPUs, stochastic-sampling behavior, other batch sizes, live-traffic gains, or switching overhead. Dataset freshness concerns our runs, not model pretraining; GSM8K training questions and all MBPP partitions are used as inference workloads.
+
+\textbf{Correctness and reproducibility.} All 18 v76 sessions, 34 v77 sessions, and 34 v78 sessions completed. Every warmup and measured output matches ordinary greedy decoding, and references agree across batch sizes. The v76 audit covers 3,888 batch outputs including references; v78 covers 3,456 speculative batch outputs. These counts include repeated executions, not independent prompts. Source/configuration hashes and local reanalysis agree with the saved remote results. The repository retains manifests, protocols, raw sessions, and W\&B logs~\cite{artifact}.
+
+\newpage
+\section{Cheaper profiling and cost amortization}
+The v77 study uses repeated measurements for evaluation, not a minimal profiler. Allocating its generation work to mixed192 gives 92.61 seconds at batch 64; adding measured initialization across 16 native sessions gives 574.04 seconds. Using v77 test throughput, these costs break even against length 8 after 3.01 million and 18.64 million output tokens, respectively. Those are retrospective subset allocations, not standalone small-profile timings.
+
+\textbf{Standalone shorter protocol (v79).} At batch 64, run three disjoint mixed192 panels from the existing profiling pool, with one warmup and one timed pass per width, independently shuffled width orders, and no test feedback. Measure the full wall time of all eight subprocesses, including startup, model loading, warmup, timed generation, and shutdown. Compilation caches already exist: this is not a cold-compilation benchmark.
 
 \begin{center}\small
-\begin{tabularx}{\linewidth}{@{}lX@{}}\toprule
-Component & Configuration \\\midrule
-Model and hardware & Qwen3-4B target; RedHatAI/Qwen3-4B-speculator.dflash2; one H200 \\
-Runtime & ForeSpark/vLLM, BF16, native DFlash fixed lengths; adaptive verification disabled \\
-Workload & 768 prompts: 256 each from Alpaca, GSM8K, and MBPP \\
-Generation & Greedy, maximum 64 new tokens, thinking disabled, prefix caching disabled \\
-Design & Batch sizes 8 and 64; native lengths 3 and 8; four balanced engine orders \\
-Timing & Two full warmup passes, then two timed passes per session; startup excluded \\
-Reference & Ordinary decoding at both batch sizes; identical full token outputs required \\
-\bottomrule\end{tabularx}
+\begin{tabular}{@{}lrrrr@{}}\toprule
+Profiling panel & Chosen length & Generation (s) & Full wall (s) & Break-even tokens \\\midrule
+1 & 3 & 23.44 & 353.94 & 10.64 million \\
+2 & 3 & 23.30 & 337.67 & 10.15 million \\
+3 & 3 & 24.09 & 335.98 & 10.10 million \\\bottomrule
+\end{tabular}
 \end{center}
 
-Previously used normalized prompt text was excluded, and MBPP task IDs were also excluded to catch edited variants. MBPP draws from all official partitions. These prompts are fresh to our experiments, not necessarily unseen in model pretraining. Length filtering and the frozen manifest define the evaluated population. Each generation call handles a finite batch; this is offline batched inference, not a server under varying arrivals.
+All 24 candidate sessions and 144 batch-output checks pass the independent local audit. All three panels select length 3, which matches the best pooled v78 test width. However, this test performance is a lookup in the completed v78 benchmark, not a new serving measurement. One panel separates lengths 3 and 7 by only 0.055\% of profiling time; three successful panels do not establish precise selection probabilities. Non-generation overhead accounts for 92.83--93.38\% of total profiling wall time.
 
-\newpage
-\section{Results: held-out configuration effects}
-Table~\ref{tab:main} reports the complete confirmation, using the same prompts for both configurations at each batch size. Positive gains compare the faster prespecified configuration against the other length. They do not compare against an optimally tuned length at that batch size.
-
-\begin{table}[h]\centering\small
-\begin{tabular}{@{}rrrrl@{}}\toprule
-Batch & Length 3 & Length 8 & Gain & 95\% interval \\
- & tokens/s & tokens/s & & \\\midrule
-8 & 1,240.31 & 1,671.41 & 34.76\% (8 over 3) & [33.01, 36.49]\% \\
-64 & 9,146.79 & 7,049.68 & 29.75\% (3 over 8) & [26.81, 32.61]\% \\\bottomrule
-\end{tabular}
-\caption{Native fixed-length comparison on 768 confirmation prompts.}\label{tab:main}
-\end{table}
-
-The batch-64 result exceeds the prespecified 10\% point-estimate threshold, and its entire bootstrap interval also exceeds 10\%. The direction reverses at batch 8. The log-time interaction,
+For profiling cost $C$ and held-out throughput $R$, the estimated break-even point is
 \[
- I=\log\!\left(\frac{T_{8,3}}{T_{8,8}}\right)
-   -\log\!\left(\frac{T_{64,3}}{T_{64,8}}\right),
+ n_{\rm break}=\frac{C}{1/R_{8}-1/R_{\widehat k}},\qquad R_{\widehat k}>R_8.
 \]
-where $T_{b,k}$ is total timed duration, is 0.559 with interval [0.540, 0.578]. This quantifies the change in relative performance across the two batch sizes; it is not a live-controller speedup.
+The v79 table uses v78 throughput and full measured profiler wall time; its cost and workload differ from the v77 allocation, so the token thresholds are not a controlled efficiency ratio. It assumes subsequent generation sustains the measured throughput and excludes any additional post-profiling deployment setup. At batch 8 the choice equals default length 8, so no throughput gain repays profiling cost. No additional gain is established over a correctly tuned batch-specific baseline.
 
-\subsection{Consistency across domains and engine orders}
-\begin{table}[h]\centering\small
-\begin{tabular}{@{}lrr@{}}\toprule
-Prompt domain (256 prompts each) & Batch 8: length 8 over 3 & Batch 64: length 3 over 8 \\\midrule
-Alpaca: instruction/conversation & +24.60\% & +37.03\% \\
-GSM8K: mathematics & +53.82\% & +19.98\% \\
-MBPP: code & +32.60\% & +30.55\% \\
-\bottomrule
-\end{tabular}
-\caption{Descriptive domain-level gains. These are not separately fitted selectors or domain-level confidence intervals.}
-\end{table}
+\section{Conclusion}
+Small profiling sets recovered a good fixed length in this setup, and the frozen choices survived new benchmarks and longer generations. The shorter protocol preserved selection quality on three panels, but engine lifecycle overhead dominated its cost. The practical value is amortized tuning for repeated inference, not free acceleration for a short job. A future implementation could reuse engines across candidates, but its cost and correctness would require measurement. Broader hardware/model generalization remains open.
 
-Every domain shows the same preferred length at each tested batch size, although effect sizes differ. At batch 64, the four engine-order gains are 30.56\%, 30.43\%, 28.48\%, and 29.54\%; at batch 8 they are 34.33\%, 35.07\%, 35.14\%, and 34.49\%. Thus the result does not depend on one measured engine order.
-
-\textbf{Uncertainty.} We use 10,000 paired bootstrap draws, resampling four engine rounds and four contiguous 64-prompt blocks within each of three domains. Batch-8 microbatches are combined into those same blocks; configurations remain paired and repeated passes remain together. The intervals describe variation over these observed rounds and workload blocks on one device. They do not quantify variation over model pairs, GPUs, or deployment environments. Four rounds and twelve blocks provide limited independent units despite many repeated output checks.
-
-\textbf{Correctness and reproducibility.} All 18 sessions completed: two ordinary-decoding references and 16 speculative sessions. All 3,888 batch-output checks, including warmups, match the corresponding reference hashes. Ordinary-decoding outputs also agree across batch sizes. Configuration/source provenance checks passed, and local reanalysis exactly reproduced the remote summary. Checks are repeated executions, not 3,888 independent prompts. Raw sessions, frozen plans, checksums, and W\&B artifacts are retained~\cite{artifact}.
-
-\newpage
-\section{What generalizes, and what remains open}
-\textbf{Supported generalization.} Lengths selected using earlier exploratory runs retained their relative advantage on 768 previously unused prompts. The batch-dependent reversal holds in all three evaluated domains and all four engine orders. This is evidence that the configuration effect transfers beyond the original small screen within this model/runtime/hardware setup.
-
-\textbf{Not yet established.} We have not measured how much profiling data is needed, trained a selector on one domain and tested it on another, or shown that lengths 3 and 8 are globally optimal on the confirmation set. Domain consistency is not an estimate of cross-domain selection accuracy. We have not tested other model pairs, GPUs, longer generations, stochastic sampling, intermediate batch sizes, or live traffic. Combining separate-engine timings would omit switching costs and cannot establish a deployed adaptive-policy gain.
-
-\textbf{Why the stronger baseline matters.} In the earlier batch-64 native sweep (v72, 192 reused prompts), length 3 was the fastest native length among 1--8. A custom forced-length-3 path differed from native length 3 by only +0.056\%, with opposite signs across its two engine orders. Therefore, the large gain is recovered by native configuration tuning; it is not evidence for a new runtime or scheduler. The earlier same-engine 16.38\% length effect motivated confirmation, but the 29.75\% fresh result is a different workload and comparison and should not be treated as a paired increase over that estimate.
-
-The next experiment should evaluate the profiling selector against a well-tuned global fixed configuration and batch-specific profiling tables on disjoint data. The current results justify that study because configuration mistakes cost roughly 30\% in the tested comparisons. They do not guarantee another 30\% improvement once the baseline is already tuned.
-
-\section{Reproduction and scope}
-The frozen plan and prompt manifest are in the repository's \texttt{experiments/} directory, alongside the benchmark and analysis scripts for v76. Raw compressed sessions and the local audit are in \texttt{results/v76/}. Reanalysis requires extracting the session JSON files beside the matching analyzer, plan, manifest, and benchmark source; the analyzer verifies their hashes before computing results. Configuration-specific compilation caches prevent cross-width cache reuse; warmup and initialization are excluded from the reported steady-state timings.
-
-The proposed contribution is a reproducible statistical study of profiling reliability and transfer. Batch-aware speculation is prior work. The completed result is substantial fixed-configuration headroom with exact greedy-output checks; profiling efficiency and deployed adaptation remain research questions.
-
-\begin{thebibliography}{9}\small
+\begin{thebibliography}{9}\footnotesize
 \bibitem{leviathan} Y. Leviathan, M. Kalman, and Y. Matias. Fast Inference from Transformers via Speculative Decoding. ICML, 2023. \url{https://arxiv.org/abs/2211.17192}.
 \bibitem{su} Q. Su, C. Giannoula, and G. Pekhimenko. The Synergy of Speculative Decoding and Batching in Serving Large Language Models. 2023. \url{https://arxiv.org/abs/2310.18813}.
 \bibitem{turbo} X. Liu et al. TurboSpec: Closed-loop Speculation Control System for Optimizing LLM Serving Goodput. 2025 revision. \url{https://arxiv.org/abs/2406.14066}.
 \bibitem{bandit} Y. Hou et al. BanditSpec: Adaptive Speculative Decoding via Bandit Algorithms. ICML, 2025. \url{https://proceedings.mlr.press/v267/hou25h.html}.
 \bibitem{fore} J. Song et al. ForeSpark: Joint Draft and Verification Budget Scheduling for Parallel Speculative Decoding. 2026. \url{https://arxiv.org/abs/2611.13442}.
-\bibitem{artifact} A. Quan. Code, frozen protocols, and raw results. \href{https://github.com/angelinaquan/adaptive-verification-for-speculative-decoding}{GitHub repository}. Confirmation logs: \href{https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/0arn12x7}{W\&B run 0arn12x7}.
+\bibitem{artifact} A. Quan. \href{https://github.com/angelinaquan/batched-speculative-decoding}{Code, protocols, and raw results}. W\&B: \href{https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/0arn12x7}{v76}, \href{https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/saxiid98}{v77}, \href{https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/62e5e0u7}{v78}, \href{https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/tvk5jo6x}{v79}.
 \end{thebibliography}
 \end{document}

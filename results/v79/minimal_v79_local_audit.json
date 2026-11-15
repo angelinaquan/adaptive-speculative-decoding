@@ -1,0 +1,30 @@
+{
+  "passed": true,
+  "sessions": 24,
+  "exact_batch_output_checks": 144,
+  "panels": [
+    {
+      "panel": 0,
+      "selected_width": 3,
+      "second_width": 7,
+      "profile_gap_percent": 3.2022352501172913,
+      "non_generation_share_percent": 93.37658119377224
+    },
+    {
+      "panel": 1,
+      "selected_width": 3,
+      "second_width": 7,
+      "profile_gap_percent": 0.05499355476314971,
+      "non_generation_share_percent": 93.0990643618979
+    },
+    {
+      "panel": 2,
+      "selected_width": 3,
+      "second_width": 7,
+      "profile_gap_percent": 5.740432362938219,
+      "non_generation_share_percent": 92.82910242748709
+    }
+  ],
+  "wall_time_evidence": "Controller-recorded subprocess elapsed; arithmetic verified, not independently remeasured.",
+  "test_evidence": "v78 throughput lookup, not another test-generation run."
+}
