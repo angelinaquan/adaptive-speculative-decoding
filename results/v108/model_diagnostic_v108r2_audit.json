@@ -1,0 +1,9 @@
+{
+  "passed": true,
+  "observed_sampler_mismatches": 0,
+  "instrumented_ar_native_equal_requests": 128,
+  "original_ar_reproduced": false,
+  "original_native_reproduced": true,
+  "scope": "Sampler.sample only, not every speculative rejection-kernel decision. Observer synchronizes and changes AR output relative to original run.",
+  "conclusion": "No evidence for a greedy sampler patch. Uninstrumented cache-controlled reproduction is needed."
+}
