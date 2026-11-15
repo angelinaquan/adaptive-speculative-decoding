@@ -1,0 +1,42 @@
+{
+  "passed": true,
+  "source_sha256": "6e9c042890603535e300a40df8ee159dbed1058a64a83ae50ff0329e332e05ff",
+  "results": [
+    {
+      "batch": 8,
+      "draft_width": 8,
+      "uniform_target_tokens": 72,
+      "full_graph_candidate_tokens": [
+        9,
+        18,
+        36,
+        72
+      ],
+      "exact_full_batch_candidate_exists": true,
+      "slack_in_exact_candidate": 0
+    },
+    {
+      "batch": 64,
+      "draft_width": 3,
+      "uniform_target_tokens": 256,
+      "full_graph_candidate_tokens": [
+        4,
+        8,
+        16,
+        32,
+        64,
+        128,
+        192,
+        256
+      ],
+      "exact_full_batch_candidate_exists": true,
+      "slack_in_exact_candidate": 0
+    }
+  ],
+  "scope": "Execute the installed graph-candidate builder with CPU-only stand-ins.\nThis audits candidate construction, not actual GPU dispatch frequencies.\n",
+  "limitations": [
+    "Assumes native uniform decode with FULL_AND_PIECEWISE and adaptive verification disabled, matching saved native benchmark configuration",
+    "Does not observe runtime dispatch, tail batches, prefill, or attention work",
+    "Does not prove that arbitrary extra tree nodes would be free even when padding exists"
+  ]
+}
