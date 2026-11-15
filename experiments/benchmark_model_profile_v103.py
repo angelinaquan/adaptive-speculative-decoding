@@ -3,7 +3,7 @@ import os,json,time,hashlib,traceback,argparse,importlib.metadata
 from pathlib import Path
 os.environ['VLLM_BATCH_INVARIANT']='1'
 p=argparse.ArgumentParser();p.add_argument('--role',choices=['ar','native'],required=True);p.add_argument('--width',type=int,required=True);p.add_argument('--round',type=int,required=True);p.add_argument('--batch',type=int,choices=[8,64],required=True);a=p.parse_args();assert (a.role=='ar' and a.width==0 and a.round==-1) or (a.role!='ar' and a.width in range(1,8) and a.round in [0,1])
-cache=Path('/tmp/aquan-forespark-v63/cache_v103')/f'b{a.batch}_{a.role}{a.width}'
+cache=Path(os.environ.get('MODEL_PROFILE_V103_CACHE','/tmp/aquan-forespark-v63/cache_v103'))/f'b{a.batch}_{a.role}{a.width}'
 for key,sub in [('VLLM_CACHE_ROOT','vllm'),('TORCHINDUCTOR_CACHE_DIR','inductor'),('TRITON_CACHE_DIR','triton')]:
  path=cache/sub;path.mkdir(parents=True,exist_ok=True);os.environ[key]=str(path)
 r=Path(__file__).resolve().parent;out=r/f'model_profile_v103_b{a.batch}_{a.role}{a.width}_round{a.round}.json';assert not out.exists()
@@ -26,7 +26,10 @@ try:
  params=SamplingParams(temperature=0.,max_tokens=64)
  expected=None
  if a.role!='ar' or a.batch==64:
-  ref=json.loads((r/'model_profile_v103_b8_ar0_round-1.json').read_text());assert ref['status']=='completed';expected=ref['outputs']
+  ref=json.loads((r/'model_profile_v103_b8_ar0_round-1.json').read_text());assert ref['status']=='completed'
+  assert ref['plan_sha256']==res['plan_sha256'] and ref['source_sha256']==res['source_sha256']
+  assert ref['config']['model']==config['model'] and ref['versions']==res['versions']
+  expected=ref['outputs'];assert len(expected)==len(tasks)
  def evaluate(width,phase,order,repeat):
   for start in range(0,len(tasks),a.batch):
    before=time.perf_counter();outputs=llm.generate(prompts[start:start+a.batch],params,use_tqdm=False);duration=time.perf_counter()-before

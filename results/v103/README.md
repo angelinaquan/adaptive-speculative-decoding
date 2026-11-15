@@ -6,4 +6,4 @@ Each domain has 64 profiling, 32 validation and 64 test prompts. Validation and 
 
 Profiling reuses 2 Alpaca, 5 GSM8K and all 64 MBPP prompts. Validation may be used for development. Test outcomes must remain uncollected until a separate candidate and analysis plan is frozen. The primary target remains a measured 10% throughput improvement over strong tuned controls, including overhead.
 
-Preparation assertions and Python syntax checks pass. The new GPU runner has not executed and has no W&B run yet. It logs timings and artifacts when launched; it aborts on any exact-output mismatch. The report is unchanged.
+Preparation assertions, Python syntax checks and ten fake-engine CPU integration sessions pass. Injected output mismatches and stale AR references are rejected. These checks cover harness bookkeeping only, not GPU decoding correctness. The new GPU runner has not executed and has no W&B run yet. It logs timings and artifacts when launched; it aborts on any exact-output mismatch. The report is unchanged.
