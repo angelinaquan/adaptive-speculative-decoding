@@ -1,0 +1,7 @@
+# Draft-stage profiling gate (pending)
+
+Job3065022 submitted. Compare native width3 with the previously parity-checked forced-width3 runtime, in both engine orders. Both use BF16, batch64, the same192reused prompts,2warmup/2timed passes, isolated compiled caches, and fresh AR output checks. Then run one additional forced3 pass with CUDA events around pre-draft, context, backbone and tail graph replays. Events are read only after generation, with no per-step synchronization. Target parameter signatures and output equality remain checked.
+
+The instrumented pass is excluded from throughput comparisons. Tail time includes output projection AND candidate selection; it is not an isolated LM-head measurement. Eager fallback, verification and host work are not separately attributed. CUDA durations are not a complete end-to-end decomposition. Compare instrumentation overhead and the native/forced throughput gap before interpreting component fractions. This is a headroom measurement, not an optimization or novelty claim.
+
+Potential low-precision drafters and speculative vocabularies have prior art, including [QSpec](https://aclanthology.org/2025.emnlp-main.240.pdf) and [Speculative Vocabulary](https://arxiv.org/abs/2602.13836). Any new statistical control mechanism must be distinguished from those methods and evaluated against tuned alternatives. No performance results yet; report unchanged.
