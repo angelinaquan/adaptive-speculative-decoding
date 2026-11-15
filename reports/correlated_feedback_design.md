@@ -25,3 +25,20 @@ The code/plan were frozen before inspecting v83 labels. Training uses384 prompts
 Controls are fixed3, training-mean allocation, and the identical frozen context predictor. All share prompt groups and draft budgets. Tests cover selected-feedback-only access, current/future outcome poisoning, deterministic model fitting, known covariance recovery, and the constant-shift invariance above.
 
 The primary gate is at least 10% validation accepted-token reward over fixed3 and a gain over the frozen predictor. It is only a gate: equal total draft tokens do not imply equal latency, teacher offsets are exogenous, and FP32 training trajectories differ from BF16 serving. A positive result must be followed by fresh held-out closed-loop evaluation, controller overhead measurements, tuned native widths and matched adaptive controls, and repeated balanced timing orders. The requested 10% throughput result remains unproven.
+
+## What information can change an allocation?
+
+Under the Gaussian surrogate, let C be the current residual covariance and let observing width w have noise variance R_w. For two candidate widths d and e, their residual difference has variance
+
+    V(d,e) = C[d,d] + C[e,e] - 2*C[d,e].
+
+After one observation at w, the reduction is
+
+    V_before(d,e) - V_after(d,e)
+      = (C[d,w] - C[e,w])^2 / (C[w,w] + R_w).
+
+This follows by substituting the rank-one covariance update. It is nonnegative, and is zero when feedback correlates equally with both candidate widths. In particular, a pure common-mode request effect has C = sigma^2 * 1*1^T and provides no information about width differences. This is a stronger explanation of v82's weakness than merely saying it had too few observations. It also identifies a falsifiable requirement for v84: persistent residual covariance must have a component outside the common-mode direction. This diagnostic is model-based; it does not validate the Gaussian assumption or establish throughput gain.
+
+For any fixed feasible allocation set, define true expected per-request rewards r_i(d) and estimates rhat_i(d). If the implemented allocator exactly maximizes the estimated sum and max_d |r_i(d)-rhat_i(d)| <= epsilon_i, then its expected reward gap to the true optimal allocation is at most 2*sum_i epsilon_i. Proof: add and subtract estimated rewards for the optimal and selected allocations; the difference between their estimated sums is nonpositive, and the two remaining error sums are bounded by sum_i epsilon_i each. This elementary bound is not a novelty claim and our experiments have not established such error bounds.
+
+Both statements concern reward at a fixed resource constraint. Neither controls wall-clock latency, predictor overhead, or changing generation trajectories. The empirical serving experiment remains necessary.
