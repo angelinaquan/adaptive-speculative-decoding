@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "screen_states": 561,
+  "checks": [
+    "Train/screen source IDs and normalized prompt texts disjoint",
+    "Native score-grid path exactly reproduces every proposal",
+    "Predicted reward curves finite and monotone",
+    "Outcome poisoning leaves frozen predictions and allocated widths unchanged",
+    "All deterministic accepted-prefix curves match direct truncation"
+  ],
+  "limitations": [
+    "Current-draft information requires full width8 drafting",
+    "No runtime overhead or serving correctness test"
+  ]
+}

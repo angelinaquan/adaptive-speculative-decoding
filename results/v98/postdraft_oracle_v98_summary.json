@@ -1,0 +1,27 @@
+{
+  "scope": "Fixed-width8 drafting with variable verification: hindsight feasibility diagnostic.",
+  "results": [
+    {
+      "split": "train",
+      "native_width3_reward": 6541.0,
+      "draft8_verify3_reward": 6624.0,
+      "draft8_adaptive_verification_oracle_reward": 7952,
+      "oracle_gain_vs_native3_percent": 21.571625133771597,
+      "fixed_truncation_gain_vs_native3_percent": 1.268919125515966
+    },
+    {
+      "split": "validation",
+      "native_width3_reward": 1683.0,
+      "draft8_verify3_reward": 1699.0,
+      "draft8_adaptive_verification_oracle_reward": 1965,
+      "oracle_gain_vs_native3_percent": 16.755793226381456,
+      "fixed_truncation_gain_vs_native3_percent": 0.9506833036244888
+    }
+  ],
+  "limitations": [
+    "Hindsight oracle only; no method or speedup claim",
+    "All arms have same verification-token budget but drafting costs differ",
+    "DFlash2 noncausal draft widths differ; width8 truncation labels are not width-k labels",
+    "Existing exposed teacher-state data"
+  ]
+}
