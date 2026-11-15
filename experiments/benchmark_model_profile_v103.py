@@ -7,7 +7,7 @@ cache=Path(os.environ.get('MODEL_PROFILE_V103_CACHE','/tmp/aquan-forespark-v63/c
 for key,sub in [('VLLM_CACHE_ROOT','vllm'),('TORCHINDUCTOR_CACHE_DIR','inductor'),('TRITON_CACHE_DIR','triton')]:
  path=cache/sub;path.mkdir(parents=True,exist_ok=True);os.environ[key]=str(path)
 r=Path(__file__).resolve().parent;out=r/f'model_profile_v103_b{a.batch}_{a.role}{a.width}_round{a.round}.json';assert not out.exists()
-plan=json.loads((r/'model_split_v103_plan.json').read_text());smoke=json.loads((r/'model_v102_summary.json').read_text());assert smoke['passed']
+plan=json.loads((r/'model_split_v103_plan.json').read_text());gate=json.loads((r/'model_repeat_v109_audit.json').read_text());assert gate['passed'] and gate['sessions']==6 and gate['ar_consistent_across_cache_conditions']
 raw=(r/'model_split_v103_manifest.json').read_bytes();assert hashlib.sha256(raw).hexdigest()==plan['manifest_sha256']
 all_tasks=json.loads(raw);tasks=[x for x in all_tasks if x['split']=='profile'];assert len(tasks)==192 and all(x['split']=='profile' for x in tasks)
 export=json.loads((r/'model_v102_paths.json').read_text());assert export['passed'];paths=export['paths'];assert export['metadata_sha256']==hashlib.sha256((r/'model_v102_metadata.json').read_bytes()).hexdigest()

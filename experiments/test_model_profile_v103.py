@@ -46,7 +46,7 @@ def main():
         raw = json.dumps(rows).encode()
         (root/'model_split_v103_manifest.json').write_bytes(raw)
         (root/'model_split_v103_plan.json').write_text(json.dumps(dict(manifest_sha256=hashlib.sha256(raw).hexdigest())))
-        (root/'model_v102_summary.json').write_text('{"passed":true}')
+        (root/'model_repeat_v109_audit.json').write_text('{"passed":true,"sessions":6,"ar_consistent_across_cache_conditions":true}')
         metadata = b'{"fixture":true}'
         (root/'model_v102_metadata.json').write_bytes(metadata)
         (root/'model_v102_paths.json').write_text(json.dumps(dict(passed=True,

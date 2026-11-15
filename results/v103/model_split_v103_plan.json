@@ -20,7 +20,7 @@
     64
   ],
   "max_tokens": 64,
-  "model_gate": "v102 fresh-AR exact parity must pass before collecting profiles.",
+  "model_gate": "v109 six uninstrumented AR/native3 sessions and local raw-output audit passed across existing/fresh/reloaded caches. Original v102 mismatch remains unexplained and preserved. Sweep must independently pass fresh AR checks for every width and batch.",
   "profiling": "Sweep native widths 1..7 on profile split only; two opposite engine orders, two warmup and two timed passes. Account for startup and generation separately.",
   "selection": "Choose strong fixed width separately by batch from pooled profiling seconds; tie chooses smaller width. No validation/test outcomes enter this baseline.",
   "validation": "Available for explicitly labelled method development; not independent confirmation after use.",

@@ -7,7 +7,7 @@ import wandb
 
 r = Path(__file__).resolve().parent
 plan = json.loads((r / 'model_split_v103_plan.json').read_text())
-assert json.loads((r / 'model_v102_summary.json').read_text())['passed']
+gate=json.loads((r / 'model_repeat_v109_audit.json').read_text());assert gate['passed'] and gate['sessions']==6 and gate['ar_consistent_across_cache_conditions']
 assert not list(r.glob('model_profile_v103_b*.json')), 'Existing run: inspect instead of overwrite'
 run = wandb.init(entity='aquan-world-model', project='18657-speculative-pilot',
                  group='second-model-v103', name='8b-native-profile-only-width-sweep',
@@ -49,7 +49,7 @@ finally:
     run.summary['status'] = status
     artifact = wandb.Artifact('qwen3-8b-v103-native-profile', 'baseline-profiling')
     for pattern in ['model_profile_v103*.json', 'model_split_v103*.json',
-                    'benchmark_model_profile_v103.py', 'run_model_profile_v103.py']:
+                    'benchmark_model_profile_v103.py', 'run_model_profile_v103.py','run_model_profile_v103.sh','model_repeat_v109_audit.json']:
         for path in r.glob(pattern):
             artifact.add_file(str(path))
     run.log_artifact(artifact)
