@@ -9,4 +9,4 @@ Use the previously exposed v89 even/odd fitting-pool split, grouping requests at
 | 3 | 826 | 839 | 1.57% |
 | 8 | 1289 | 1306 | 1.32% |
 
-150 exhaustive small-case comparisons verify maximum surrogate mass under the global budget. Gold-label poisoning leaves decisions unchanged. This does not verify a serving implementation or attention/KV-cache behavior. Dynamic batch allocation already has prior art; no novelty is claimed. The screen does not justify a GPU implementation for the 10% goal. Results remain local/GitHub; W&B upload for v93 has not been submitted. Report unchanged.
+150 exhaustive small-case comparisons verify maximum surrogate mass under the global budget. Gold-label poisoning leaves decisions unchanged. This does not verify a serving implementation or attention/KV-cache behavior. Dynamic batch allocation already has prior art; no novelty is claimed. The screen does not justify a GPU implementation for the 10% goal. W&B upload submitted as CPU job 3066610; completion unconfirmed. Report unchanged.
