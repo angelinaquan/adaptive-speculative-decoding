@@ -1,0 +1,7 @@
+{
+  "passed": true,
+  "output_hash_checks": 162,
+  "target_unchanged_audits": 48,
+  "shortlists_reproduced": true,
+  "scope": "Local replay of completed v105 artifacts, not a new GPU confirmation."
+}

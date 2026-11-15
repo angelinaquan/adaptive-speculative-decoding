@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "paths": {
+    "Qwen/Qwen3-8B": "/tmp/aquan-forespark-v63/hf-cache-8b/models--Qwen--Qwen3-8B/snapshots/b968826d9c46dd6066d109eabc6255188de91218",
+    "RedHatAI/Qwen3-8B-speculator.dflash2": "/tmp/aquan-forespark-v63/hf-cache-8b/models--RedHatAI--Qwen3-8B-speculator.dflash2/snapshots/e1c737a13c34ba1e1f0f739e02af0bf082fe8080"
+  },
+  "draft_width_max": 7,
+  "cache": "/tmp/aquan-forespark-v63/hf-cache-8b",
+  "free_bytes_before": 484668342272,
+  "free_bytes_after": 466227691520,
+  "metadata_sha256": "2642a340d8131ce0e446e0e732f41267520e8f2c269e330006b2fb2e11d23e9a"
+}

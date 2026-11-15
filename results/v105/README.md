@@ -1,4 +1,4 @@
-# Shared-engine profiling screen (submitted, no results yet)
+# Shared-engine profiling screen (exploratory gate passed)
 
 Candidate: screen all widths in one reusable forced-width engine, then measure only shortlisted widths with native engines. This targets profiling startup cost, not faster inference. Its central unresolved assumption is that shared-engine timings preserve the useful native ranking despite different execution overhead.
 
@@ -10,4 +10,4 @@ Before collecting outcomes, we fix the shortlist to the two widths with smallest
 
 Generic bandit configuration selection is prior work ([BanditSpec, ICML2025](https://proceedings.mlr.press/v267/hou25h.html)); this screen carries no novelty claim. A search did not establish that this exact engine-screening application is new. The original >=10% steady-state inference target is still unmet, and profiling savings are a separate exploratory outcome.
 
-Submitted GPU job3068356 follows job3068300 with afterany dependency. W&B logging is implemented, but no completed run URL or result is available yet. Report unchanged.
+Job3068356 completed. Shortlists were [3,5] and [3,4] in opposite orders; pooled shortlist [3,4]. Historical native winner3 survived both. Local audit reproduced all shortlists and checked162 output hashes and48 target-parameter audits. The shared-engine subprocess took236.81s, including158.18s initialization; separate AR reference generation took118.81s. These timings are not a matched cold/warm comparison against the full native sweep, and there is no measured profiling or inference improvement yet. [W&B run](https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/hky0zfhg). Report unchanged.
