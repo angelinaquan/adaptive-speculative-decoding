@@ -9,3 +9,7 @@ Fit on even v89 prompts; screen on odd prompts. Both sets have already been expo
 The feature audit passes on four prompts at both widths: exact identity joins, native preservation at zero residual, original feature preservation, finite features, and label poisoning. The original full-pool audit was terminated to avoid duplicating large interaction tensors while fitting; this narrower test is explicitly not a full-pool audit. Main fitting validates every prompt/anchor join and requires every optimizer to converge.
 
 Local fitting session70864 submitted, output /tmp/context_rerank_v96_output.txt. Do not inspect before 2026-11-15 12:05 UTC. No results or report changes yet.
+
+## Completed result
+
+All optimizer fits converged; local process exited0. At width3, native/CE/prefix each score816. At width8, native1193, CE1192 (-0.084%), prefix1198 (+0.419%). Prefix selects native fallback at width3 and penalty.01 at width8. Neither width meets the prespecified10% reward gate. Retire this adaptation candidate; no speedup or novelty claim follows. W&B upload submitted as3067445, unconfirmed. Next check no earlier than12:41UTC. Report unchanged.

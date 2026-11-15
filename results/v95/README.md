@@ -13,3 +13,5 @@ RBF gains only 0.47% over linear. This does not support the 10% goal and does no
 Audits pass for input hashes, disjoint prompt IDs and normalized texts, grouped folds, actual feature normalization, frozen decisions independent of feedback labels, allocation budgets, and synthetic RBF kernel properties. The bandwidth uses all training features across folds, so this is not strictly inductive nested CV. Source hash is recorded in checks.
 
 Local session 21781 exited0. W&B publication submitted as job3067020 alongside repair of the failed v90 artifact upload. The v90 failure was a missing source file, not an experiment failure; missing files were copied and the original run is resumed. Next check no earlier than 2026-11-15 12:03 UTC. Report unchanged.
+
+Upload verified complete: https://app.forge.coreweave.com/aquan-world-model/18657-speculative-pilot/runs/ks39pvo4

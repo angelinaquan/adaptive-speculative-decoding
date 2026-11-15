@@ -15,3 +15,5 @@ Thus, on these recorded states and constraints, even perfect hindsight cannot ob
 A request-mean hindsight heuristic is also saved for transparency. It can change widths as group membership changes, so its6.71% validation gain is not a valid fixed-per-request upper bound; use the exact6.12% result.
 
 W&B upload submitted as3067086; completion unconfirmed. Report unchanged.
+
+Upload verified complete: https://app.forge.coreweave.com/aquan-world-model/18657-speculative-pilot/runs/yntiahup
