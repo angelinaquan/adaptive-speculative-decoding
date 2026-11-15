@@ -1,9 +1,14 @@
-# Learned frozen-score residual reranking (pending)
+# Frozen-score residual reranking: negative result
 
-Fit a small linear correction to frozen candidate-transition logits. Five fixed score/rank/entropy features have shared and position-specific coefficients:20parameters at width3 and45at width8. The neural drafter and target remain frozen. Greedy selection uses the corrected scores.
+Fit on all 96 v89 prompts, including its formerly internal validation prompts; evaluate on 96 distinct prompts from the historical training pool. This is an internal screen, not a fresh final test. Models were frozen before evaluation.
 
-Compare ordinary teacher-prefix cross-entropy to negative expected accepted-prefix length under the corrected softmax. Both use identical capacity, three ridge penalties, three prompt-grouped fitting folds, and a native fallback. All96v89prompts are now fitting data, explicitly including that earlier internal validation. The new96v90prompts are disjoint, taken from another part of the historical v83training pool; they never select parameters. This is an internal held-out screen, not a fresh final benchmark.
+| Width | Native reward | CE reward | Prefix reward | Prefix gain |
+|---|---:|---:|---:|---:|
+| 3 | 1646 | 1646 | 1646 | 0.00% |
+| 8 | 2371 | 2418 | 2363 | -0.34% |
 
-Analytic CE/prefix gradients match finite differences. Expected-prefix loss matches exhaustive path expectation on a synthetic chain. These tests validate implementation, not model accuracy. The prefix objective must gain>=10%held-out reward over native and improve over CE before fresh serving investigation. Acceptance-oriented training/correctors have prior art; no novelty or speed claim yet.
+At width 3, grouped training cross-validation selected the native fallback for both objectives. At width 8, CE improves reward 1.98%, while the proposed prefix objective loses 0.34%. Both prespecified gates fail. Retire this candidate; no serving-speedup claim is justified.
 
-Local training session85224 started. GPUcollection job3066201 submitted with W&B; native proposal and exported-grid reproduction gates retained. Report unchanged.
+Checks cover analytical gradients, exhaustive prefix expectation, saved model/input/source hashes, disjoint prompt identities/texts, optimizer convergence, and exact reconstruction of native proposals. Data collection passed its native-output checks. See [collection W&B run](https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/ueda54c1). Evaluation upload was submitted as CPU job 3066538 and remains unconfirmed.
+
+The training-only error diagnostic finds 251/285 width-3 first errors and 390/466 width-8 first errors still have the correct token in the candidate set. Most of these correct tokens rank second or third. This establishes selection headroom only: oracle rewards cannot be presented as deployable improvements. Cheap score calibration has not recovered this headroom. The report PDF is unchanged.

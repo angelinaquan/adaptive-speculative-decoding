@@ -1,0 +1,81 @@
+{
+  "passed": true,
+  "results": [
+    {
+      "width": 3,
+      "states": 561,
+      "models": {
+        "native": {
+          "reward": 1646,
+          "gain_vs_native_percent": 0.0,
+          "domains": {
+            "alpaca": 455,
+            "gsm8k": 651,
+            "mbpp": 540
+          }
+        },
+        "ce": {
+          "reward": 1646,
+          "gain_vs_native_percent": 0.0,
+          "domains": {
+            "alpaca": 455,
+            "gsm8k": 651,
+            "mbpp": 540
+          }
+        },
+        "prefix": {
+          "reward": 1646,
+          "gain_vs_native_percent": 0.0,
+          "domains": {
+            "alpaca": 455,
+            "gsm8k": 651,
+            "mbpp": 540
+          }
+        }
+      },
+      "gate_passed": false
+    },
+    {
+      "width": 8,
+      "states": 561,
+      "models": {
+        "native": {
+          "reward": 2371,
+          "gain_vs_native_percent": 0.0,
+          "domains": {
+            "alpaca": 585,
+            "gsm8k": 1047,
+            "mbpp": 739
+          }
+        },
+        "ce": {
+          "reward": 2418,
+          "gain_vs_native_percent": 1.9822859552931282,
+          "domains": {
+            "alpaca": 611,
+            "gsm8k": 1050,
+            "mbpp": 757
+          }
+        },
+        "prefix": {
+          "reward": 2363,
+          "gain_vs_native_percent": -0.3374103753690405,
+          "domains": {
+            "alpaca": 594,
+            "gsm8k": 1031,
+            "mbpp": 738
+          }
+        }
+      },
+      "gate_passed": false
+    }
+  ],
+  "scope": "Frozen-backbone residual candidate reranking: fit on all96v89prompts, evaluate once on96distinct prompts from samehistoricaltrainingpool. Earlier v89validation explicitly reused asfit; newv90outcomes never fit/select.",
+  "models_sha256": "da6d8760480e1778370578776847aa286a00992eddb7ca24456cc1a9daa5cbdb",
+  "heldout_sha256": "156178ecb98c4a008eeea8b07aaee11d7a68e19c8b27fe227ec5bf363796697b",
+  "limitations": [
+    "Historical training-pool workloads; not final fresh test",
+    "Reward only; no runtime overhead or closed-loop evaluation",
+    "Acceptance-oriented training and learned correction have prior art"
+  ]
+}

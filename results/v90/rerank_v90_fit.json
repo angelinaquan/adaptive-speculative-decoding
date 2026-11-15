@@ -1,0 +1,369 @@
+{
+  "passed": true,
+  "scope": "Fit only; no new held-out outcomes read. Priorv89validation explicitly repurposed into training.",
+  "models": [
+    {
+      "width": 3,
+      "objective": "ce",
+      "parameters": 20,
+      "selected_penalty": null,
+      "training_fold_candidates": [
+        {
+          "penalty": null,
+          "reward": 1633,
+          "fits": []
+        },
+        {
+          "penalty": 0.1,
+          "reward": 1632,
+          "fits": [
+            {
+              "success": true,
+              "message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+              "iterations": 6,
+              "loss": 0.5160541354905865
+            },
+            {
+              "success": true,
+              "message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+              "iterations": 6,
+              "loss": 0.5042559836974855
+            },
+            {
+              "success": true,
+              "message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+              "iterations": 7,
+              "loss": 0.5175597548848188
+            }
+          ]
+        },
+        {
+          "penalty": 0.01,
+          "reward": 1630,
+          "fits": [
+            {
+              "success": true,
+              "message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+              "iterations": 13,
+              "loss": 0.5024126432060118
+            },
+            {
+              "success": true,
+              "message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+              "iterations": 13,
+              "loss": 0.4939645302375113
+            },
+            {
+              "success": true,
+              "message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+              "iterations": 13,
+              "loss": 0.5027941537666615
+            }
+          ]
+        },
+        {
+          "penalty": 0.001,
+          "reward": 1626,
+          "fits": [
+            {
+              "success": true,
+              "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+              "iterations": 25,
+              "loss": 0.4917276853001282
+            },
+            {
+              "success": true,
+              "message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+              "iterations": 26,
+              "loss": 0.4853876299119581
+            },
+            {
+              "success": true,
+              "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+              "iterations": 33,
+              "loss": 0.4910797319510892
+            }
+          ]
+        }
+      ],
+      "final_fit": {
+        "success": true,
+        "message": "Native fallback chosen on training folds"
+      }
+    },
+    {
+      "width": 3,
+      "objective": "prefix",
+      "parameters": 20,
+      "selected_penalty": null,
+      "training_fold_candidates": [
+        {
+          "penalty": null,
+          "reward": 1633,
+          "fits": []
+        },
+        {
+          "penalty": 0.1,
+          "reward": 1630,
+          "fits": [
+            {
+              "success": true,
+              "message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+              "iterations": 5,
+              "loss": -0.596789466956337
+            },
+            {
+              "success": true,
+              "message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+              "iterations": 6,
+              "loss": -0.6314469328652098
+            },
+            {
+              "success": true,
+              "message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+              "iterations": 5,
+              "loss": -0.6078293114248969
+            }
+          ]
+        },
+        {
+          "penalty": 0.01,
+          "reward": 1623,
+          "fits": [
+            {
+              "success": true,
+              "message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+              "iterations": 8,
+              "loss": -0.6122869582493788
+            },
+            {
+              "success": true,
+              "message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+              "iterations": 8,
+              "loss": -0.6522129917329236
+            },
+            {
+              "success": true,
+              "message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+              "iterations": 9,
+              "loss": -0.6295686589514331
+            }
+          ]
+        },
+        {
+          "penalty": 0.001,
+          "reward": 1627,
+          "fits": [
+            {
+              "success": true,
+              "message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+              "iterations": 12,
+              "loss": -0.6255654051850832
+            },
+            {
+              "success": true,
+              "message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+              "iterations": 11,
+              "loss": -0.6672507202089295
+            },
+            {
+              "success": true,
+              "message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+              "iterations": 12,
+              "loss": -0.6459836333590161
+            }
+          ]
+        }
+      ],
+      "final_fit": {
+        "success": true,
+        "message": "Native fallback chosen on training folds"
+      }
+    },
+    {
+      "width": 8,
+      "objective": "ce",
+      "parameters": 45,
+      "selected_penalty": 0.001,
+      "training_fold_candidates": [
+        {
+          "penalty": null,
+          "reward": 2361,
+          "fits": []
+        },
+        {
+          "penalty": 0.1,
+          "reward": 2373,
+          "fits": [
+            {
+              "success": true,
+              "message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+              "iterations": 5,
+              "loss": 0.39952270138590384
+            },
+            {
+              "success": true,
+              "message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+              "iterations": 6,
+              "loss": 0.41245918858888386
+            },
+            {
+              "success": true,
+              "message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+              "iterations": 6,
+              "loss": 0.39874949751174454
+            }
+          ]
+        },
+        {
+          "penalty": 0.01,
+          "reward": 2378,
+          "fits": [
+            {
+              "success": true,
+              "message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+              "iterations": 10,
+              "loss": 0.3904773621132737
+            },
+            {
+              "success": true,
+              "message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+              "iterations": 9,
+              "loss": 0.4036118484282461
+            },
+            {
+              "success": true,
+              "message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+              "iterations": 11,
+              "loss": 0.39038822533530043
+            }
+          ]
+        },
+        {
+          "penalty": 0.001,
+          "reward": 2397,
+          "fits": [
+            {
+              "success": true,
+              "message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+              "iterations": 24,
+              "loss": 0.37949920466821147
+            },
+            {
+              "success": true,
+              "message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+              "iterations": 23,
+              "loss": 0.3931154832249098
+            },
+            {
+              "success": true,
+              "message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+              "iterations": 24,
+              "loss": 0.3802177920454579
+            }
+          ]
+        }
+      ],
+      "final_fit": {
+        "success": true,
+        "message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+        "iterations": 23,
+        "loss": 0.3855011838749257
+      }
+    },
+    {
+      "width": 8,
+      "objective": "prefix",
+      "parameters": 45,
+      "selected_penalty": 0.001,
+      "training_fold_candidates": [
+        {
+          "penalty": null,
+          "reward": 2361,
+          "fits": []
+        },
+        {
+          "penalty": 0.1,
+          "reward": 2358,
+          "fits": [
+            {
+              "success": true,
+              "message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+              "iterations": 5,
+              "loss": -0.35925412144058244
+            },
+            {
+              "success": true,
+              "message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+              "iterations": 5,
+              "loss": -0.3777876814347409
+            },
+            {
+              "success": true,
+              "message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+              "iterations": 5,
+              "loss": -0.3650442213122154
+            }
+          ]
+        },
+        {
+          "penalty": 0.01,
+          "reward": 2367,
+          "fits": [
+            {
+              "success": true,
+              "message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+              "iterations": 8,
+              "loss": -0.37544118877767
+            },
+            {
+              "success": true,
+              "message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+              "iterations": 8,
+              "loss": -0.3979044121136617
+            },
+            {
+              "success": true,
+              "message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+              "iterations": 8,
+              "loss": -0.3841430769398346
+            }
+          ]
+        },
+        {
+          "penalty": 0.001,
+          "reward": 2369,
+          "fits": [
+            {
+              "success": true,
+              "message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+              "iterations": 12,
+              "loss": -0.3903932217862652
+            },
+            {
+              "success": true,
+              "message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+              "iterations": 12,
+              "loss": -0.4160601112336121
+            },
+            {
+              "success": true,
+              "message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+              "iterations": 12,
+              "loss": -0.40256210772069223
+            }
+          ]
+        }
+      ],
+      "final_fit": {
+        "success": true,
+        "message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+        "iterations": 12,
+        "loss": -0.4027287169634792
+      }
+    }
+  ],
+  "input_sha256": "35a1217a54dd46d25216a2ffe76ef04635bb5b36a4bb24b017e38e8fdd248c4f",
+  "models_sha256": "da6d8760480e1778370578776847aa286a00992eddb7ca24456cc1a9daa5cbdb",
+  "plan_sha256": "766a1e42a0ed8b23cd81570ed697fb1698e69bffd947547dedccf3bd918c51c0"
+}
