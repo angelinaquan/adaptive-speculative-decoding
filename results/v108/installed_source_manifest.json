@@ -1,0 +1,302 @@
+[
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/sample/__init__.py",
+    "file": "v1__sample____init__.py",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/sample/logits_processor/__init__.py",
+    "file": "v1__sample__logits_processor____init__.py",
+    "sha256": "1f9b02dae8cf6d44484638037123d3a2dec6b7b9a2bcc9afceef1a9bf3eaedec"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/sample/logits_processor/builtin.py",
+    "file": "v1__sample__logits_processor__builtin.py",
+    "sha256": "6105816ece77e5b1dbee0d07abc90ce039d650bac2ddb85c93280c48b00f2ebe"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/sample/logits_processor/interface.py",
+    "file": "v1__sample__logits_processor__interface.py",
+    "sha256": "171dfc6ef9b5b53128e8eaecc4bdf1de413a706d64bf5be686048f583c66eee1"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/sample/logits_processor/state.py",
+    "file": "v1__sample__logits_processor__state.py",
+    "sha256": "a96411f14362c45f839e181dcb3ac01d5b880812bccb3552fc17863b219f44ac"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/sample/metadata.py",
+    "file": "v1__sample__metadata.py",
+    "sha256": "6582cfe1a240c7ddb975f0ef6dd7dcd28dcf0fc7670394390250013977aa7ffd"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/sample/ops/__init__.py",
+    "file": "v1__sample__ops____init__.py",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/sample/ops/bad_words.py",
+    "file": "v1__sample__ops__bad_words.py",
+    "sha256": "0b1d0a9b13b92ddcae2c83393c07a34c0f107813725700dee794caa7fe7f3b12"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/sample/ops/logprobs.py",
+    "file": "v1__sample__ops__logprobs.py",
+    "sha256": "b286f69012a6758bfe9250038b0697294dbffe0d32c6906f284c39f75ee48be3"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/sample/ops/penalties.py",
+    "file": "v1__sample__ops__penalties.py",
+    "sha256": "4debfcf247b3887478d2b9ec98f108756bbed2805462777ef6b56f3bdf4ce682"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/sample/ops/topk_topp_sampler.py",
+    "file": "v1__sample__ops__topk_topp_sampler.py",
+    "sha256": "13ea4359832bc914492330958ec4f5ac140f408b8f410cc05c6eaf7ddcd70be4"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/sample/ops/topk_topp_triton.py",
+    "file": "v1__sample__ops__topk_topp_triton.py",
+    "sha256": "0b5fc337058e22bc28a8530ccec904d6ccd89b9548b02955c657ac429b1669d2"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/sample/rejection_sampler.py",
+    "file": "v1__sample__rejection_sampler.py",
+    "sha256": "0bb9d224887ccb1355e16199005cc23a4afc6fa75156eca419851b7247d99750"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/sample/sampler.py",
+    "file": "v1__sample__sampler.py",
+    "sha256": "f95805b2c6d06218c724826aa5f881a606e8d0a534a566aee7c85948520dd216"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/sample/thinking_budget_state.py",
+    "file": "v1__sample__thinking_budget_state.py",
+    "sha256": "962f8f55210eb0a431cb9c78b013e35f7a7dd58d06d6fb2e7fcff1b457356f8e"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/worker/gpu/sample/__init__.py",
+    "file": "v1__worker__gpu__sample____init__.py",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/worker/gpu/sample/bad_words.py",
+    "file": "v1__worker__gpu__sample__bad_words.py",
+    "sha256": "8d3cbd5613398260314d94739d8ee0e1ac0c22abf2f960f541d3c0d4e39d360b"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/worker/gpu/sample/batch_shard.py",
+    "file": "v1__worker__gpu__sample__batch_shard.py",
+    "sha256": "c30274a3a04e6a03e89be9cd7c62de602b1aba4d412f64540ab6201036de3928"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/worker/gpu/sample/gumbel.py",
+    "file": "v1__worker__gpu__sample__gumbel.py",
+    "sha256": "3ec1df510bdad13e8b0a457b5b67c98affdf6e57369e56cb471246cc8f40dd34"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/worker/gpu/sample/logit_bias.py",
+    "file": "v1__worker__gpu__sample__logit_bias.py",
+    "sha256": "9e80a3fe6f3c7474723408cfff52183f4585fdeedd9c2312843ee98d0b12724c"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/worker/gpu/sample/logprob.py",
+    "file": "v1__worker__gpu__sample__logprob.py",
+    "sha256": "f47479a818192acb6b297c79fa67a3b2f9820e3492a394d5adda777e9b7c832e"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/worker/gpu/sample/min_p.py",
+    "file": "v1__worker__gpu__sample__min_p.py",
+    "sha256": "4cb5e2f45e1ced6f9685283a7a5c8cfd7204d9a249822e866cfff756c7f04f62"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/worker/gpu/sample/output.py",
+    "file": "v1__worker__gpu__sample__output.py",
+    "sha256": "d6e298c0f197d487a8faaf7200f500fa83df1d7a4bbf4339cadd6a18008f7f9c"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/worker/gpu/sample/penalties.py",
+    "file": "v1__worker__gpu__sample__penalties.py",
+    "sha256": "46c29434caf5f415129ef4a9bb2b8d4f62d2765596e3e07f73ad2b198c7def1b"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/worker/gpu/sample/prompt_logprob.py",
+    "file": "v1__worker__gpu__sample__prompt_logprob.py",
+    "sha256": "4cf22d390e7bf59e44c458cff7180268db63e95d06af2f1e14d720a2d77c9663"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/worker/gpu/sample/sampler.py",
+    "file": "v1__worker__gpu__sample__sampler.py",
+    "sha256": "b547366de0e86a8d66d77ca934f824bd6394424da0a84f6c5b50ad58bce8c65e"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/worker/gpu/sample/states.py",
+    "file": "v1__worker__gpu__sample__states.py",
+    "sha256": "f33a66728e2d28cd74a2e0c43ea8b4c658d601903cd540088141187b27f01318"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/worker/gpu/sample/thinking_budget.py",
+    "file": "v1__worker__gpu__sample__thinking_budget.py",
+    "sha256": "020513e1d3406f367de6ad995a95055008fd0c28f2873647e8283c9870e22404"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/worker/gpu/sample/trace_replay.py",
+    "file": "v1__worker__gpu__sample__trace_replay.py",
+    "sha256": "d2a7d3b3b55379efabe4740a4b7f14030126dc11be36f6ea974164ce42316a50"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/worker/gpu/sample/watermark.py",
+    "file": "v1__worker__gpu__sample__watermark.py",
+    "sha256": "a3581458169dab9153eb09fd67218e0ee5585406537a9de80ad528ae62b030c0"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/worker/gpu/spec_decode/__init__.py",
+    "file": "v1__worker__gpu__spec_decode____init__.py",
+    "sha256": "5cecb85ff0070ba0a26b148647fa2270c998ba14fc47c9d644d46b3ff2c8334f"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/worker/gpu/spec_decode/acceptance_estimator.py",
+    "file": "v1__worker__gpu__spec_decode__acceptance_estimator.py",
+    "sha256": "505b843bdd75928b03793b395b47b8be914bd7fe2a3351c8ec04339baeebb1c2"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/worker/gpu/spec_decode/adaptive_verification.py",
+    "file": "v1__worker__gpu__spec_decode__adaptive_verification.py",
+    "sha256": "8be2a32dbbcd80690cf7a03a5fc1970380d7acd04cda1dd7b0aab4b66c4a9994"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/worker/gpu/spec_decode/autoregressive/__init__.py",
+    "file": "v1__worker__gpu__spec_decode__autoregressive____init__.py",
+    "sha256": "e3c55cbb0d7a8bd47df6f3378835644645f5d3bc89b45793b5d5a02d013e5c58"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/worker/gpu/spec_decode/autoregressive/cudagraph_utils.py",
+    "file": "v1__worker__gpu__spec_decode__autoregressive__cudagraph_utils.py",
+    "sha256": "13392ef0a9ed59eb9c2b2bad43d7c61beb212a8805849e46b5130c230275d0a5"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/worker/gpu/spec_decode/autoregressive/speculator.py",
+    "file": "v1__worker__gpu__spec_decode__autoregressive__speculator.py",
+    "sha256": "5b97f54e20ddf65b98e939832d050745f67ef43cfa145786da300f1a8322e3c6"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/worker/gpu/spec_decode/dflash/__init__.py",
+    "file": "v1__worker__gpu__spec_decode__dflash____init__.py",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/worker/gpu/spec_decode/dflash/cudagraph.py",
+    "file": "v1__worker__gpu__spec_decode__dflash__cudagraph.py",
+    "sha256": "beab567ae2df6a2ba2cd92fe7ee452c6b959b8a7037a4b5f493993a1824619bb"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/worker/gpu/spec_decode/dflash/speculator.py",
+    "file": "v1__worker__gpu__spec_decode__dflash__speculator.py",
+    "sha256": "f9c100f42f9326e48eb84e89281897e859ba761943f54d593523555ccd98dc63"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/worker/gpu/spec_decode/dflash/utils.py",
+    "file": "v1__worker__gpu__spec_decode__dflash__utils.py",
+    "sha256": "53d2c3ad474d290d2c6df027446bbd80ac7447684e5242ab2c3c5337d2abd383"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/worker/gpu/spec_decode/dflash2/__init__.py",
+    "file": "v1__worker__gpu__spec_decode__dflash2____init__.py",
+    "sha256": "e3c55cbb0d7a8bd47df6f3378835644645f5d3bc89b45793b5d5a02d013e5c58"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/worker/gpu/spec_decode/dflash2/speculator.py",
+    "file": "v1__worker__gpu__spec_decode__dflash2__speculator.py",
+    "sha256": "b70043550938a1df9aecc85d8c8224c38c929ca34f68834572f6e723854d2027"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/worker/gpu/spec_decode/dspark/__init__.py",
+    "file": "v1__worker__gpu__spec_decode__dspark____init__.py",
+    "sha256": "e3c55cbb0d7a8bd47df6f3378835644645f5d3bc89b45793b5d5a02d013e5c58"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/worker/gpu/spec_decode/dspark/speculator.py",
+    "file": "v1__worker__gpu__spec_decode__dspark__speculator.py",
+    "sha256": "dcf4abdedbd2bddd0d76be198ccf5b4e467c46f645038c35fcab821491a35b03"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/worker/gpu/spec_decode/dspark/utils.py",
+    "file": "v1__worker__gpu__spec_decode__dspark__utils.py",
+    "sha256": "86af2bf30604a184312e8f076097b91ecfec704f409f9d68d634b03d6b318070"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/worker/gpu/spec_decode/eagle/__init__.py",
+    "file": "v1__worker__gpu__spec_decode__eagle____init__.py",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/worker/gpu/spec_decode/eagle/eagle3_utils.py",
+    "file": "v1__worker__gpu__spec_decode__eagle__eagle3_utils.py",
+    "sha256": "201ee875fcc3d076a8fc1f3876dcbf85736b221a368555243a8987ff26a1674e"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/worker/gpu/spec_decode/eagle/speculator.py",
+    "file": "v1__worker__gpu__spec_decode__eagle__speculator.py",
+    "sha256": "746e318a4f266d75522ff7f3731ea9b4527b7b4824f71364d1a62184ea1f7b3d"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/worker/gpu/spec_decode/eagle/utils.py",
+    "file": "v1__worker__gpu__spec_decode__eagle__utils.py",
+    "sha256": "94de6f55a1761f24f4aa1388cbc3b3763d4ab3ee53260330056ad31ce0b78236"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/worker/gpu/spec_decode/extract_hidden_states.py",
+    "file": "v1__worker__gpu__spec_decode__extract_hidden_states.py",
+    "sha256": "93c4233be7b2d2290b33902ea9b3bb5274c11701830851d03967a22144536e2d"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/worker/gpu/spec_decode/gemma4/__init__.py",
+    "file": "v1__worker__gpu__spec_decode__gemma4____init__.py",
+    "sha256": "e3c55cbb0d7a8bd47df6f3378835644645f5d3bc89b45793b5d5a02d013e5c58"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/worker/gpu/spec_decode/gemma4/speculator.py",
+    "file": "v1__worker__gpu__spec_decode__gemma4__speculator.py",
+    "sha256": "9991210d7babd2caf2cd10797ca8688543dedeafbc3b86bc7c979c1a6ae9f949"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/worker/gpu/spec_decode/mtp/__init__.py",
+    "file": "v1__worker__gpu__spec_decode__mtp____init__.py",
+    "sha256": "e3c55cbb0d7a8bd47df6f3378835644645f5d3bc89b45793b5d5a02d013e5c58"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/worker/gpu/spec_decode/mtp/speculator.py",
+    "file": "v1__worker__gpu__spec_decode__mtp__speculator.py",
+    "sha256": "926d6c9ffdb368c971647911a60493820d056ce236fcae9d94a42fa2e006255d"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/worker/gpu/spec_decode/multi_module_mtp/__init__.py",
+    "file": "v1__worker__gpu__spec_decode__multi_module_mtp____init__.py",
+    "sha256": "e3c55cbb0d7a8bd47df6f3378835644645f5d3bc89b45793b5d5a02d013e5c58"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/worker/gpu/spec_decode/multi_module_mtp/speculator.py",
+    "file": "v1__worker__gpu__spec_decode__multi_module_mtp__speculator.py",
+    "sha256": "d9d4735b9b33829332b0e845b6d3073b2f0436045ed693b25c6434f351644127"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/worker/gpu/spec_decode/rejection_sampler.py",
+    "file": "v1__worker__gpu__spec_decode__rejection_sampler.py",
+    "sha256": "9a58f5c3a4d71fbcac627618e55f8c9b997b7a47854ee0b0f6bdcb6775d5dc2e"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/worker/gpu/spec_decode/rejection_sampler_utils.py",
+    "file": "v1__worker__gpu__spec_decode__rejection_sampler_utils.py",
+    "sha256": "214b61fa0abe88573beb779872c035b3954e5651a85bd438d99ee5905d3a62ec"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/worker/gpu/spec_decode/speculator.py",
+    "file": "v1__worker__gpu__spec_decode__speculator.py",
+    "sha256": "3a1ab15bf8b20918852eb835fe9755046e99dcbac6ba6ca3d414949fc8bc695a"
+  },
+  {
+    "source": "/tmp/aquan-forespark-v63/ForeSpark/.venv/src/vllm/vllm/v1/worker/gpu/spec_decode/utils.py",
+    "file": "v1__worker__gpu__spec_decode__utils.py",
+    "sha256": "282f2929eddae9ca7312269f799be07472334b6df9fd91878b5e839ec05e418c"
+  }
+]

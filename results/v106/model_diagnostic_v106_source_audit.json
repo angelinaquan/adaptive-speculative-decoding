@@ -1,0 +1,15 @@
+{
+  "scope": "Read-only installed-source audit; no numeric root cause proven",
+  "installed_vllm_commit": "ced6857afa0ea7b2e3f0846a62e1394e90f15607",
+  "source_job": 3068886,
+  "source_hashes_passed": true,
+  "observations": [
+    "Completed v102 log shows batch-invariant matmul_persistent tracing in both target configurations.",
+    "Qwen3 delegates model forward to Qwen2Model, which optionally captures auxiliary hidden states after layers.",
+    "EagleModelMixin._maybe_add_hidden_state computes hidden_states+residual when requested; it does not assign back to either tensor.",
+    "RMSNorm has separate forward_native IR and forward_cuda batch-invariant implementations. Compiled execution and auxiliary outputs can differ between AR and speculation; no causal mismatch demonstrated by source inspection."
+  ],
+  "candidate_next_diagnostic": "After v106, compare eager BF16 AR and native3 on same data, checking exact equality. This isolates compilation without changing precision; do not infer a fix before measuring.",
+  "reference": "https://docs.vllm.ai/en/latest/features/batch_invariance/",
+  "reference_caveat": "Current upstream documentation is context, not proof about the installed patched commit."
+}
