@@ -1,11 +1,12 @@
 {
-  "job": 3072601,
-  "status": "running_correctness_gate",
+  "job": 3089108,
+  "status": "running",
+  "previous_job": 3072601,
+  "previous_job_failure": "W&B finalizer after successful correctness gate",
+  "gate_passed": true,
+  "gate_sessions": 32,
+  "batch_output_checks": 1856,
   "gate_wandb": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/hj28pf3h",
-  "heldout_started": false,
-  "automatic_sequence": [
-    "v113 diagnostic audit",
-    "v114 full correctness regression",
-    "v112 heldout comparison only if gate passes"
-  ]
+  "heldout_results_available": false,
+  "heldout_wandb": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/h22izxk4"
 }

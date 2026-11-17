@@ -25,7 +25,7 @@ try:
  gate=dict(passed=True,sessions=len(completed),batch_output_checks=checks,manifest_sha256=plan['manifest_sha256'],plan_sha256=hashlib.sha256((r/'matched_v112_plan.json').read_bytes()).hexdigest(),benchmark_sha256=hashlib.sha256((r/'benchmark_matched_v112.py').read_bytes()).hexdigest(),precision={'backbone':'bfloat16','head':'float32'},cache_root='/tmp/aquan-forespark-v63/cache_v114',wandb_url=run.url,scope='Empirically validated precision mitigation. Original BF16 mismatch not reproduced or root-caused; no sampler-bug fix claim.')
  (r/'correctness_v112_gate.json').write_text(json.dumps(gate,indent=2)+'\n');run.summary.update(gate);status='completed'
 finally:
- run.summary.update(status=status,completed_sessions=len(completed))
+ run.summary.update({'status':status,'completed_sessions':len(completed)})
  art=wandb.Artifact('8b-fp32head-correctness-v114','correctness-regression')
  for pattern in ['correctness_v114_*.json','correctness_v112_gate.json','benchmark_correctness_v114.py','run_correctness_v114.py','matched_v112_plan.json','model_split_v103_manifest.json','vocab_v54_manifest.json','model_v102_plan.json']:
   for path in r.glob(pattern):art.add_file(str(path))

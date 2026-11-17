@@ -14,6 +14,7 @@ assert not list(r.glob('matched_v112_*_deploy.json'))
 run=wandb.init(entity='aquan-world-model',project='18657-speculative-pilot',
     group='matched-total-cost-v112',name='8b-heldout-transfer-total-cost',
     dir=os.environ['SERVING_SCRATCH'],config=plan)
+(r/'matched_v112_run.json').write_text(json.dumps(dict(url=run.url,status='running'),indent=2)+'\n')
 status='failed';pipelines=[]
 
 def stage(role,phase,width,order,tag,start_ns=0):
@@ -58,6 +59,7 @@ try:
                 deployment,wall=stage('native','deploy',selected,order,tag+'_deploy',start_ns)
                 record=dict(**selection,milestones=deployment['milestones'],deployment_subprocess_seconds=wall)
                 pipelines.append(record)
+                (r/'matched_v112_progress.json').write_text(json.dumps(dict(status='running',pipelines=pipelines),indent=2)+'\n')
                 run.log({'completed_pipelines':len(pipelines),'order':order,'batch':batch,
                          f'{method}/profiling_wall_seconds':profile_seconds,
                          **{f'{method}/total_seconds_h{h}':z['total_pipeline_seconds'] for h,z in record['milestones'].items()}})

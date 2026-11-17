@@ -1,6 +1,6 @@
-# Guarded held-out 8B comparison: submitted, no results yet
+# Held-out 8B comparison: gate passed, comparison resubmitted
 
-Job3072601 runs the full [v114 correctness gate](https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/hj28pf3h), then automatically starts v112 only if it passes. The eight-prompt FP32-head diagnostic passed; it is not sufficient by itself.
+The full [v114 correctness gate](https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/hj28pf3h) passed:32 sessions and1856 output checks. Job3072601 then failed in W&B finalization, so v112 did not start. The logging call is repaired and tested. Job3089108 reuses the independently audited gate, republishes its artifact, and starts only the held-out comparison. No held-out result is available yet.
 
 The regression uses 192 profile prompts plus eight historical regression prompts, two batches (8/64), all native widths1–7, two engine loads, and two warmup/two timed passes per engine. All outputs must exactly match fresh AR outputs, including cross-batch AR checks. No holdout prompt enters this gate. The gate binds the benchmark and plan hashes.
 

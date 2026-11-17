@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "sessions": 32,
+  "batch_output_checks": 1856,
+  "manifest_sha256": "f570546760de7bcb9ad683242328fe5416de082d24468f4a7226867260e5fbc8",
+  "plan_sha256": "908b1ec8f759944eb12e52d7383f6264346cb336d1c2d05dbde7d265924e53d4",
+  "benchmark_sha256": "2b0829b69f9a0aa89a8483a597d440f7feb01398c5e4f01c70d814b6723eeeab",
+  "precision": {
+    "backbone": "bfloat16",
+    "head": "float32"
+  },
+  "cache_root": "/tmp/aquan-forespark-v63/cache_v114",
+  "wandb_url": "https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/hj28pf3h",
+  "scope": "Empirically validated precision mitigation. Original BF16 mismatch not reproduced or root-caused; no sampler-bug fix claim."
+}
