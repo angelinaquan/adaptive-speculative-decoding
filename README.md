@@ -17,14 +17,12 @@ From the repository root, recompute both published summaries from the saved sess
 ```sh
 python -m pip install numpy matplotlib
 python scripts/verify.py
-python scripts/plot_result.py
 ```
 
-For a fresh timing run, use an H200 with the paper's vLLM 0.33.0 GPU environment (PyTorch 2.14.0). Download the pinned checkpoints, then stage and execute either experiment in a new directory. W&B logging defaults to offline.
+For a fresh timing run, use an H200 with the paper's vLLM 0.33.0 GPU environment (PyTorch 2.14.0). The runner downloads the pinned checkpoints and stages each experiment in a new directory. W&B logging defaults to offline.
 
 ```sh
 python -m pip install -r requirements.txt
-python scripts/download_models.py
 python scripts/run_cost_study.py --phase confirmation-v38 --run-dir /tmp/cost-batch64
 python scripts/run_cost_study.py --phase confirmation --run-dir /tmp/cost-batch32
 ```

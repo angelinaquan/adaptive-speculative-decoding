@@ -12,12 +12,22 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--phase', choices=['confirmation', 'confirmation-v38'], required=True)
     parser.add_argument('--run-dir', type=Path, required=True, help='New directory; existing directories are never overwritten')
-    parser.add_argument('--model-paths', type=Path, help='Defaults to experiments/model_paths.json from download_models.py')
+    parser.add_argument('--model-paths', type=Path, help='JSON mapping model IDs to local directories; otherwise use pinned Hugging Face checkpoints')
     parser.add_argument('--stage-only', action='store_true', help='Copy inputs without importing vLLM, downloading models, or starting inference')
     args = parser.parse_args()
     repo = Path(__file__).resolve().parents[1]
-    model_paths = args.model_paths or repo/'experiments/model_paths.json'
-    models = json.loads(model_paths.read_text())
+    revisions = {
+        'Qwen/Qwen3-4B': '1cfa9a7208912126459214e8b04321603b3df60c',
+        'deepseek-ai/dspark_qwen3_4b_block7': '3457dff1417cb84927f6098a5fcb7cee85c934b7',
+    }
+    if args.model_paths:
+        models = json.loads(args.model_paths.read_text())
+    elif args.stage_only:
+        models = {name: f'/path/to/{name}' for name in revisions}
+    else:
+        from huggingface_hub import snapshot_download
+        models = {name: snapshot_download(repo_id=name, revision=revision)
+                  for name, revision in revisions.items()}
     assert set(models) == {'Qwen/Qwen3-4B', 'deepseek-ai/dspark_qwen3_4b_block7'}
     assert all(isinstance(p, str) and p for p in models.values())
     version = 'v26' if args.phase == 'confirmation' else 'v38'
