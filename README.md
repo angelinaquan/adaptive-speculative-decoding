@@ -1,5 +1,7 @@
 # The throughput cost of smoothing GPU timings in speculative decoding
 
+[Core implementation](src/verification_costs.py) · [Benchmark and analysis code](src/) · [Paper](paper/paper.pdf)
+
 **Research question.** Does enforcing a nondecreasing GPU timing curve lead a speculative decoder to choose slower verification budgets? The native vLLM scheduler uses a running maximum over profiled target times. We replace that running maximum with the median measured at each captured size. The confidence head, token verifier, and allocation rule stay fixed.
 
 **Setting.** Qwen3-4B with the seven-token DSpark drafter on one H200, using greedy decoding and a 128-token output cap. The batch-64 comparison used 768 held-out prompts, equally divided among conversation, math, and code. Each method ran in four balanced engine orders, with two timed passes after warmup. All timed outputs matched the ordinary greedy reference.
@@ -8,7 +10,7 @@
 
 ![Held-out batch-64 throughput gains with 95% paired intervals](results/throughput.png)
 
-[Course paper](paper/paper.pdf) · [LaTeX](paper/main.tex) · [Cost-table implementation](experiments/cost_only_v26.py) · [Research history](HISTORY.md)
+[Course paper](paper/paper.pdf) · [LaTeX](paper/main.tex) · [Cost-table implementation](src/verification_costs.py) · [Research history](HISTORY.md)
 
 ## Reproduce
 
@@ -23,6 +25,6 @@ For a fresh timing run, use an H200 with the paper's vLLM 0.33.0 GPU environment
 
 ```sh
 python -m pip install -r requirements.txt
-python scripts/run_cost_study.py --phase confirmation-v38 --run-dir /tmp/cost-batch64
-python scripts/run_cost_study.py --phase confirmation --run-dir /tmp/cost-batch32
+python scripts/run_cost_study.py --batch 64 --run-dir /tmp/cost-batch64
+python scripts/run_cost_study.py --batch 32 --run-dir /tmp/cost-batch32
 ```

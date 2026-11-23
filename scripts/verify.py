@@ -1,7 +1,7 @@
 """Recompute both paper summaries from the archived sessions on CPU."""
 import json
 from pathlib import Path
-import shutil
+from run_cost_study import stage_inputs
 import subprocess
 import sys
 import tempfile
@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 
 
 def plot_result(results):
-    summary = json.loads((results / 'v38/cost_v38_summary.json').read_text())
+    summary = json.loads((results / 'batch64_summary.json').read_text())
     fig, ax = plt.subplots(figsize=(8, 3), layout='constrained')
     baselines = [('original', 'Native adaptive'), ('fixed7', 'Global fixed width'),
                  ('domain_fixed', 'Domain-specific widths')]
@@ -38,18 +38,16 @@ with tempfile.TemporaryDirectory() as directory:
     work = Path(directory)
     with zipfile.ZipFile(repo / 'results/sessions.zip') as records:
         records.extractall(work)
-    for source in (repo / 'experiments').iterdir():
-        if source.is_file():
-            shutil.copy2(source, work / source.name)
-    for version in ('v26', 'v38'):
+    for batch in (32, 64):
+        version = stage_inputs(repo, work, batch)
         summary = work / f'{version}.json'
         subprocess.run([sys.executable, str(work / f'analyze_cost_{version}.py'),
                         str(work), '--output', str(summary)], stdout=subprocess.DEVNULL, check=True)
-        published = repo / 'results' / version / f'cost_{version}_summary.json'
+        published = repo / 'results' / f'batch{batch}_summary.json'
         if json.loads(summary.read_text()) != json.loads(published.read_text()):
             raise ValueError(f'{version} differs from the published analysis')
-        print(f'{version}: reproduced the complete published summary')
-    subprocess.run([sys.executable, str(work / 'audit_cost_tables_v38.py'), str(work),
+        print(f'Batch {batch}: reproduced the complete published summary')
+    subprocess.run([sys.executable, str(repo / 'src/audit_cost_tables.py'), str(work),
                     '--output', str(work / 'tables.json')], stdout=subprocess.DEVNULL, check=True)
     print('Verified all eight stored batch-64 cost tables against raw profile samples')
 plot_result(repo / 'results')
