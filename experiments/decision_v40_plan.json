@@ -1,8 +1,0 @@
-{
-  "scope": "Reused384 validation prompts, b64 greedy; matched model/backend; instrumented full-verification diagnostic only.",
-  "hypothesis": "Determine whether the confidence forecasts leave decision-relevant headroom before more online-fitting sweeps.",
-  "protocol": "Admit every available draft (up to7); snapshot head confidence before target-feedback observation; attach actual accepted prefixes by persistent slot. All outputs must match AR.",
-  "oracle": "Post-hoc one-step full-information ceiling on these recorded full-verification states, using same profiled cost table. Not causal/deployable and not a closed-loop speedup bound. Do not use oracle labels in a claimed online policy.",
-  "report": "Head-budget decisions vs fixed7 and oracle budgets, realized accepted-token/profile-cost ratios, all domains. Different policies change future states; replay cannot prove wall-time speedup.",
-  "correctness": "Assert each scheduled capacity equals sampled-minus-one plus rejected, map feedback byslot, no unmatched records. Preserve failure outputs."
-}

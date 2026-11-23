@@ -1,5 +1,0 @@
-{
-  "passed": true,
-  "cases": 1000,
-  "scope": "Host-cap function only; actual GPU allocations and target output equality are mandatory in the serving run"
-}

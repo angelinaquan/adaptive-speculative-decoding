@@ -1,9 +1,0 @@
-{
-  "hypothesis": "Context-dependent correction can recover candidate errors that a global score transformation cannot.",
-  "features": "Existing five score features interact with a fixed 16-dimensional random projection of causal pre-draft context; retain v90 shared/position score features.",
-  "screen": "Exposed v89 even/odd prompt split, internal three request-grouped folds on even prompts select penalty; native fallback wins ties.",
-  "penalties": [0.1, 0.01, 1.0],
-  "controls": ["native", "matched-capacity CE versus prefix objective"],
-  "gate": "At least 10% replay reward versus native and prefix exceeds CE before collecting independent data. This gate is necessary, not sufficient: goal requires serving speed against strong controls.",
-  "limitations": ["Not a new held-out evaluation", "Contextual candidate correction is prior art", "A positive screen alone does not justify novelty or speed claims"]
-}

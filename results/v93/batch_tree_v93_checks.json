@@ -1,9 +1,0 @@
-{
-  "passed": true,
-  "exhaustive_global_allocation_checks": 150,
-  "checks": [
-    "Global node budget",
-    "Global mass equals exhaustive optimum",
-    "Gold labels do not affect allocation"
-  ]
-}

@@ -1,6 +1,0 @@
-{
-  "passed": true,
-  "cases": 15000,
-  "includes_exact_ties": true,
-  "scope": "Single-block restricted greedy Markov draft, fixed backbone features. Exact positive-prefix-loss identity and additive upper bound; NOT end-to-end speed evidence."
-}

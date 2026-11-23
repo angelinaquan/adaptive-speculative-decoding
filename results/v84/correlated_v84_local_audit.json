@@ -1,7 +1,0 @@
-{
-  "passed": true,
-  "records": 4941,
-  "all_choices_rewards_parameters_equal": true,
-  "prediction_tolerance": 1e-10,
-  "primary_gate_passed": false
-}

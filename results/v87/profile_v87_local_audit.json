@@ -1,9 +1,0 @@
-{
-  "passed": true,
-  "sessions": 5,
-  "output_batch_checks": 504,
-  "source_plan_hashes_match": true,
-  "tail_fraction": 0.04482481418523154,
-  "idealized_zero_tail_gain_percent": 4.692836963409586,
-  "caveat": "Hypothetical deletion of the entire tail in the instrumented forced runtime, not achievable head-only savings or a native speed bound."
-}

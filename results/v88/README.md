@@ -1,9 +1,0 @@
-# Frozen selector calibration diagnostic (pending)
-
-Job3065407 submitted with W&B logging.96prompts are drawn only from v83 training, split48fit/48internal-validation, balanced by domain. No v83 validation prompt enters this screen. Teacher sequences are reused exactly; scale1 proposals must match prior v83 outputs at every anchor for widths3and8. Original model weights, causal features, target full-sequence replay and independent first-anchor verifications remain checked. Alternative scales0and2 also receive independent first-anchor verification.
-
-The correction scale multiplies only the predecessor-conditioned transition term; unary candidate sets and backbone weights are unchanged. Eight fixed scalar choices are compared. Selection uses fitting prompts alone, with validation-label poisoning checks. Oracle prefix coverage measures whether the target tokens are even present in the unary candidate sets; this is an unattainable reference, not a proposed selector.
-
-[DFlash2](https://docs.vllm.ai/projects/speculators/en/v0.8.0/user_guide/algorithms/dflash2/) already supplies predecessor-conditioned candidate scoring. Scalar calibration is an ablation, not a new architecture. The purpose is to locate learnable selector headroom before considering a method. Any improvement is teacher-anchor reward only and requires fresh heldout data plus matched serving timings. No result yet; report unchanged.
-
-Completed0:0,2m16s. Independent local token reconstruction and summary exactly match remote; selection poison passed. Selectedscale.75 yields+0.246%reward(width3) and-0.822%(width8). Scalar calibration fails. Candidate oracle reward headroom27.03%/55.67%is hindsight, not a method gain. [W&B](https://wandb.ai/aquan-world-model/18657-speculative-pilot/runs/jntxt85r). No speed claim.

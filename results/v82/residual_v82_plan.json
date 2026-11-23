@@ -1,9 +1,0 @@
-{
-  "method": "Predict reward by frozen context/anchor ridge, then add a shrunk request-specific residual estimated only from previously selected widths. Current feedback is applied after allocation.",
-  "hypothesis": "Context prediction and recent verification feedback have complementary errors; request-specific residual correction can improve allocation even when each alone fails.",
-  "base_selection": "Four ridge penalties, inner prompt-grouped MSE; four prompt-grouped outer folds. Same frozen predictor in adaptive and frozen controls.",
-  "update_selection": "Inner prompt-grouped allocation reward; include no-update plus alpha .5/1, prior count 1/4, decay .5/1. Fixed enumeration tie-break. No outer label tuning.",
-  "budget": "Exact DP, widths 1-8, sum widths <=3*active states at each teacher offset.",
-  "gate": "Require >=10% reward over fixed3 and improvement over frozen to justify further fresh-data study; no inference-speed claim from this diagnostic.",
-  "limitations": ["47 reused prompts, 277 teacher anchors; exploratory only.", "Feedback at exogenous offsets8tokens apart is not closed-loop inference.", "Accepted-token reward is not throughput; deployment must include all overhead.", "General context-aware allocation and feedback adaptation already have prior art; novelty not established."]
-}

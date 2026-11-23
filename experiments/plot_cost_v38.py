@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 
 def main():
  repo=Path(__file__).resolve().parents[1]
- p=argparse.ArgumentParser();p.add_argument('--summary',type=Path,default=repo/'results/v38/cost_v38_summary.json');p.add_argument('--output-prefix',type=Path,default=repo/'docs/figures/cost_v38_confirmation');a=p.parse_args()
+ p=argparse.ArgumentParser();p.add_argument('--summary',type=Path,default=repo/'results/v38/cost_v38_summary.json');p.add_argument('--output-prefix',type=Path,default=repo/'paper/figures/cost_v38_confirmation');a=p.parse_args()
  s=json.loads(a.summary.read_text());assert s['all_correctness_and_provenance_checks_passed']
  keys=['fixed7','domain_fixed','original'];labels=['Global fixed width 7','Domain-specific fixed width','Original adaptive policy'];colors=['#386cb0','#238b45','#7556a4']
  fig,(left,right)=plt.subplots(1,2,figsize=(12,4.8),gridspec_kw={'width_ratios':[1.1,1.]})

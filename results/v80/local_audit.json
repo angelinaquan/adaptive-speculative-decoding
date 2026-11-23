@@ -1,7 +1,0 @@
-{
-  "passed": true,
-  "input_files_exactly_match_remote": 68,
-  "local_remote_records_exactly_equal": true,
-  "local_remote_summary_exactly_equal": true,
-  "report_changed": false
-}

@@ -1,4 +1,4 @@
-"""Stage an isolated reproduction of the cost validation or confirmation study."""
+"""Stage an isolated reproduction of the cost batch-32 or batch-64 confirmation study."""
 import argparse
 import json
 import os
@@ -10,7 +10,7 @@ import sys
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--phase', choices=['validation', 'confirmation', 'confirmation-v38'], required=True)
+    parser.add_argument('--phase', choices=['confirmation', 'confirmation-v38'], required=True)
     parser.add_argument('--run-dir', type=Path, required=True, help='New directory; existing directories are never overwritten')
     parser.add_argument('--model-paths', type=Path, help='Defaults to experiments/model_paths.json from download_models.py')
     parser.add_argument('--stage-only', action='store_true', help='Copy inputs without importing vLLM, downloading models, or starting inference')
@@ -20,24 +20,13 @@ def main():
     models = json.loads(model_paths.read_text())
     assert set(models) == {'Qwen/Qwen3-4B', 'deepseek-ai/dspark_qwen3_4b_block7'}
     assert all(isinstance(p, str) and p for p in models.values())
-    files = [repo/'experiments'/name for name in [
-        'analyze_cost_v25.py', 'benchmark_cost_v25.py', 'run_cost_v25.py',
-        'cost_policy_v24.py', 'diagnostic_budget_v22.py', 'head_calibration_v17.py',
-        'head_calibration_v18_manifest.json',
-    ]]
-    files += [repo/'results/v18/head_calibration_v18_ar.json']
-    if args.phase == 'confirmation-v38':
-        files = [repo/'experiments'/name for name in [
-            'cost_only_v26.py', 'benchmark_cost_v38.py', 'run_cost_v38.py',
-            'analyze_cost_v38.py', 'cost_v38_manifest.json', 'cost_v38_plan.json',
-        ]]
-    if args.phase == 'confirmation':
-        files += [repo/'experiments'/name for name in [
-            'cost_only_v26.py', 'benchmark_cost_v26.py', 'run_cost_v26.py',
-            'analyze_cost_v26.py', 'cost_v26_manifest.json', 'cost_v26_plan.json',
-        ]]
-        files += [repo/'results/v25'/f'cost_v25_{method}.json'
-                  for method in ['ar', 'original', 'measured']+[f'fixed{i}' for i in range(1, 8)]]
+    version = 'v26' if args.phase == 'confirmation' else 'v38'
+    files = [repo/'experiments'/name for name in (
+        'cost_only_v26.py', f'benchmark_cost_{version}.py', f'analyze_cost_{version}.py',
+        f'cost_{version}_manifest.json', f'cost_{version}_plan.json',
+    )]
+    if version == 'v26':
+        files.append(repo/'results/v25/cost_v25_summary.json')
     for path in files:
         if not path.is_file():
             raise FileNotFoundError(path)
@@ -50,12 +39,12 @@ def main():
     for path in files:
         shutil.copy2(path, work/path.name)
     (work/'model_paths.json').write_text(json.dumps(models, indent=2)+'\n')
-    version = {'validation': 'v25', 'confirmation': 'v26', 'confirmation-v38': 'v38'}[args.phase]
-    entry = f'run_cost_{version}.py'
+    entry = f'benchmark_cost_{version}.py'
     scratch = work/'scratch'
     (scratch/'tmp').mkdir(parents=True)
     (scratch/'cache').mkdir()
     overrides = {
+        'WANDB_MODE': os.environ.get('WANDB_MODE', 'offline'),
         'SERVING_SCRATCH': str(scratch), 'TMPDIR': str(scratch/'tmp'),
         'XDG_CACHE_HOME': str(scratch/'cache'), 'VLLM_CACHE_ROOT': str(scratch/'cache/vllm'),
         'TORCHINDUCTOR_CACHE_DIR': str(scratch/'cache/inductor'),
@@ -67,17 +56,20 @@ def main():
         'PYTHONPATH': str(work)+(os.pathsep+os.environ['PYTHONPATH'] if os.environ.get('PYTHONPATH') else ''),
     }
     (work/'reproduction.json').write_text(json.dumps(dict(
-        phase=args.phase, command=[sys.executable, str(work/entry)], environment=overrides,
+        phase=args.phase, benchmark=entry, environment=overrides,
         note='Confirmation reuses the published validation selection and frozen prompts; a reproduction is not a new unseen test.',
     ), indent=2)+'\n')
     print(f'Staged {args.phase} in {work}', flush=True)
     if args.stage_only:
         return
-    subprocess.run([sys.executable, str(work/entry)], cwd=work, env={**os.environ, **overrides}, check=True)
+    plan = json.loads((work/f'cost_{version}_plan.json').read_text())
+    sessions = [(role, rd) for rd, order in enumerate(plan['orders']) for role in order]
+    if version == 'v38':
+        sessions.insert(0, ('ar', -1))
+    for role, rd in sessions:
+        command = [sys.executable, str(work/entry), '--role', role, '--round', str(rd)]
+        subprocess.run(command, cwd=work, env={**os.environ, **overrides}, check=True)
     analyzer = f'analyze_cost_{version}.py'
-    if (work/'cost_v26_not_launched.json').exists():
-        print('Confirmation skipped: published validation gate failed.', flush=True)
-        return
     subprocess.run([sys.executable, str(work/analyzer), str(work), '--output', str(work/'summary.json')], check=True)
 
 

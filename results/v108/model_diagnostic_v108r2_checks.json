@@ -1,9 +1,0 @@
-{
-  "passed": true,
-  "checks": [
-    "unarmed warmup returns original outputs",
-    "explicit post-init arming resets observer",
-    "armed nonzero temperatures rejected"
-  ],
-  "scope": "CPU arming logic regression only; GPU audit not executed"
-}

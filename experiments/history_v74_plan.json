@@ -1,7 +1,0 @@
-{
- "scope":"Past-feedback-only allocation replay on v73 teacher anchors; diagnostic not serving.",
- "rule":"Fixed Beta(1,1) perrequest. Add acceptedprefixlength successes and onefailure iff selecteddraft rejected. Choose widths1..8 bygreedy marginal geometric survival under exact totalwidth3*n. No parameter tuning.",
- "controls":"Fixed3; hindsight optimalallocation withbudget<=3*n. Clip acceptance+1 reward atremainingreference continuation.",
- "gates":"Poisonunobservedcounterfactual labels andfuturelabels; earlier/currentchoices invariant. Allocationbudgetchecked.",
- "limitations":"Exogenous teacher anchors8tokensapart, notclosedlooptrajectories. Reusedprompts, no testofspeed ornewmethodnovelty."
-}
