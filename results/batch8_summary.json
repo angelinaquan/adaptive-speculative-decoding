@@ -1,0 +1,119 @@
+{
+  "scope": "Dedicated batch 8, 768 identical prompts previously used at batch 64. Transferred fixed-width controls. Primary contrast measured vs native.",
+  "all_correctness_and_provenance_checks_passed": true,
+  "passed_statistical_criteria": false,
+  "passed_5_percent_practical_target": false,
+  "passed_primary_success": false,
+  "throughputs": {
+    "fixed3": 757.3350826478766,
+    "fixed7": 1037.6723027007183,
+    "original": 1035.8467938214194,
+    "measured": 1037.5814862930738,
+    "domain_fixed": 934.7138906264232
+  },
+  "comparisons": {
+    "fixed7": {
+      "gain_percent": -0.008751935211925854,
+      "round_gains_percent": [
+        -0.017379127261241134,
+        -0.2210856311735232,
+        -0.16843155980258429,
+        0.3731046463364862
+      ],
+      "stratified_batch_bootstrap_95": [
+        -0.11221531356861048,
+        0.09833223271283274
+      ],
+      "batch_and_round_bootstrap_95": [
+        -0.23208396796172925,
+        0.2753749002186183
+      ]
+    },
+    "domain_fixed": {
+      "gain_percent": 11.005249488451607,
+      "round_gains_percent": [
+        10.958988105614198,
+        10.77351061836842,
+        10.820023421867052,
+        11.469898630131038
+      ],
+      "stratified_batch_bootstrap_95": [
+        9.903315754841561,
+        12.120947818600472
+      ],
+      "batch_and_round_bootstrap_95": [
+        9.864676500970234,
+        12.143296508582127
+      ]
+    },
+    "original": {
+      "gain_percent": 0.16746612356204338,
+      "round_gains_percent": [
+        -0.003659162176694597,
+        -0.03670124573772471,
+        0.029740644100617608,
+        0.681903347310886
+      ],
+      "stratified_batch_bootstrap_95": [
+        0.1114066354945481,
+        0.22738519582944092
+      ],
+      "batch_and_round_bootstrap_95": [
+        -0.049392419989124074,
+        0.5214553562918902
+      ]
+    }
+  },
+  "domain_gain_percent": {
+    "alpaca": {
+      "fixed3": 25.702616096237207,
+      "fixed7": -0.07594796122953884,
+      "domain_fixed": 25.702616096237207,
+      "original": 0.058887120281547745
+    },
+    "gsm8k": {
+      "fixed3": 54.00103308039994,
+      "fixed7": 0.004082588888554284,
+      "domain_fixed": 0.004082588888554284,
+      "original": 0.19287381280983507
+    },
+    "mbpp": {
+      "fixed3": 38.65049696263681,
+      "fixed7": 0.07091121574835935,
+      "domain_fixed": 0.07091121574835935,
+      "original": 0.2924922100630223
+    }
+  },
+  "hashes": {
+    "manifest_sha256": "7d14dbbf40b88bfee46b2f4a2ca25a474281109caa7935dc337d33408bf6d9bd",
+    "plan_sha256": "b35e97a5673f52eb759e72efaf1dbfa7c35de18e67ddd18be1fe524fc4b4001c",
+    "source_sha256": "f4fd44142086876b6500b9be5926f7190263b9fa503efb5fc849aeda848e621c",
+    "cost_source_sha256": "840ed9054753729b8adadf0eaae0e06f149f55e9f1581352eedc585a017992ac"
+  },
+  "runs": {
+    "fixed3-round0": null,
+    "fixed3-round1": null,
+    "fixed3-round2": null,
+    "fixed3-round3": null,
+    "fixed7-round0": null,
+    "fixed7-round1": null,
+    "fixed7-round2": null,
+    "fixed7-round3": null,
+    "original-round0": null,
+    "original-round1": null,
+    "original-round2": null,
+    "original-round3": null,
+    "measured-round0": null,
+    "measured-round1": null,
+    "measured-round2": null,
+    "measured-round3": null
+  },
+  "reference_run": null,
+  "limitations": [
+    "One model pair, H200, batch8 and FP32 tensor/batch-invariant backend only; globally strict IEEE arithmetic not established.",
+    "32 prompt batches per domain and four engine rounds; repeats are not independent workload samples.",
+    "Code source expands from sanitized MBPP257-test subset to official full500-test split, with task-ID and normalized-text overlap exclusions.",
+    "Domain-specific fixed baseline is assembled from prespecified choices, not selected on this batch-size comparison.",
+    "A positive chat result does not replace mixed-workload primary success; no online-calibration benefit claim."
+  ]
+}

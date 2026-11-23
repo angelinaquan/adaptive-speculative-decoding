@@ -6,7 +6,7 @@
 
 **Setting.** Qwen3-4B with the seven-token DSpark drafter on one H200, using greedy decoding and a 128-token output cap. The batch-64 comparison used 768 held-out prompts, equally divided among conversation, math, and code. Each method ran in four balanced engine orders, with two timed passes after warmup. All timed outputs matched the ordinary greedy reference.
 
-**Main result.** At batch 64, measured costs raised warmed-up throughput from **6,059 to 6,251 tokens/s** versus native adaptive verification, a **3.17% gain** (95% paired batch-and-round bootstrap interval **1.13% to 5.45%**). The gain over a globally tuned fixed width was 2.56%. Against prespecified domain-specific widths, the interval included zero. A separate batch-32 experiment found a 1.35% gain over native adaptive verification. Timing excludes startup and profiling.
+**Main result.** At batch 64, measured costs raised warmed-up throughput from **6,059 to 6,251 tokens/s** versus native adaptive verification, a **3.17% gain** (95% paired batch-and-round bootstrap interval **1.13% to 5.45%**). The gain over a globally tuned fixed width was 2.56%. Against prespecified domain-specific widths, the interval included zero. A separate batch-32 experiment found a 1.35% gain over native adaptive verification. On the same 768 prompts as the batch-64 experiment, dedicated [batch-8](results/batch8_summary.json) and [batch-16](results/batch16_summary.json) runs gave gains of 0.17% and 0.015% over native adaptive verification. Both intervals included zero. Timing excludes startup and profiling.
 
 ![Held-out batch-64 throughput gains with 95% paired intervals](results/throughput.png)
 
@@ -28,3 +28,5 @@ python -m pip install -r requirements.txt
 python scripts/run_cost_study.py --batch 64 --run-dir /tmp/cost-batch64
 python scripts/run_cost_study.py --batch 32 --run-dir /tmp/cost-batch32
 ```
+
+The [small-batch replication archive](results/small_batch_replication.zip) contains the frozen inputs, benchmark code, analysis, and session records. After extracting it, run `python batch8/analyze.py batch8 --output batch8.json` and repeat with `batch16`.
