@@ -1,4 +1,4 @@
-# The throughput cost of smoothing GPU timings in speculative decoding
+# Using Measured GPU Costs to Speed Up Speculative Decoding
 
 [Core implementation](src/verification_costs.py) · [Benchmark and analysis code](src/) · [Paper](paper/paper.pdf)
 
