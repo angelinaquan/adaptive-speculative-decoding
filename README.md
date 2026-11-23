@@ -6,11 +6,13 @@
 
 **Setting.** Qwen3-4B with the seven-token DSpark drafter on one H200, using greedy decoding and a 128-token output cap. The batch-64 comparison used 768 held-out prompts, equally divided among conversation, math, and code. Each method ran in four balanced engine orders, with two timed passes after warmup. All timed outputs matched the ordinary greedy reference.
 
-**Main result.** At batch 64, measured costs raised warmed-up throughput from **6,059 to 6,251 tokens/s** versus native adaptive verification, a **3.17% gain** (95% paired batch-and-round bootstrap interval **1.13% to 5.45%**). The gain over a globally tuned fixed width was 2.56%. Against prespecified domain-specific widths, the interval included zero. A separate batch-32 experiment found a 1.35% gain over native adaptive verification. On the same 768 prompts as the batch-64 experiment, dedicated [batch-8](results/batch8_summary.json) and [batch-16](results/batch16_summary.json) runs gave gains of 0.17% and 0.015% over native adaptive verification. Both intervals included zero. Timing excludes startup and profiling.
+**Main result.** Using measured GPU costs increased warmed-up throughput over native adaptive verification by **1.35% at batch 32** (384 held-out prompts, 95% paired bootstrap interval 1.07% to 1.63%) and **3.17% at batch 64** (768 held-out prompts, 1.13% to 5.45%). At batch 64, throughput rose from 6,059 to 6,251 tokens/s. Timing excludes startup and profiling.
 
 ![Held-out batch-64 throughput gains with 95% paired intervals](results/throughput.png)
 
 [Course paper](paper/paper.pdf) · [LaTeX](paper/main.tex) · [Cost-table implementation](src/verification_costs.py) · [Research history](HISTORY.md)
+
+**Additional batch sizes.** On the same 768 prompts, the [batch-8](results/batch8_summary.json) and [batch-16](results/batch16_summary.json) estimates were +0.17% and +0.015%. Both intervals included zero.
 
 ## Reproduce
 
