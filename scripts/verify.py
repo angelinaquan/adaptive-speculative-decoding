@@ -14,23 +14,27 @@ import matplotlib.pyplot as plt
 
 def plot_result(results):
     summary = json.loads((results / 'batch64_summary.json').read_text())
-    fig, ax = plt.subplots(figsize=(8, 3), layout='constrained')
-    baselines = [('original', 'Native adaptive'), ('fixed7', 'Global fixed width'),
-                 ('domain_fixed', 'Domain-specific widths')]
-    for row, (key, label) in enumerate(baselines):
-        comparison = summary['comparisons'][key]
-        gain = comparison['gain_percent']
-        low, high = comparison['batch_and_round_bootstrap_95']
-        ax.hlines(row, low, high, color='#275b70', linewidth=3)
-        ax.plot(gain, row, 'o', color='#275b70')
-        ax.annotate(f'{gain:+.2f}%', (gain, row), xytext=(0, 8),
-                    textcoords='offset points', ha='center')
-    ax.axvline(0, color='gray', linestyle=':', zorder=0)
-    ax.set(yticks=range(3), yticklabels=[label for _, label in baselines],
-           ylim=(2.45, -.55), xlabel='Throughput gain (%) with 95% paired bootstrap interval',
-           title='Measured verification costs on 768 held-out prompts at batch 64')
-    ax.spines[['right', 'top', 'left']].set_visible(False)
+    gains = summary['domain_gain_percent']
+    domains = [('alpaca', 'Chat'), ('gsm8k', 'Math'), ('mbpp', 'Code')]
+    baselines = [('fixed7', 'Fixed width 7', '#396CB1'),
+                 ('domain_fixed', 'Domain-specific width', '#238447'),
+                 ('original', 'Native adaptive', '#7956A2')]
+    fig, ax = plt.subplots(figsize=(8.4, 4.7), layout='constrained')
+    for index, (key, label, color) in enumerate(baselines):
+        positions = [group + (index - 1) * 0.25 for group in range(len(domains))]
+        values = [gains[domain][key] for domain, _ in domains]
+        bars = ax.bar(positions, values, width=0.235, label=label, color=color)
+        ax.bar_label(bars, labels=[f'{value:+.1f}%' for value in values], padding=4)
+    ax.set_title('Measured-cost verification: throughput gain at batch 64', pad=12)
+    ax.set_ylabel('More output tokens per second (%)')
+    ax.set_xticks(range(len(domains)), [label for _, label in domains])
+    ax.set_ylim(0, 6.6)
+    ax.legend(title='Comparison baseline', loc='upper right', frameon=False)
+    ax.grid(axis='y', alpha=0.16)
+    ax.set_axisbelow(True)
+    ax.spines[['right', 'top']].set_visible(False)
     fig.savefig(results / 'throughput.png', dpi=180)
+    plt.close(fig)
 
 
 repo = Path(__file__).resolve().parents[1]

@@ -8,7 +8,9 @@
 
 **Main result.** Using measured GPU costs increased warmed-up throughput over native adaptive verification by **1.35% at batch 32** (384 held-out prompts, 95% paired bootstrap interval 1.07% to 1.63%) and **3.17% at batch 64** (768 held-out prompts, 1.13% to 5.45%). At batch 64, throughput rose from 6,059 to 6,251 tokens/s. Timing excludes startup and profiling.
 
-![Held-out batch-64 throughput gains with 95% paired intervals](results/throughput.png)
+![Batch-64 throughput gains for measured-cost verification versus fixed width 7, domain-specific width, and native adaptive verification. Chat gains are 5.4%, 2.1%, and 5.7%, respectively.](results/throughput.png)
+
+Each bar compares **measured-cost verification** with the baseline named in the legend on the same 256 prompts. For example, **+5.7%** means the measured-cost scheduler generated **5.7% more output tokens per second than native adaptive verification on chat**. Against that same baseline, the gains were +0.4% on math and +2.6% on code. The domain-specific baseline uses width 3 for chat and width 7 for math and code, which is why the two fixed-width bars coincide for math and code. These are descriptive per-domain estimates.
 
 [Course paper](paper/paper.pdf) · [LaTeX](paper/main.tex) · [Cost-table implementation](src/verification_costs.py) · [Research history](HISTORY.md)
 
